@@ -13,8 +13,12 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '.'))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..'))
 
+require 'awesome_print'
+
 require 'minitest/unit'
 require 'minitest/autorun'
+require 'minitest/reporters'
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require File.expand_path('../../lib/kracker', __FILE__)
 test_objects_location = File.expand_path('../test_objects/*', __FILE__)
@@ -24,6 +28,7 @@ module Kracker
   class KrackerTestCase < Minitest::Unit::TestCase
     include Kracker
     include Kracker::TestObjects
+
 
   end
 end

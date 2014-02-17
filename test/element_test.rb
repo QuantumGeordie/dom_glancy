@@ -36,4 +36,12 @@ class ElementTest < Kracker::KrackerTestCase
     assert element1.close_enough?(element3), 'should not be close enough'
   end
 
+  def test_changed_element__width
+    element1 = DOMElement.new(array_of_elements.last)
+    element2 = DOMElement.new(array_of_elements.last.merge("width" => 20))
+
+    assert element1.same_element?(element2), 'should be same element'
+    refute element1.close_enough?(element2), 'elements not close enough'
+  end
+
 end

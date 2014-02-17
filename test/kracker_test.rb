@@ -7,23 +7,76 @@ class KrackerTest < Kracker::KrackerTestCase
     master_data = array_of_elements
     current_data = array_of_elements
 
-    analysis = analyze_data_sets(master_data, current_data)
+    analysis = analyze(master_data, current_data)
 
     assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
 
   end
 
-  def test_one_size_different
+  def test_one_id_different
     master_data = array_of_elements_small
     current_data = array_of_elements_small
-    current_data.first['width'] = current_data.first['width'] + 13
+    current_data.first['id'] = 'some-new-id'
 
-    analysis = analyze_data_sets(master_data, current_data)
+    analysis = analyze(master_data, current_data)
 
     assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 1, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+  end
 
+  def test_one_new_element
+    master_data = array_of_elements
+    current_data = array_of_elements
+    current_data << single_element_hash
+
+    analysis = analyze(master_data, current_data)
+
+    assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+  end
+
+  def test_two_changed
+    master_data = array_of_elements
+    current_data = array_of_elements
+    current_data[0]['height'] = current_data[0]['height'] + 13
+    current_data[1]['width'] = current_data[1]['width'] + 25
+
+    analysis = analyze(master_data, current_data)
+
+    assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    assert_equal 2, analysis[:changed_element_pairs].count, 'changed element pairs'
+
+  end
+
+  def test_one_changed_less_than_similarity_factor
+    master_data = array_of_elements
+    current_data = array_of_elements
+
+    current_data[1]['height'] = current_data[1]['height'] + 3
+
+    analysis = analyze(master_data, current_data)
+
+    assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    assert_equal 0, analysis[:changed_element_pairs].count, 'changed element pairs'
+  end
+
+  def test_one_changed_one_missing_one_added
+    master_data = array_of_elements
+    current_data = array_of_elements
+
+    current_data[0]['height'] = current_data[0]['height'] + 13   ## the one changed (by more than similarity factor)
+    current_data[1]['height'] = current_data[1]['height'] + 3    ## the one changed (by less than similarity factor and therefor not counted)
+    current_data.delete_at(5)                                    ## the one missing
+    current_data << single_element_hash                          ## the one added
+
+    analysis = analyze(master_data, current_data)
+
+    assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 1, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    assert_equal 1, analysis[:changed_element_pairs].count, 'changed element pairs'
   end
 
 end
