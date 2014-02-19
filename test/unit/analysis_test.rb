@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class KrackerTest < Kracker::KrackerTestCase
+class AnalysisTest < Kracker::KrackerTestCase
 
   def test_same_elements
 
@@ -11,6 +11,7 @@ class KrackerTest < Kracker::KrackerTestCase
 
     assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    assert analysis[:same], 'results of data analysis.same'
 
   end
 
@@ -23,6 +24,7 @@ class KrackerTest < Kracker::KrackerTestCase
 
     assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 1, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    refute analysis[:same], 'results of data analysis.same'
   end
 
   def test_one_new_element
@@ -34,6 +36,7 @@ class KrackerTest < Kracker::KrackerTestCase
 
     assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    refute analysis[:same], 'results of data analysis.same'
   end
 
   def test_two_changed
@@ -47,6 +50,7 @@ class KrackerTest < Kracker::KrackerTestCase
     assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
     assert_equal 2, analysis[:changed_element_pairs].count, 'changed element pairs'
+    refute analysis[:same], 'results of data analysis.same'
 
   end
 
@@ -61,6 +65,7 @@ class KrackerTest < Kracker::KrackerTestCase
     assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
     assert_equal 0, analysis[:changed_element_pairs].count, 'changed element pairs'
+    assert analysis[:same], 'results of data analysis.same'
   end
 
   def test_one_changed_one_missing_one_added
@@ -77,6 +82,7 @@ class KrackerTest < Kracker::KrackerTestCase
     assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 1, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
     assert_equal 1, analysis[:changed_element_pairs].count, 'changed element pairs'
+    refute analysis[:same], 'results of data analysis.same'
   end
 
 end

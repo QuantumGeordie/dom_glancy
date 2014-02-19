@@ -6,8 +6,15 @@ namespace :test do
   Rake::TestTask.new :units do |t|
     t.libs << '.'
     t.libs << 'test'
-    t.pattern = 'test/**/*_test.rb'
+    t.pattern = 'test/unit/**/*_test.rb'
     t.verbose = true
+  end
+
+  desc 'mapping tests'
+  Rake::TestTask.new :mapping do |t|
+    t.libs << '.'
+    t.libs << 'test'
+    t.pattern = 'test/mapping/**/*_test.rb'
   end
 end
 

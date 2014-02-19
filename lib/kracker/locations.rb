@@ -34,4 +34,12 @@ module Kracker
     ::FileUtils.mkdir_p(@current_file_location)
   end
 
+  def self.master_filename(test_root)
+    File.join(self.master_file_location, "#{test_root}_master.yaml")
+  end
+
+  def self.current_filename(test_root)
+    File.join(self.current_file_location, "#{test_root}.yaml")
+  end
+
 end

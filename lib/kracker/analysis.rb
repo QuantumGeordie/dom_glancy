@@ -27,6 +27,7 @@ module Kracker
     output_hash[:not_in_master]  = set_current_not_master
     output_hash[:not_in_current] = set_master_not_current
     output_hash[:changed_element_pairs] = changed_element_pairs
+    output_hash[:same] = set_current_not_master.count == 0 && set_master_not_current.count == 0 && changed_element_pairs.count == 0
 
     output_hash
   end
@@ -44,5 +45,15 @@ module Kracker
     end
     same_but_different_pairs
   end
+
+  def make_analysis_failure_report(analysis_data)
+    return '' if analysis_data[:same]
+
+    msg =  "\nMap Failure:\n"
+    msg += "\tElements not in master: #{analysis_data[:not_in_master].count}\n"
+    msg += "\tElements not in current: #{analysis_data[:not_in_current].count}\n"
+    msg += "\tChanged elements: #{analysis_data[:changed_element_pairs].count}\n"
+  end
+
 
 end

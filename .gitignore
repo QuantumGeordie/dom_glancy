@@ -17,3 +17,5 @@ test/version_tmp
 tmp
 .idea
 *.DS_store
+test/test_app/log
+test/test_app/tmp

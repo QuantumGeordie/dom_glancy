@@ -7,7 +7,7 @@ class LocationTest < Kracker::KrackerTestCase
   end
 
   def teardown
-    clean_up
+    delete_test_locations
   end
 
   def test_locations
@@ -20,21 +20,4 @@ class LocationTest < Kracker::KrackerTestCase
     assert Dir.exist?(Kracker.diff_file_location)  , 'difference file location created'
   end
 
-  private
-
-  def prep_locations_for_test
-    @locations_root = File.expand_path('..', __FILE__)
-
-    Kracker.master_file_location  = File.join(@locations_root, 'masters')
-    Kracker.current_file_location = File.join(@locations_root, 'current')
-    Kracker.diff_file_location    = File.join(@locations_root, 'diff')
-
-    Kracker.create_comparison_directories
-  end
-
-  def clean_up
-    FileUtils.rm_rf Kracker.master_file_location
-    FileUtils.rm_rf Kracker.current_file_location
-    FileUtils.rm_rf Kracker.diff_file_location
-  end
 end
