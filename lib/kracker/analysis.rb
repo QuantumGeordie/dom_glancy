@@ -49,11 +49,23 @@ module Kracker
   def make_analysis_failure_report(analysis_data)
     return '' if analysis_data[:same]
 
-    msg =  "\nMap Failure:\n"
-    msg += "\tElements not in master: #{analysis_data[:not_in_master].count}\n"
-    msg += "\tElements not in current: #{analysis_data[:not_in_current].count}\n"
-    msg += "\tChanged elements: #{analysis_data[:changed_element_pairs].count}\n"
+    msg = ["\n------- DOM Comparison Failure ------"]
+    msg << "Elements not in master: #{analysis_data[:not_in_master].count}"
+    msg << "Elements not in current: #{analysis_data[:not_in_current].count}"
+    msg << "Changed elements: #{analysis_data[:changed_element_pairs].count}"
+    msg << "Files:"
+    msg << "\tcurrent: #{Kracker.current_filename(analysis_data[:test_root])}"
+    msg << "\tmaster: #{Kracker.master_filename(analysis_data[:test_root])}"
+    msg << "\tdifference: #{Kracker.diff_filename(analysis_data[:test_root])}"
+    msg << "Bless this current data set:"
+    msg << "\t#{blessing_copy_string(analysis_data[:test_root])}"
+    msg<< "-------------------------------------"
+
+    msg.join("\n")
   end
 
+  def blessing_copy_string(test_root)
+    "cp #{Kracker.current_filename(test_root)} #{Kracker.master_filename(test_root)}"
+  end
 
 end

@@ -42,4 +42,8 @@ module Kracker
     File.join(self.current_file_location, "#{test_root}.yaml")
   end
 
+  def self.diff_filename(test_root)
+    File.join(self.diff_file_location, "#{test_root}_diff.yaml")
+  end
+
 end

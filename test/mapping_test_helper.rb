@@ -31,14 +31,18 @@ require 'selenium-webdriver'
 test_objects_location = File.expand_path('../test_objects/*', __FILE__)
 Dir[test_objects_location].each { |f| require f }
 
+test_helper_location = File.expand_path('../test_helpers/**/*.rb', __FILE__)
+Dir[test_helper_location].each { |f| require f }
+
 Capybara.default_driver = :selenium
 
 module Kracker
   class KrackerMappingTestCase < Minitest::Test
     include Kracker
     include Kracker::TestObjects
-    include Capybara::DSL
+    include Kracker::TestHelpers::Location
 
+    include Capybara::DSL
 
   end
 end

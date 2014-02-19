@@ -2,8 +2,9 @@ require 'test_helper'
 
 class KrackerTest < Kracker::KrackerTestCase
   def setup
+    @test_root = 'elbow'
     prep_locations_for_test
-    make_master_file('junk', array_of_elements_small)
+    make_master_file(@test_root, array_of_elements_small)
     @kracker_object = KrackerClassForStubbing.new
   end
 
@@ -13,7 +14,7 @@ class KrackerTest < Kracker::KrackerTestCase
 
   def test_kracker__pass
     @kracker_object.stubs(:perform_mapping_operation).returns(array_of_elements_small)
-    mapping_results = @kracker_object.page_map_same?('junk')
+    mapping_results = @kracker_object.page_map_same?(@test_root)
 
     assert mapping_results[0], mapping_results[1]
   end
@@ -21,12 +22,19 @@ class KrackerTest < Kracker::KrackerTestCase
   def test_kracker__fail_one_new_element
     current_data = array_of_elements_small << single_element_hash
     @kracker_object.stubs(:perform_mapping_operation).returns(current_data)
-    mapping_results = @kracker_object.page_map_same?('junk')
+    mapping_results = @kracker_object.page_map_same?(@test_root)
 
     refute mapping_results[0], mapping_results[1]
-    assert_match 'Elements not in master: 1', mapping_results[1], mapping_results[1]
+
+    assert_match 'Elements not in master: 1',  mapping_results[1], mapping_results[1]
     assert_match 'Elements not in current: 0', mapping_results[1], mapping_results[1]
-    assert_match 'Changed elements: 0', mapping_results[1], mapping_results[1]
+    assert_match 'Changed elements: 0',        mapping_results[1], mapping_results[1]
+
+    assert_match "current: #{Kracker.current_filename(@test_root)}", mapping_results[1], mapping_results[1]
+    assert_match "master: #{Kracker.master_filename(@test_root)}",   mapping_results[1], mapping_results[1]
+    assert_match "difference: #{Kracker.diff_filename(@test_root)}", mapping_results[1], mapping_results[1]
+
+    assert_match "cp #{Kracker.current_filename(@test_root)} #{Kracker.master_filename(@test_root)}", mapping_results[1], mapping_results[1]
   end
 
   def make_master_file(test_root, data)

@@ -16,14 +16,17 @@ module Kracker
     result, msg, master_data = read_map_file(Kracker.master_filename(test_root))
     return [result, msg]  unless result
 
-    result, msg = analyze_map_differences(master_data, current_data)
+    #result, msg = analyze_map_differences(master_data, current_data)
+    analysis_data = analyze_map_differences(master_data, current_data)
+    analysis_data[:test_root] = test_root
+    msg = make_analysis_failure_report(analysis_data)
+    result = analysis_data[:same]
 
+    [result, msg]
   end
 
   def analyze_map_differences(master_data, current_data)
-    analysis = analyze(master_data, current_data)
-    msg = make_analysis_failure_report(analysis)
-    [analysis[:same], msg]
+    analyze(master_data, current_data)
   end
 
   def read_map_file(filename)
@@ -52,7 +55,8 @@ module Kracker
   end
 
   def perform_mapping_operation
-    [ {} ]
+    js = "return kracker.treeUp();"
+    page.driver.browser.execute_script(js)
   end
 
   def master_file_exists?(test_root)

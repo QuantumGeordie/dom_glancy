@@ -26,19 +26,6 @@ var kracker = {
             nodeList.push(node_details);
         }
 
-        var resultsElement = document.createElement('textarea');
-
-        resultsElement.style.marginLeft = 'auto';
-        resultsElement.style.marginRight = 'auto';
-        resultsElement.style.width = '100%';
-        resultsElement.style.height = '400px';
-        resultsElement.id = 'tree_results';
-        resultsElement.textContent = JSON.stringify(nodeList, undefined, 2);
-        document.getElementsByTagName('body')[0].appendChild(resultsElement);
-
-
-        console.log(nodeList[0]);
-
         return(nodeList);
     },
 
