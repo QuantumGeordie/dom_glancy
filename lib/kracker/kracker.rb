@@ -2,13 +2,12 @@ module Kracker
   require 'yaml'
 
   def page_map_same?(test_root)
-    result, msg = master_file_exists?(test_root)
-
-    return [result, msg] unless result
 
     result, msg = map_current_file(test_root)
-
     return [result, msg]  unless result
+
+    result, msg = master_file_exists?(test_root)
+    return [result, msg] unless result
 
     result, msg, current_data = read_map_file(Kracker.current_filename(test_root))
     return [result, msg]  unless result
@@ -16,17 +15,12 @@ module Kracker
     result, msg, master_data = read_map_file(Kracker.master_filename(test_root))
     return [result, msg]  unless result
 
-    #result, msg = analyze_map_differences(master_data, current_data)
-    analysis_data = analyze_map_differences(master_data, current_data)
+    analysis_data = analyze(master_data, current_data)
     analysis_data[:test_root] = test_root
     msg = make_analysis_failure_report(analysis_data)
     result = analysis_data[:same]
 
     [result, msg]
-  end
-
-  def analyze_map_differences(master_data, current_data)
-    analyze(master_data, current_data)
   end
 
   def read_map_file(filename)
@@ -62,8 +56,18 @@ module Kracker
   def master_file_exists?(test_root)
     filename = Kracker.master_filename(test_root)
     result = File.exist?(filename)
-    msg = result ? '' : "Master file does not exist: #{filename}"
+    msg = result ? '' : make_missing_master_failure_report(test_root)
     [result, msg]
+  end
+
+  def make_missing_master_failure_report(test_root)
+    msg = ["\n------- DOM Comparison Failure ------"]
+    msg << "Master file does not exist. To make a new master from"
+    msg << "the current page, use this command:"
+    msg << "\t#{blessing_copy_string(test_root)}"
+    msg<< "-------------------------------------"
+
+    msg.join("\n")
   end
 
 end
