@@ -1,9 +1,6 @@
-<h2>Index page</h2>
-
-<table class="kr">
-  <tbody>
-    <tr><th>master</th><td><%= Kracker.master_file_location %></td></tr>
-    <tr><th>current</th><td><%= Kracker.current_file_location %></td></tr>
-    <tr><th>diff</th><td><%= Kracker.diff_file_location %></td></tr>
-  </tbody>
-</table>
+<h2>difference files</h2>
+<ul>
+  <% @files.each do |file| %>
+    <li><%= file %></li>
+  <% end %>
+</ul>

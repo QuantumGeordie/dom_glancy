@@ -16,16 +16,17 @@
 </head>
 <body>
   <div class="grid grid_top">
-    <div class="row">
-      <h1>Kracker</h1>
-    </div>
-    <div class="row">
-      <h2 class="caramel"><%= @parent_application_name %> {<%= @kracker_gem_version %>}</h2>
-    </div>
-    <%= render :partial => 'shared/nav' %>
-    <div class="row">
-      just a <%= link_to 'bunch', '#', :class => 'kr' %> of text.
-    </div>
+    <nav>
+      <div class="row">
+        <h1>Kracker</h1>
+      </div>
+      <div class="row">
+        <h2 class="caramel"><%= @parent_application_name %> {<span id="js-kr--gem_rev"><%= @kracker_gem_version %></span>}</h2>
+      </div>
+
+      <%= render :partial => 'shared/nav' %>
+    </nav>
+
     <div class="row">
       <%= yield %>
     </div>

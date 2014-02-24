@@ -28,6 +28,8 @@ require 'capybara/dsl'
 require 'capybara/rails'
 require 'selenium-webdriver'
 
+require 'page_objects'
+
 test_objects_location = File.expand_path('../test_objects/*', __FILE__)
 Dir[test_objects_location].each { |f| require f }
 
@@ -43,6 +45,18 @@ module Kracker
     include Kracker::TestHelpers::Location
 
     include Capybara::DSL
+
+    def setup
+      delete_contents_from_kracker_locations
+    end
+
+    def teardown
+      delete_contents_from_kracker_locations
+    end
+
+    def visit_index
+      PageObjects::Kracker::IndexPage.visit
+    end
 
   end
 end

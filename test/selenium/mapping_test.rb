@@ -2,27 +2,8 @@ require 'selenium_test_helper'
 
 class MappingTest < Kracker::SeleniumTestCase
 
-  def setup
-    delete_contents_from_kracker_locations
-  end
-
-  def teardown
-    delete_contents_from_kracker_locations
-  end
-
-  def test_mapping
-    page.visit '/kracker'
-    assert page.has_content?('Kracker'), 'looking for content on page'
-    assert page.has_content?('Index'), 'looking for content on page'
-
-    js = 'return kracker.treeUp();'
-    results = page.driver.browser.execute_script(js)
-
-    assert results.length > 0, 'number of elements returned from kracker.treeUp() call is at least greater than 0.'
-  end
-
   def test_full_mapping__same
-    page.visit '/kracker'
+    visit_index
 
     map_current_page_and_save_as_master('kracker_index')
 
@@ -32,7 +13,7 @@ class MappingTest < Kracker::SeleniumTestCase
   end
 
   def test_full_mapping__different
-    page.visit '/kracker'
+    visit_index
 
     map_current_page_and_save_as_master('kracker_index')
 
