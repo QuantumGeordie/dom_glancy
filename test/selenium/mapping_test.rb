@@ -1,6 +1,6 @@
-require 'mapping_test_helper'
+require 'selenium_test_helper'
 
-class MappingTest < Kracker::KrackerMappingTestCase
+class MappingTest < Kracker::SeleniumTestCase
 
   def setup
     delete_contents_from_kracker_locations
@@ -18,7 +18,7 @@ class MappingTest < Kracker::KrackerMappingTestCase
     js = 'return kracker.treeUp();'
     results = page.driver.browser.execute_script(js)
 
-    assert_equal 7, results.length, 'number of elements returned from mapping call'
+    assert results.length > 0, 'number of elements returned from kracker.treeUp() call is at least greater than 0.'
   end
 
   def test_full_mapping__same

@@ -37,7 +37,7 @@ Dir[test_helper_location].each { |f| require f }
 Capybara.default_driver = :selenium
 
 module Kracker
-  class KrackerMappingTestCase < Minitest::Test
+  class SeleniumTestCase < Minitest::Test
     include Kracker
     include Kracker::TestObjects
     include Kracker::TestHelpers::Location

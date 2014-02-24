@@ -1,3 +1,3 @@
 watch( './*\.rb' ) do |md|
-  system("clear && rake")
+  system("clear && rake test:units")
 end

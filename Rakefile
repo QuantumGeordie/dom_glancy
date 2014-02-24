@@ -10,14 +10,14 @@ namespace :test do
     t.verbose = true
   end
 
-  desc 'mapping tests'
-  Rake::TestTask.new :mapping do |t|
+  desc 'selenium tests'
+  Rake::TestTask.new :selenium do |t|
     t.libs << '.'
     t.libs << 'test'
-    t.pattern = 'test/mapping/**/*_test.rb'
+    t.pattern = 'test/selenium/**/*_test.rb'
   end
 end
 
-task :test => [ 'test:units' ]
+task :test => [ 'test:units', 'test:selenium' ]
 
 task :default => :test
