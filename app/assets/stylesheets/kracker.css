@@ -1,0 +1,52 @@
+/* colors from pallett at http://www.colourlovers.com/palette/137881/Tabby_Cat */
+
+.blackish {
+  color: #180F01;
+}
+
+.brown_black {
+  color: #2A2111;
+}
+
+.caramel {
+    color: #956C1F;
+}
+
+.white {
+    color: #FFFBF5;
+}
+
+.faded {
+    color: #A3906D;
+}
+
+html {
+    font-family: Menlo, 'Panic Sans', monospace;
+}
+
+body {
+  background-color: #FFFBF5;
+  color: #2A2111;
+  margin-top: 0px;
+}
+
+a.kr:link    { text-decoration:none; color: #A3906D; }
+a.kr:visited { text-decoration:none; color: #A3906D; }
+a.kr:hover   { text-decoration:none; color: #956C1F; }
+a.kr:active  { text-decoration:none; color: #A3906D; }
+
+.kr th {
+    padding: 0.2em 1em 0.2em 1em;
+    color: #2A2111;
+    text-align: left;
+}
+
+.grid_top {
+    margin-top: 0px;
+    border-top: 6px #956C1F solid;
+}
+
+.kr--nav {
+  font-size: 1.2em;
+  text-align: center;
+}

@@ -7,3 +7,5 @@ gem 'sqlite3'
 group :test, :development do
   gem 'kracker', :path => '../..'
 end
+
+

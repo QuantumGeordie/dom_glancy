@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+  <%= stylesheet_link_tag "noramlize.css", :media => "all" %>
+  <%= stylesheet_link_tag "720_grid.css", :media => "screen and (min-width: 720px)" %>
+  <%= stylesheet_link_tag "986_grid.css", :media => "screen and (min-width: 986px)" %>
+  <%= stylesheet_link_tag "1236_grid.css", :media => "screen and (min-width: 1236px)" %>
+
+  <%= stylesheet_link_tag "kracker", :media => "all" %>
+
+  <%= javascript_include_tag "application.js" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="grid grid_top">
+    <div class="row">
+      <h1>Kracker</h1>
+    </div>
+    <div class="row">
+      <h2 class="caramel"><%= @parent_application_name %> {<%= @kracker_gem_version %>}</h2>
+    </div>
+    <%= render :partial => 'shared/nav' %>
+    <div class="row">
+      just a <%= link_to 'bunch', '#', :class => 'kr' %> of text.
+    </div>
+    <div class="row">
+      <%= yield %>
+    </div>
+  </div>
+</body>
+</html>
