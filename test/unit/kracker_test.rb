@@ -58,6 +58,9 @@ class KrackerTest < Kracker::KrackerTestCase
 
     assert_match blessing_copy_string, mapping_results[1], 'blessing copy string should be in the error message'
 
+    files_in_diff_location = Dir[File.join(Kracker.diff_file_location, '*')]
+    assert_equal 4, files_in_diff_location.count, 'the number of files in the diff location after a failure.'
+
     `#{blessing_copy_string}`
 
     @kracker_object.stubs(:perform_mapping_operation).returns(current_data)

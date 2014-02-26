@@ -22,7 +22,7 @@ module PageObjects
     end
 
     def clear_results!
-      node.find_link('clear results').click
+      node.find_link('clear').click
       PageObjects::Kracker::IndexPage.new
     end
 

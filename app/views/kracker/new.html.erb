@@ -1,3 +1,15 @@
-NEW MASTERS!!
+<div class="row">
+  <p>Files in the Screenshot directory that do not have a corresponding master file in the expected file location. Probably means that they go with a new test.</p>
+</div>
 
-SOON!!
+<div class="row">
+  <table class='kr kr--artifacts'>
+    <% @extra_files.each do |f| %>
+      <tr>
+        <td><%= f %></td>
+        <td><%= link_to 'make master', "make_master/#{f}", :class => 'kr' %></td>
+        <td><%= link_to 'delete', "delete_current/#{f}", :class => 'kr' %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

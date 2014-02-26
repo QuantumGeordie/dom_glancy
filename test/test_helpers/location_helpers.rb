@@ -19,9 +19,10 @@ module Kracker
       end
 
       def delete_contents_from_kracker_locations
-        Dir[File.join(Kracker.master_file_location, "*.rb")].each { |file| FileUtils.rm_rf file }
-        Dir[File.join(Kracker.current_file_location, "*.rb")].each { |file| FileUtils.rm_rf file }
-        Dir[File.join(Kracker.diff_file_location, "*.rb")].each { |file| FileUtils.rm_rf file }
+        Dir[File.join(Kracker.master_file_location, "*.yaml")].each { |file| FileUtils.rm_rf file }
+        Dir[File.join(Kracker.current_file_location, "*.yaml")].each { |file| FileUtils.rm_rf file }
+        Dir[File.join(Kracker.diff_file_location, "*.html")].each { |file| FileUtils.rm_rf file }
+        Dir[File.join(Kracker.diff_file_location, "*.yaml")].each { |file| FileUtils.rm_rf file }
       end
     end
   end

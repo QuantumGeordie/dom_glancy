@@ -15,8 +15,8 @@ module Kracker
     result, msg, master_data = read_map_file(Kracker.master_filename(test_root))
     return [result, msg]  unless result
 
-    analysis_data = analyze(master_data, current_data)
-    analysis_data[:test_root] = test_root
+    analysis_data = analyze(master_data, current_data, test_root)
+
     msg = make_analysis_failure_report(analysis_data)
     result = analysis_data[:same]
 

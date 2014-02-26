@@ -1,1 +1,16 @@
-ARTIFACTS, YO!
+<div class="row">
+  <h1>TeamCity Artifacts</h1>
+  <p>assume downloads from TeamCity will end up in ~/Downloads</p>
+
+  <p><strong>** Can't unzip yet. **</strong></p>
+  <table class='kr kr--artifacts'>
+    <% @artifacts.each do |artifact| %>
+      <tr>
+        <% a = artifact.gsub('.', '^') %>
+        <th><%= artifact %></th>
+        <td>unzip</td>
+        <td><%= link_to 'delete', "artifacts_delete/#{a}", :class => 'kr' %></td>
+      </tr>
+    <% end -%>
+  </table>
+</div>

@@ -12,7 +12,6 @@ class AnalysisTest < Kracker::KrackerTestCase
     assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
     assert analysis[:same], 'results of data analysis.same'
-
   end
 
   def test_one_id_different

@@ -1,0 +1,35 @@
+<div id="<%= finder_id %>">
+  <% if elements.length > 0 %>
+    <table class='kr--dom'>
+      <thead>
+        <tr>
+          <th>tag</th>
+          <th>id</th>
+          <th>class(s)</th>
+          <th>top</th>
+          <th>left</th>
+          <th>width</th>
+          <th>height</th>
+          <th>visible</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% reset_cycle %>
+        <% elements.each do |element| %>
+          <tr onclick="highlightElement(<%= element[:js_id] %>);" class="<%= cycle("kr-dom_row_odd", "kr-dom_row_even") %>">
+            <td><%= element['tag'] %></td>
+            <td><%= element['id'] %></td>
+            <td><%= element['class'] %></td>
+            <td><%= element['top'] %></td>
+            <td><%= element['left'] %></td>
+            <td><%= element['width'] %></td>
+            <td><%= element['height'] %></td>
+            <td><%= element['visible'] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>no elements found.</p>
+  <% end %>
+</div>
