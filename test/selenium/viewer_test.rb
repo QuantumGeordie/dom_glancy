@@ -17,7 +17,7 @@ class ViewerTest < Kracker::SeleniumTestCase
     assert page.has_content?('TeamCity Artifacts'), 'artifacts page needs some content.'
 
     about_page = artifacts_page.navigation.about!
-    assert page.has_content?('Add this line to your application’s Gemfile:'), 'about page line from README.md'
+    assert page.has_content?('Add this line to your'), 'about page line from README.md'
 
     index_page = about_page.navigation.home!
   end
