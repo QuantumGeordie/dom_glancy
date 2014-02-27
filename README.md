@@ -2,6 +2,10 @@
 
 DOM element comparison
 
+## Travis-ci.org
+
+[![Build Status](https://travis-ci.org/QuantumGeordie/kracker.png)](https://travis-ci.org/QuantumGeordie/kracker)
+
 ## Installation
 
 Add this line to your application's Gemfile:
