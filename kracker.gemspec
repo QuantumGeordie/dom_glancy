@@ -22,5 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
   spec.add_dependency(%q<kramdown>, ["~> 1.1.0"])
+  spec.add_dependency 'capybara'
 
 end
