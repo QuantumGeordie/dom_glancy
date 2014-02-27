@@ -1,4 +1,6 @@
 class KrackerController < KrackerApplicationController
+  layout 'kracker'
+
   require 'kramdown'
 
   def index

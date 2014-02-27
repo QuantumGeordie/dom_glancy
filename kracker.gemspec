@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["george.speake@gmail.com"]
   spec.description   = %q{DOM Mapping}
   spec.summary       = %q{Map the page DOM and get some stats on it compared to a known default map.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/QuantumGeordie/kracker"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

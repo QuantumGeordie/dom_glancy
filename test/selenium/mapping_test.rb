@@ -78,12 +78,23 @@ class MappingTest < Kracker::SeleniumTestCase
 
   end
 
+  def test_non_kracker_page
+    local_page = PageObjects::Kracker::LocalIndexPage.visit
+
+    map_current_page_and_save_as_master('test_page')
+
+    same, msg = page_map_same?('test_page')
+
+    assert same, msg
+  end
+
 
   private
 
   def map_current_page_and_save_as_master(test_root)
-    js = "return kracker.treeUp();"
-    map_data = page.driver.browser.execute_script(js)
+    #js = "return kracker.treeUp();"
+    #map_data = page.driver.browser.execute_script(js)
+    map_data = perform_mapping_operation
     File.open(Kracker.master_filename(test_root), 'w') { |file| file.write(map_data.to_yaml) }
   end
 

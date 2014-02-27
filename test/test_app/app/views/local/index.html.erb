@@ -1,0 +1,45 @@
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>phone</th>
+      <th>address</th>
+      <th>member?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% 5.times do |i| %>
+      <tr>
+        <td><%= "Person #{i}" %></td>
+        <td><%= "555-1#{i}1#{i}" %></td>
+        <td><%= "#{i}#{i}#{i}#{i} Main St." %></td>
+        <td><%= i % 2 == 0 ? 'yes' : 'no' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<h1><%= @data %></h1>
+<%= form_for '#' do |f| %>
+  <%= f.label :first_name %>:
+  <%= f.text_field :first_name %>
+  <br/>
+  <%= f.label :last_name %>:
+  <%= f.text_field :last_name %>
+  <br/>
+  <%= f.label :comments %>:
+  <%= f.text_area :comments %>
+  <br/>
+  <%= f.label :comment_type %>:
+  <br/>
+  <%= f.label :car %><%= f.radio_button :comment_type, 'car', :checked => true %>
+  <%= f.label :truck %><%= f.radio_button :comment_type, 'truck' %>
+  <%= f.label :bike %><%= f.radio_button :comment_type, 'bike' %>
+  <br/>
+  <%= f.submit%>
+<% end %>
+
+<div class="big_text">
+  <p>Hashtag art party trust fund, twee Terry Richardson direct trade mlkshk cornhole pickled Bushwick cardigan kale chips butcher. Polaroid chillwave direct trade, squid American Apparel literally semiotics 90's High Life twee ethical vinyl Odd Future Bushwick. Chillwave scenester authentic, try-hard Neutra pug wayfarers cornhole. Chambray next level wayfarers, ethical mixtape chillwave Etsy pour-over Cosby sweater. Ennui bespoke Echo Park umami banjo, Pinterest gastropub retro paleo next level. Tonx Schlitz stumptown Intelligentsia small batch, pickled roof party literally synth bitters irony. Wayfarers tousled chambray farm-to-table fanny pack, street art Thundercats cornhole fap pickled.</p>
+  <p>Do you need some dummy text? *sigh* Of course you do.</p>
+  <p>I bet you still use Helvetica too…</p>
+</div>

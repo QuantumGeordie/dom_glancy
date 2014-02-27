@@ -1,0 +1,25 @@
+body {
+    background-color: #c0c0c0;
+    color: #ffff00;
+}
+
+table {
+    margin: auto;
+    padding: 20px;
+    color: #ff9933;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    border: 1px #ff0000 solid;
+}
+
+td {
+    padding: 0 10px 0 20px;
+    text-align: center;
+}
+
+.big_text {
+    width: 100%;
+    max-width: 600px;
+    float: right;
+    font-size: 1.5em;
+    font-family: monospace, arial, helvetica, sans-serif;
+}
