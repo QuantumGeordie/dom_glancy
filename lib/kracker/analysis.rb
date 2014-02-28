@@ -12,6 +12,14 @@ module Kracker
 
     changed_element_pairs = []
     if set_master_not_current.count > 0 || set_current_not_master.count > 0
+
+      ok_pairs = pairs_that_are_close_enough(set_current_not_master, set_master_not_current)
+
+      ok_pairs.each do |item1, item2|
+        set_current_not_master.delete(item1)
+        set_master_not_current.delete(item2)
+      end
+
       changed_element_pairs = get_set_of_same_but_different(set_current_not_master, set_master_not_current)
 
       changed_element_pairs.each do |item1, item2|
@@ -87,6 +95,20 @@ module Kracker
       end
     end
     same_but_different_pairs
+  end
+
+  def pairs_that_are_close_enough(set1, set2)
+    ok_pairs = []
+    set1.each do |item1|
+      element1 = DOMElement.new(item1)
+      set2.each do |item2|
+        element2 = DOMElement.new(item2)
+        if element1.same_element?(element2) && element1.close_enough?(element2)
+          ok_pairs << [item1, item2]
+        end
+      end
+    end
+    ok_pairs
   end
 
   def make_analysis_failure_report(analysis_data)

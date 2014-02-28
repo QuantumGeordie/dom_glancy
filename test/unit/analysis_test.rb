@@ -41,7 +41,7 @@ class AnalysisTest < Kracker::KrackerTestCase
   def test_two_changed
     master_data = array_of_elements
     current_data = array_of_elements
-    current_data[0]['height'] = current_data[0]['height'] + 13
+    current_data[0]['height'] = current_data[0]['height'] + 16
     current_data[1]['width'] = current_data[1]['width'] + 25
 
     analysis = analyze(master_data, current_data)
@@ -71,7 +71,7 @@ class AnalysisTest < Kracker::KrackerTestCase
     master_data = array_of_elements
     current_data = array_of_elements
 
-    current_data[0]['height'] = current_data[0]['height'] + 13   ## the one changed (by more than similarity factor)
+    current_data[0]['height'] = current_data[0]['height'] + 23   ## the one changed (by more than similarity factor)
     current_data[1]['height'] = current_data[1]['height'] + 3    ## the one changed (by less than similarity factor and therefor not counted)
     current_data.delete_at(5)                                    ## the one missing
     current_data << single_element_hash                          ## the one added
@@ -82,6 +82,17 @@ class AnalysisTest < Kracker::KrackerTestCase
     assert_equal 1, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
     assert_equal 1, analysis[:changed_element_pairs].count, 'changed element pairs'
     refute analysis[:same], 'results of data analysis.same'
+  end
+
+  def test_huge_list_of_similarly_named_elements
+    master_data  = travis_local_generated_master
+    current_data = travis_generated_current
+
+    analysis = analyze(master_data, current_data)
+    assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    assert_equal 0, analysis[:changed_element_pairs].count, 'changed element pairs'
+    assert analysis[:same], 'results of data analysis.same'
   end
 
 end

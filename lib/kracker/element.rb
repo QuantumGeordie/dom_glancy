@@ -25,7 +25,7 @@ module Kracker
       @id         = h[:id]         || h['id']
       @style      = h[:style]      || h['style']
       @visible    = h[:visible]    || h['visible']
-      @similarity = h[:similarity] || h['similarity'] || 10
+      @similarity = h[:similarity] || h['similarity'] || 15
     end
 
     def same_element?(anOther)
