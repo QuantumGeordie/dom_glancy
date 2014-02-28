@@ -69,7 +69,7 @@ class MappingTest < Kracker::SeleniumTestCase
 
     assert_equal 0, show_page.not_master.count, 'elements listed as not in master'
     assert_equal 8, show_page.not_current.count, 'elements listed as not in current'
-    assert_equal 6, show_page.changed.count, 'elements listed as changed'
+    assert_equal 5, show_page.changed.count, 'elements listed as changed'
 
     assert_artifacts_on_difference('kracker_index')
 
@@ -88,12 +88,9 @@ class MappingTest < Kracker::SeleniumTestCase
     assert same, msg
   end
 
-
   private
 
   def map_current_page_and_save_as_master(test_root)
-    #js = "return kracker.treeUp();"
-    #map_data = page.driver.browser.execute_script(js)
     map_data = perform_mapping_operation
     File.open(Kracker.master_filename(test_root), 'w') { |file| file.write(map_data.to_yaml) }
   end

@@ -22,6 +22,8 @@ module KrackerApp
     # Configure cookies
     config.secret_token = (('a'..'z').to_a * 2).join
     config.session_store :cookie_store
+
+    I18n.enforce_available_locales = false
   end
 end
 

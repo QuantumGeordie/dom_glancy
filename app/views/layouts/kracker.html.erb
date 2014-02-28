@@ -15,16 +15,14 @@
 </head>
 <body>
   <div class="grid grid_top">
-    <nav>
-      <div class="row">
-        <h1>Kracker</h1>
-      </div>
-      <div class="row">
-        <h2 class="caramel"><%= @parent_application_name %> {<span id="js-kr--gem_rev"><%= @kracker_gem_version %></span>}</h2>
-      </div>
+    <div class="row">
+      <h1>Kracker</h1>
+    </div>
+    <div class="row">
+      <h2 class="caramel"><%= @parent_application_name %> {<span id="js-kr--gem_rev"><%= @kracker_gem_version %></span>}</h2>
+    </div>
 
-      <%= render :partial => 'shared/nav' %>
-    </nav>
+    <%= render :partial => 'shared/kracker_nav' %>
 
     <div class="row">
       <%= yield %>
