@@ -95,4 +95,17 @@ class AnalysisTest < Kracker::KrackerTestCase
     assert analysis[:same], 'results of data analysis.same'
   end
 
+  def test_huge_another_list_of_similarly_named_elements
+    master_data  = travis_local_generated_master_2
+    current_data = travis_generated_current_2
+
+    analysis = analyze(master_data, current_data)
+
+    ## real difference that was found on travis with the INPUT tags being different styles/sizes if not css-styled
+    assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    assert_equal 1, analysis[:changed_element_pairs].count, 'changed element pairs'
+    refute analysis[:same], 'results of data analysis.same'
+  end
+
 end
