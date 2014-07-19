@@ -10,7 +10,7 @@ gem 'minitest-reporters'
 gem 'awesome_print'
 gem 'mocha'
 
-gem 'selenium-webdriver', '2.37.0'
+gem 'selenium-webdriver', '2.42.0'
 gem 'capybara', '2.2.1'
 gem 'ae_page_objects', '1.0.0'
 
