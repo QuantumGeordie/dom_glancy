@@ -50,6 +50,10 @@ module Kracker
         end
       end
 
+      def same?
+        @noncompliant_pixels.count == 0
+      end
+
       private
 
       def antialiased?(data, src_x, src_y)

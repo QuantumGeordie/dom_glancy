@@ -15,7 +15,28 @@ class ZookaTest < Kracker::SeleniumTestCase
     FileUtils.rm_rf @filename_2
   end
 
-  def test_zooka
+  def test_zooka__pass
+    index_page = visit_index
+
+    index_page.navigation.config!
+
+    page.driver.save_screenshot(@filename_1)
+    page.driver.save_screenshot(@filename_2)
+
+    image_1 = ChunkyPNG::Image.from_file(@filename_1)
+    image_2 = ChunkyPNG::Image.from_file(@filename_2)
+
+    analyzer = Kracker::Zooka::Analyzer.new(image_1, image_2)
+    analyzer.analyze
+    not_compliant = analyzer.noncompliant_pixels
+
+    expected = 0
+
+    assert analyzer.same?, 'images should be found to be the same'
+    assert_equal expected, not_compliant.count
+  end
+
+  def test_zooka__fail
     index_page = visit_index
 
     index_page.navigation.config!
@@ -30,10 +51,12 @@ class ZookaTest < Kracker::SeleniumTestCase
 
     analyzer = Kracker::Zooka::Analyzer.new(image_1, image_2)
     analyzer.analyze
-    # diff_image = analyzer.result
-    # diff_image.save('results.png')
     not_compliant = analyzer.noncompliant_pixels
-    assert_equal 34400, not_compliant.count
+
+    expected = ENV['TRAVIS'] ? 30400 : 34400
+
+    refute analyzer.same?, 'images should be found to be different'
+    assert_equal expected, not_compliant.count
   end
 
 end
