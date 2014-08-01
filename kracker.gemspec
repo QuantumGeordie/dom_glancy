@@ -23,5 +23,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency(%q<kramdown>, ["~> 1.1.0"])
   spec.add_dependency 'capybara'
+  spec.add_dependency 'chunky_png'
 
 end

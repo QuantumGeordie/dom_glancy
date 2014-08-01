@@ -31,8 +31,10 @@ Dir[test_objects_location].each { |f| require f }
 test_helper_location = File.expand_path('../test_helpers/**/*.rb', __FILE__)
 Dir[test_helper_location].each { |f| require f }
 
+
 module Kracker
   class KrackerTestCase < Minitest::Test
+
     include Kracker
     include Kracker::TestObjects
     include Kracker::TestHelpers::Location
