@@ -26,7 +26,7 @@ class ZookaTest < Kracker::SeleniumTestCase
     image_1 = ChunkyPNG::Image.from_file(@filename_1)
     image_2 = ChunkyPNG::Image.from_file(@filename_2)
 
-    analyzer = Kracker::Zooka::Analyzer.new(image_1, image_2)
+    analyzer = Kracker::Zooka::Analyzer.new({:image_1 => image_1, :image_2 => image_2})
     analyzer.analyze
     not_compliant = analyzer.noncompliant_pixels
 
@@ -49,7 +49,7 @@ class ZookaTest < Kracker::SeleniumTestCase
     image_1 = ChunkyPNG::Image.from_file(@filename_1)
     image_2 = ChunkyPNG::Image.from_file(@filename_2)
 
-    analyzer = Kracker::Zooka::Analyzer.new(image_1, image_2)
+    analyzer = Kracker::Zooka::Analyzer.new({:image_1 => image_1, :image_2 => image_2})
     analyzer.analyze
     not_compliant = analyzer.noncompliant_pixels
 

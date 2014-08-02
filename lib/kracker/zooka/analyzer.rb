@@ -2,27 +2,41 @@ module Kracker
   module Zooka
     class Analyzer
       attr_accessor :tolerance, :ignore_antialiasing, :ignore_colors
-      attr_accessor :data_1, :data_2
+      attr_accessor :image_1, :image_2
       attr_reader :result
       attr_reader :noncompliant_pixels
 
-      def initialize(data_1, data_2)
+      def initialize(options = {})
         @tolerance = Tolerance.new
         @ignore_antialiasing = false
         @ignore_colors = false
-        @data_1 = data_1
-        @data_2 = data_2
         @noncompliant_pixels = []
+
+        if options.has_key?(:image_1)
+          @image_1 = options[:image_1]
+        elsif options.has_key?(:filename_1)
+          @image_1 = ChunkyPNG::Image.from_file(options[:filename_1])
+        else
+          @image_1 = nil
+        end
+
+        if options.has_key?(:image_2)
+          @image_2 = options[:image_2]
+        elsif options.has_key?(:filename_2)
+          @image_2 = ChunkyPNG::Image.from_file(options[:filename_2])
+        else
+          @image_2 = nil
+        end
       end
 
       def analyze
         @noncompliant_pixels = []
-        @result = ChunkyPNG::Image.new(@data_1.width, @data_1.height, ChunkyPNG::Color::TRANSPARENT)
+        @result = ChunkyPNG::Image.new(@image_1.width, @image_1.height, ChunkyPNG::Color::TRANSPARENT)
 
-        @data_1.width.times do |x|
-          @data_1.height.times do |y|
-            pix_1 = Pixel.new(@data_1[x, y])
-            pix_2 = Pixel.new(@data_2[x, y])
+        @image_1.width.times do |x|
+          @image_1.height.times do |y|
+            pix_1 = Pixel.new(@image_1[x, y])
+            pix_2 = Pixel.new(@image_2[x, y])
 
              if @ignore_colors
               if brightness_similar?(pix_1, pix_2)
@@ -34,7 +48,7 @@ module Kracker
             else
               if rgb_similar?(pix_1, pix_2)
                 @result[x, y] = ChunkyPNG::Color::rgba(pix_1.red, pix_1.green, pix_1.blue, pix_1.alpha / 10)
-              elsif @ignore_antialiasing && (antialiased?(@data_1, x, y)  || antialiased?(@data_2, x, y))
+              elsif @ignore_antialiasing && (antialiased?(@image_1, x, y)  || antialiased?(@image_2, x, y))
                 if brightness_similar?(pix_1, pix_2)
                   @result[x, y] = ChunkyPNG::Color::rgba(pix_1.red, pix_1.green, pix_1.blue, pix_1.alpha / 10)
                 else

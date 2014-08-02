@@ -3,10 +3,44 @@ require_relative '../test_helper'
 class AnalyzerTest < Kracker::KrackerTestCase
   require 'chunky_png'
 
-  def test_similar_color
-    image = ChunkyPNG::Image.new(10, 10)
+  def test_analyzer_initialization
+    prep_locations_for_test
+    filename_1 = make_zooka_filename('zooka_1')
+    filename_2 = make_zooka_filename('zooka_2')
+    img1 = ChunkyPNG::Image.new(10, 10, ChunkyPNG::Color::rgb(0, 0, 255))
+    img2 = img1.dup
+    img1.save(filename_1)
+    img2.save(filename_2)
 
-    analyzer = Kracker::Zooka::Analyzer.new(image, image)
+    analyzer = Kracker::Zooka::Analyzer.new
+    assert analyzer.is_a?(Kracker::Zooka::Analyzer)
+    assert_nil analyzer.image_1
+    assert_nil analyzer.image_2
+    analyzer.image_1 = img1
+    analyzer.image_2 = img2
+    assert analyzer.image_1.is_a?(ChunkyPNG::Image)
+    assert analyzer.image_2.is_a?(ChunkyPNG::Image)
+
+    analyzer = Kracker::Zooka::Analyzer.new({ :image_1 => img1, :image_2 => img2 })
+    assert analyzer.is_a?(Kracker::Zooka::Analyzer)
+    assert analyzer.image_1.is_a?(ChunkyPNG::Image)
+    assert analyzer.image_2.is_a?(ChunkyPNG::Image)
+
+    analyzer = Kracker::Zooka::Analyzer.new({ :filename_1 => filename_1, :filename_2 => filename_2 })
+    assert analyzer.is_a?(Kracker::Zooka::Analyzer)
+    assert analyzer.image_1.is_a?(ChunkyPNG::Image)
+    assert analyzer.image_2.is_a?(ChunkyPNG::Image)
+
+    analyzer = Kracker::Zooka::Analyzer.new({ :image_1 => img1, :filename_2 => filename_2 })
+    assert analyzer.is_a?(Kracker::Zooka::Analyzer)
+    assert analyzer.image_1.is_a?(ChunkyPNG::Image)
+    assert analyzer.image_2.is_a?(ChunkyPNG::Image)
+
+    remove_old_zooka_files
+  end
+
+  def test_similar_color
+    analyzer = Kracker::Zooka::Analyzer.new
 
     assert analyzer.send(:color_similar?, 1, 1, 'red')
     assert analyzer.send(:color_similar?, 1, 16, 'red')
@@ -21,9 +55,7 @@ class AnalyzerTest < Kracker::KrackerTestCase
   end
 
   def test_similar_brightness
-    image = ChunkyPNG::Image.new(10, 10)
-
-    analyzer = Kracker::Zooka::Analyzer.new(image, image)
+    analyzer = Kracker::Zooka::Analyzer.new
     analyzer.tolerance.red = 2
 
     pixel1 = Kracker::Zooka::Pixel.new(0)
@@ -48,8 +80,10 @@ class AnalyzerTest < Kracker::KrackerTestCase
     hue_data = [
               [   9, 135, 209, 0.5616 ],  #r:9   g:135 b:209 h:0.5616666666666666  - blue is greatest
               [ 106, 186, 221, 0.5507 ],  #r:106 g:186 b:221 h:0.5507246376811594  - blue is greatest
-              [ 225, 254, 250, 0.4770 ],  #r:225 g:254 b:250 h:0.47701149425287354 - green is greatest
-              [ 225, 254, 250, 0.4770 ]   #r:225 g:254 b:250 h:0.47701149425287354 - green is greatest
+              [ 106, 221, 186, 0.4492 ],  #r:106 g:221 b:186 h:0.4492753623188406  - green is greatest
+              [ 225, 254, 100, 0.1980 ],  #r:225 g:254 b:100 h:0.19805194805194806 - green is greatest
+              [ 21,  16,  13,  0.0625 ],  #r:21  g:16  b:13  h:0.0625              - red is greatest
+              [ 17,  16,  11,  0.1388 ]   #r:17  g:16  b:11  h:0.1388888888888889  - red is greatest
           ]
 
     hue_data.each do |hue_data_set|
@@ -75,7 +109,7 @@ class AnalyzerTest < Kracker::KrackerTestCase
     img1.save(filename_1)
     img2.save(filename_2)
 
-    analyzer = Kracker::Zooka::Analyzer.new(img1, img2)
+    analyzer = Kracker::Zooka::Analyzer.new({ :image_1 => img1, :image_2 => img2 })
     analyzer.analyze
     result_image = analyzer.result
     pixels = analyzer.noncompliant_pixels
