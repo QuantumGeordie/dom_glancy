@@ -48,7 +48,7 @@ module Kracker
     output_hash
   end
 
-  def make_svg(set_master_not_current, set_current_not_master)
+  def make_svg(set_master_not_current, set_current_not_master, set_changed_master)
     js_id = 0
     set_master_not_current.each do |item|
       item[:js_id] = js_id
@@ -58,9 +58,14 @@ module Kracker
       item[:js_id] = js_id
       js_id += 1
     end
+    set_changed_master.each do |item|
+      item[:js_id] = js_id
+      js_id += 1
+    end
 
     rectangles = set_current_not_master.map  { |item| item.merge(format__not_in_master) }
     rectangles << set_master_not_current.map { |item| item.merge(format__not_in_current) }
+    rectangles << set_changed_master.map     { |item| item.merge(format__same_but_different) }
     rectangles.flatten!
 
     generate_svg(rectangles)
@@ -68,7 +73,7 @@ module Kracker
 
   def create_diff_file(set_current_not_master, set_master_not_current, set_changed_master, test_root)
     filename = Kracker.diff_filename(test_root)
-    svg = make_svg(set_current_not_master, set_master_not_current)
+    svg = make_svg(set_current_not_master, set_master_not_current, set_changed_master)
     File.open(filename, 'w') { |file| file.write(svg) }
     save_set_info(test_root, 'current_not_master', set_current_not_master)
     save_set_info(test_root, 'master_not_current', set_master_not_current)

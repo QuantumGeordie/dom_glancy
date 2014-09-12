@@ -8,11 +8,13 @@ class ZookaTest < Kracker::SeleniumTestCase
 
     FileUtils.rm_rf @filename_1
     FileUtils.rm_rf @filename_2
+    super
   end
 
   def teardown
     FileUtils.rm_rf @filename_1
     FileUtils.rm_rf @filename_2
+    super
   end
 
   def test_zooka__pass
@@ -53,7 +55,7 @@ class ZookaTest < Kracker::SeleniumTestCase
     analyzer.analyze
     not_compliant = analyzer.noncompliant_pixels
 
-    expected = ENV['TRAVIS'] ? 30400 : 34400
+    expected = ENV['TRAVIS'] ? 30400 : 26400
 
     refute analyzer.same?, 'images should be found to be different'
     assert_equal expected, not_compliant.count
