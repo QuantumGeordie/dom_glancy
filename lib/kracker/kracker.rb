@@ -2,6 +2,7 @@ module Kracker
   require 'yaml'
 
   def page_map_same?(test_root)
+    purge_old_files_before_test(test_root)
 
     result, msg = map_current_file(test_root)
     return [result, msg]  unless result
@@ -19,6 +20,8 @@ module Kracker
 
     msg = make_analysis_failure_report(analysis_data)
     result = analysis_data[:same]
+
+    File.delete Kracker.current_filename(test_root) if result
 
     [result, msg]
   end
@@ -109,4 +112,10 @@ module Kracker
     msg.join("\n")
   end
 
+  def purge_old_files_before_test(test_root)
+    File.delete Kracker.current_filename(test_root) if File.exist?(Kracker.current_filename(test_root))
+
+    filename_pattern = File.join(Kracker.diff_file_location, "#{test_root}__*__diff.yaml")
+    Dir[filename_pattern].each { |file| file.delete(file) if File.exist?(file) }
+  end
 end

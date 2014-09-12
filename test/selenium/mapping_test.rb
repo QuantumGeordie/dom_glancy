@@ -10,6 +10,7 @@ class MappingTest < Kracker::SeleniumTestCase
     same, msg = page_map_same?('kracker_index')
 
     assert same, msg
+    assert_artifacts_on_same('kracker_index')
   end
 
   def test_mapping__no_master
@@ -19,7 +20,7 @@ class MappingTest < Kracker::SeleniumTestCase
     assert_match 'Master file does not exist', msg, 'the missing master error message'
   end
 
-  def test_full_mapping__one_added__bless
+  def test_full_mapping__one_added__clear
     visit_index
 
     map_current_page_and_save_as_master('kracker_index')
@@ -75,10 +76,9 @@ class MappingTest < Kracker::SeleniumTestCase
 
     index_page = show_page.bless!
     assert_equal 0, index_page.files.count, 'number of difference files'
-
   end
 
-  def test_non_kracker_page
+  def test_non_kracker_page__pass
     local_page = PageObjects::Kracker::LocalIndexPage.visit
 
     map_current_page_and_save_as_master('test_page')
@@ -86,6 +86,26 @@ class MappingTest < Kracker::SeleniumTestCase
     same, msg = page_map_same?('test_page')
 
     assert same, msg
+
+    assert_artifacts_on_same 'test_page'
+  end
+
+  def test_non_kracker_page__fail__size_change
+    local_page = PageObjects::Kracker::LocalIndexPage.visit
+
+    map_current_page_and_save_as_master('test_page')
+
+    starting_dimensions = get_current_browser_dimensions
+    w = starting_dimensions.width + 100
+    h = starting_dimensions.height
+
+    resize_browser(w, h)
+
+    same, msg = page_map_same?('test_page')
+
+    refute same, msg
+
+    assert_artifacts_on_difference 'test_page'
   end
 
   private
