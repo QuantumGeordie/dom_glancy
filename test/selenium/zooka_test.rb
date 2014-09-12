@@ -55,7 +55,7 @@ class ZookaTest < Kracker::SeleniumTestCase
     analyzer.analyze
     not_compliant = analyzer.noncompliant_pixels
 
-    expected = ENV['TRAVIS'] ? 30400 : 26400
+    expected = ENV['TRAVIS'] ? 27200 : 26400
 
     refute analyzer.same?, 'images should be found to be different'
     assert_equal expected, not_compliant.count
