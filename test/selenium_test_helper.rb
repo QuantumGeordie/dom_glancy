@@ -50,10 +50,21 @@ module Kracker
 
     def setup
       delete_contents_from_kracker_locations
+      initialize_browser_size_for_test
     end
 
     def teardown
       delete_contents_from_kracker_locations
+    end
+
+    def initialize_browser_size_for_test
+      @browser_dimensions = ENV['BROWSER_SIZE'] || '960x1000'
+      if @browser_dimensions
+        @starting_dimensions = get_current_browser_dimensions
+        w = @browser_dimensions.split('x')[0]
+        h = @browser_dimensions.split('x')[1]
+        resize_browser(w, h)
+      end
     end
 
     def visit_index
@@ -86,6 +97,14 @@ module Kracker
       page.driver.browser.execute_script(js)
     end
 
+    def resize_browser(width, height)
+      page.driver.browser.manage.window.resize_to(width.to_i, height.to_i)
+    end
+
+    def get_current_browser_dimensions
+      page.driver.browser.manage.window.size
+    end
+
     def assert_artifacts_on_difference(test_root)
       filename = Kracker.diff_filename(test_root)
       assert File.exists?(filename), "Diff file should exist: #{filename}"
@@ -98,6 +117,32 @@ module Kracker
 
       filename = File.join(Kracker.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
       assert File.exists?(filename), "Master, not current, file should exist: #{filename}"
+
+      filename = Kracker.master_filename(test_root)
+      assert File.exists?(filename), "Master file should exist: #{filename}"
+
+      filename = Kracker.current_filename(test_root)
+      assert File.exists?(filename), "Current file should exist: #{filename}"
+    end
+
+    def assert_artifacts_on_same(test_root)
+      filename = Kracker.diff_filename(test_root)
+      refute File.exists?(filename), "No diff file should exist: #{filename}"
+
+      filename = File.join(Kracker.diff_file_location, "#{test_root}__changed_master__diff.yaml")
+      refute File.exists?(filename), "No changed master file should exist: #{filename}"
+
+      filename = File.join(Kracker.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
+      refute File.exists?(filename), "No current, not master, file should exist: #{filename}"
+
+      filename = File.join(Kracker.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
+      refute File.exists?(filename), "No master, not current, file should exist: #{filename}"
+
+      filename = Kracker.master_filename(test_root)
+      assert File.exists?(filename), "Master file should exist: #{filename}"
+
+      filename = Kracker.current_filename(test_root)
+      refute File.exists?(filename), "No current file should exist: #{filename}"
     end
 
   end
