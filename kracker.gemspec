@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'capybara'
   spec.add_dependency 'chunky_png'
 
+  spec.post_install_message = "The 'kracker' gem has been deprecated and has been replaced by 'dom_glancy'."
 end
