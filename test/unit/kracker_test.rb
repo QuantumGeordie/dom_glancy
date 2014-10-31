@@ -12,7 +12,7 @@ class DomGlancyTest < DomGlancy::DomGlancyTestCase
     delete_test_locations
   end
 
-  def test_kracker__missing_master
+  def test_dom_glancy__missing_master
     this_test_root = 'not_elbow'
     blessing_copy_string = "cp #{DomGlancy.current_filename(this_test_root)} #{DomGlancy.master_filename(this_test_root)}"
 
@@ -31,14 +31,14 @@ class DomGlancyTest < DomGlancy::DomGlancyTestCase
 
   end
 
-  def test_kracker__pass
+  def test_dom_glancy__pass
     @DomGlancy_object.stubs(:perform_mapping_operation).returns(array_of_elements_small)
     mapping_results = @DomGlancy_object.page_map_same?(@test_root)
 
     assert mapping_results[0], mapping_results[1]
   end
 
-  def test_kracker__fail_one_new_element
+  def test_dom_glancy__fail_one_new_element
     blessing_copy_string = "cp #{DomGlancy.current_filename(@test_root)} #{DomGlancy.master_filename(@test_root)}"
 
 

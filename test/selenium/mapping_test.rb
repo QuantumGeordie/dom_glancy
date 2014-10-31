@@ -5,12 +5,12 @@ class MappingTest < DomGlancy::SeleniumTestCase
   def test_full_mapping__same
     visit_index
 
-    map_current_page_and_save_as_master('kracker_index')
+    map_current_page_and_save_as_master('dom_glancy_index')
 
-    same, msg = page_map_same?('kracker_index')
+    same, msg = page_map_same?('dom_glancy_index')
 
     assert same, msg
-    assert_artifacts_on_same('kracker_index')
+    assert_artifacts_on_same('dom_glancy_index')
   end
 
   def test_mapping__no_master
@@ -23,18 +23,18 @@ class MappingTest < DomGlancy::SeleniumTestCase
   def test_full_mapping__one_added__clear
     visit_index
 
-    map_current_page_and_save_as_master('kracker_index')
+    map_current_page_and_save_as_master('dom_glancy_index')
 
     add_centered_element('Back In Black')
 
-    same, msg = page_map_same?('kracker_index')
+    same, msg = page_map_same?('dom_glancy_index')
 
     refute same, msg
 
     index_page = visit_index
 
     assert_equal 1, index_page.files.count, 'number of difference files'
-    assert_match 'kracker_index_diff.html', index_page.files.first.text, 'file name displayed'
+    assert_match 'dom_glancy_index_diff.html', index_page.files.first.text, 'file name displayed'
 
     index_page.files.first.find('a').click
     show_page = PageObjects::DomGlancy::ShowPage.new
@@ -43,7 +43,7 @@ class MappingTest < DomGlancy::SeleniumTestCase
     assert_equal 0, show_page.not_current.count, 'elements listed as not in current'
     assert_equal 0, show_page.changed.count, 'elements listed as changed'
 
-    assert_artifacts_on_difference('kracker_index')
+    assert_artifacts_on_difference('dom_glancy_index')
 
     index_page = show_page.navigation.clear_results!
     assert_equal 0, index_page.files.count, 'should be no difference files now'
@@ -52,18 +52,18 @@ class MappingTest < DomGlancy::SeleniumTestCase
   def test_full_mapping__one_missing__bless
     visit_index
 
-    map_current_page_and_save_as_master('kracker_index')
+    map_current_page_and_save_as_master('dom_glancy_index')
 
     remove_about_element
 
-    same, msg = page_map_same?('kracker_index')
+    same, msg = page_map_same?('dom_glancy_index')
 
     refute same, msg
 
     index_page = visit_index
 
     assert_equal 1, index_page.files.count, 'number of difference files'
-    assert_match 'kracker_index_diff.html', index_page.files.first.text, 'file name displayed'
+    assert_match 'dom_glancy_index_diff.html', index_page.files.first.text, 'file name displayed'
 
     index_page.files.first.find('a').click
     show_page = PageObjects::DomGlancy::ShowPage.new
@@ -72,13 +72,13 @@ class MappingTest < DomGlancy::SeleniumTestCase
     assert_equal 7, show_page.not_current.count, 'elements listed as not in current'
     assert_equal 5, show_page.changed.count, 'elements listed as changed'
 
-    assert_artifacts_on_difference('kracker_index')
+    assert_artifacts_on_difference('dom_glancy_index')
 
     index_page = show_page.bless!
     assert_equal 0, index_page.files.count, 'number of difference files'
   end
 
-  def test_non_kracker_page__pass
+  def test_non_dom_glancy_page__pass
     local_page = PageObjects::DomGlancy::LocalIndexPage.visit
 
     map_current_page_and_save_as_master('test_page')
@@ -90,7 +90,7 @@ class MappingTest < DomGlancy::SeleniumTestCase
     assert_artifacts_on_same 'test_page'
   end
 
-  def test_non_kracker_page__fail__size_change
+  def test_non_dom_glancy_page__fail__size_change
     local_page = PageObjects::DomGlancy::LocalIndexPage.visit
 
     map_current_page_and_save_as_master('test_page')

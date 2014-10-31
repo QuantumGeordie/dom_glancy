@@ -2,12 +2,12 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: kracker_test
+  database: dom_glancy_test
   pool: 5
   username: root
   password:
 development:
   adapter: sqlite3
-  database: kracker_development
+  database: dom_glancy_development
   pool: 5
   timeout: 5000

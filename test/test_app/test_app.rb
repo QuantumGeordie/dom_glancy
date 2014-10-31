@@ -1,4 +1,4 @@
-db_name = "kracker_#{Rails.env}"
+db_name = "dom_glancy_#{Rails.env}"
 
 `mysql -uroot -e "DROP DATABASE IF EXISTS #{db_name}; CREATE DATABASE IF NOT EXISTS #{db_name};"`
 

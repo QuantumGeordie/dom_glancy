@@ -1,6 +1,8 @@
-# Kracker
+# DOM Glancy
 
 DOM element comparison
+
+_you know. like taking a quick glance at the DOM, but make it sound kinda like Tom Clancy instead._
 
 ## Travis-ci.org
 
