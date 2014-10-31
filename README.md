@@ -4,7 +4,7 @@ DOM element comparison
 
 ## Travis-ci.org
 
-[![Build Status](https://travis-ci.org/QuantumGeordie/kracker.png)](https://travis-ci.org/QuantumGeordie/kracker)
+[![Build Status](https://travis-ci.org/QuantumGeordie/dom_glancy.svg?branch=master)](https://travis-ci.org/QuantumGeordie/dom_glancy)
 
 ## Installation
 
