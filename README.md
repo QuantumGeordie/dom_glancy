@@ -10,7 +10,7 @@ DOM element comparison
 
 Add this line to your application's Gemfile:
 
-    gem 'kracker'
+    gem 'dom_glancy'
 
 And then execute:
 
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install kracker
+    $ gem install dom_glancy
 
 ## Usage
 

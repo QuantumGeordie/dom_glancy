@@ -1,3 +1,3 @@
-class KrackerClassForStubbing
-  include Kracker
+class DomGlancyClassForStubbing
+  include DomGlancy
 end

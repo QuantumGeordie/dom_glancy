@@ -23,7 +23,7 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require 'mocha/setup'
 
-require File.expand_path('../../lib/kracker', __FILE__)
+require File.expand_path('../../lib/dom_glancy', __FILE__)
 
 test_objects_location = File.expand_path('../test_objects/*', __FILE__)
 Dir[test_objects_location].each { |f| require f }
@@ -32,12 +32,12 @@ test_helper_location = File.expand_path('../test_helpers/**/*.rb', __FILE__)
 Dir[test_helper_location].each { |f| require f }
 
 
-module Kracker
-  class KrackerTestCase < Minitest::Test
+module DomGlancy
+  class DomGlancyTestCase < Minitest::Test
 
-    include Kracker
-    include Kracker::TestObjects
-    include Kracker::TestHelpers::Location
+    include DomGlancy
+    include DomGlancy::TestObjects
+    include DomGlancy::TestHelpers::Location
 
   end
 end

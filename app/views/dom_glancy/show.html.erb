@@ -1,0 +1,42 @@
+<form name="bessing" action="/dom_glancy/bless" method="POST">
+  <p><input type="checkbox" name="delete_on_bless" value='true' checked>Remove difference files on blessing</p>
+  <input type="submit" value="Bless these differences">
+  <input type="hidden" name="option_1" value="<%= @test_root %>" />
+</form>
+
+<table class="kr--dom_review_table">
+  <tr>
+    <td>
+      <% contents = File.read(File.join(DomGlancy.diff_file_location, "#{@file_diff}")) %>
+      <%= raw(contents) %>
+    </td>
+    <td>
+      <h2>in current dom, not master</h2>
+      <% elements = YAML::load_file(File.join(DomGlancy.diff_file_location, @file_set_not_master)) %>
+      <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--not_master'} %>
+
+      <h2>in master dom, not current</h2>
+      <% elements = YAML::load_file(File.join(DomGlancy.diff_file_location, @file_set_not_current)) %>
+      <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--not_current'} %>
+
+      <h2>changed</h2>
+      <% elements = YAML::load_file(File.join(DomGlancy.diff_file_location, @file_set_changed)) %>
+      <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--changed'} %>
+
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  highlightElement = function(element_id) {
+    var elements = document.getElementsByTagName('rect');
+    var element = null;
+    var length = elements.length;
+
+    for (var i = 0; i < length; i++) {
+      elements[i].setAttribute("stroke-width", "1");
+    }
+    var this_element = document.getElementById(element_id);
+    this_element.setAttribute("stroke-width", "5");
+  }
+</script>

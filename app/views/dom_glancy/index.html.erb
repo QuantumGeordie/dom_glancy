@@ -1,0 +1,12 @@
+<h2>difference files</h2>
+<% if @files.length > 0 %>
+  <p>file location: <%= DomGlancy.diff_file_location %></p>
+<% else %>
+  <p>There were no differences files found.</p>
+<% end %>
+
+<ul id="kr--files" class="kr--ul">
+  <% @files.each do |file| %>
+    <li class="kr--file"><%= link_to file, "/dom_glancy/show/#{file}", :class => 'kr' %></li>
+  <% end %>
+</ul>

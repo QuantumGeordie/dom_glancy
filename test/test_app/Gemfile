@@ -5,6 +5,6 @@ gem 'json'
 gem 'sqlite3'
 
 group :test, :development do
-  gem 'kracker', :path => '../..'
+  gem 'dom_glancy', :path => '../..'
 end
 

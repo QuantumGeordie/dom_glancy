@@ -1,6 +1,6 @@
 require 'selenium_test_helper'
 
-class MappingTest < Kracker::SeleniumTestCase
+class MappingTest < DomGlancy::SeleniumTestCase
 
   def test_full_mapping__same
     visit_index
@@ -37,7 +37,7 @@ class MappingTest < Kracker::SeleniumTestCase
     assert_match 'kracker_index_diff.html', index_page.files.first.text, 'file name displayed'
 
     index_page.files.first.find('a').click
-    show_page = PageObjects::Kracker::ShowPage.new
+    show_page = PageObjects::DomGlancy::ShowPage.new
 
     assert_equal 1, show_page.not_master.count, 'elements listed as not in master'
     assert_equal 0, show_page.not_current.count, 'elements listed as not in current'
@@ -66,10 +66,10 @@ class MappingTest < Kracker::SeleniumTestCase
     assert_match 'kracker_index_diff.html', index_page.files.first.text, 'file name displayed'
 
     index_page.files.first.find('a').click
-    show_page = PageObjects::Kracker::ShowPage.new
+    show_page = PageObjects::DomGlancy::ShowPage.new
 
     assert_equal 0, show_page.not_master.count, 'elements listed as not in master'
-    assert_equal 8, show_page.not_current.count, 'elements listed as not in current'
+    assert_equal 7, show_page.not_current.count, 'elements listed as not in current'
     assert_equal 5, show_page.changed.count, 'elements listed as changed'
 
     assert_artifacts_on_difference('kracker_index')
@@ -79,7 +79,7 @@ class MappingTest < Kracker::SeleniumTestCase
   end
 
   def test_non_kracker_page__pass
-    local_page = PageObjects::Kracker::LocalIndexPage.visit
+    local_page = PageObjects::DomGlancy::LocalIndexPage.visit
 
     map_current_page_and_save_as_master('test_page')
 
@@ -91,7 +91,7 @@ class MappingTest < Kracker::SeleniumTestCase
   end
 
   def test_non_kracker_page__fail__size_change
-    local_page = PageObjects::Kracker::LocalIndexPage.visit
+    local_page = PageObjects::DomGlancy::LocalIndexPage.visit
 
     map_current_page_and_save_as_master('test_page')
 
@@ -112,7 +112,7 @@ class MappingTest < Kracker::SeleniumTestCase
 
   def map_current_page_and_save_as_master(test_root)
     map_data = perform_mapping_operation
-    File.open(Kracker.master_filename(test_root), 'w') { |file| file.write(map_data.to_yaml) }
+    File.open(DomGlancy.master_filename(test_root), 'w') { |file| file.write(map_data.to_yaml) }
   end
 
 end
