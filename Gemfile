@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in kracker.gemspec
+# Specify your gem's dependencies in dom_glancy.gemspec
 gemspec
 
 gem 'rails', '3.2.16'

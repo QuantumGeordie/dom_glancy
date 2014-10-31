@@ -16,7 +16,7 @@ rescue Bundler::BundlerError => e
 end
 
 require 'rails/all'
-require 'kracker'
+require 'dom_glancy'
 require 'test_app/test_app'
 
 require 'minitest/autorun'
@@ -40,21 +40,21 @@ Dir[test_helper_location].each { |f| require f }
 
 Capybara.default_driver = :selenium
 
-module Kracker
+module DomGlancy
   class SeleniumTestCase < Minitest::Test
-    include Kracker
-    include Kracker::TestObjects
-    include Kracker::TestHelpers::Location
+    include DomGlancy
+    include DomGlancy::TestObjects
+    include DomGlancy::TestHelpers::Location
 
     include Capybara::DSL
 
     def setup
-      delete_contents_from_kracker_locations
+      delete_contents_from_dom_glancy_locations
       initialize_browser_size_for_test
     end
 
     def teardown
-      delete_contents_from_kracker_locations
+      delete_contents_from_dom_glancy_locations
     end
 
     def initialize_browser_size_for_test
@@ -68,7 +68,7 @@ module Kracker
     end
 
     def visit_index
-      PageObjects::Kracker::IndexPage.visit
+      PageObjects::DomGlancy::IndexPage.visit
     end
 
     def remove_about_element
@@ -106,42 +106,42 @@ module Kracker
     end
 
     def assert_artifacts_on_difference(test_root)
-      filename = Kracker.diff_filename(test_root)
+      filename = DomGlancy.diff_filename(test_root)
       assert File.exists?(filename), "Diff file should exist: #{filename}"
 
-      filename = File.join(Kracker.diff_file_location, "#{test_root}__changed_master__diff.yaml")
+      filename = File.join(DomGlancy.diff_file_location, "#{test_root}__changed_master__diff.yaml")
       assert File.exists?(filename), "Changed master file should exist: #{filename}"
 
-      filename = File.join(Kracker.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
+      filename = File.join(DomGlancy.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
       assert File.exists?(filename), "Current, not master, file should exist: #{filename}"
 
-      filename = File.join(Kracker.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
+      filename = File.join(DomGlancy.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
       assert File.exists?(filename), "Master, not current, file should exist: #{filename}"
 
-      filename = Kracker.master_filename(test_root)
+      filename = DomGlancy.master_filename(test_root)
       assert File.exists?(filename), "Master file should exist: #{filename}"
 
-      filename = Kracker.current_filename(test_root)
+      filename = DomGlancy.current_filename(test_root)
       assert File.exists?(filename), "Current file should exist: #{filename}"
     end
 
     def assert_artifacts_on_same(test_root)
-      filename = Kracker.diff_filename(test_root)
+      filename = DomGlancy.diff_filename(test_root)
       refute File.exists?(filename), "No diff file should exist: #{filename}"
 
-      filename = File.join(Kracker.diff_file_location, "#{test_root}__changed_master__diff.yaml")
+      filename = File.join(DomGlancy.diff_file_location, "#{test_root}__changed_master__diff.yaml")
       refute File.exists?(filename), "No changed master file should exist: #{filename}"
 
-      filename = File.join(Kracker.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
+      filename = File.join(DomGlancy.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
       refute File.exists?(filename), "No current, not master, file should exist: #{filename}"
 
-      filename = File.join(Kracker.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
+      filename = File.join(DomGlancy.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
       refute File.exists?(filename), "No master, not current, file should exist: #{filename}"
 
-      filename = Kracker.master_filename(test_root)
+      filename = DomGlancy.master_filename(test_root)
       assert File.exists?(filename), "Master file should exist: #{filename}"
 
-      filename = Kracker.current_filename(test_root)
+      filename = DomGlancy.current_filename(test_root)
       refute File.exists?(filename), "No current file should exist: #{filename}"
     end
 

@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class AnalyzerTest < Kracker::KrackerTestCase
+class AnalyzerTest < DomGlancy::DomGlancyTestCase
   require 'chunky_png'
 
   def test_analyzer_initialization
@@ -12,8 +12,8 @@ class AnalyzerTest < Kracker::KrackerTestCase
     img1.save(filename_1)
     img2.save(filename_2)
 
-    analyzer = Kracker::Zooka::Analyzer.new
-    assert analyzer.is_a?(Kracker::Zooka::Analyzer)
+    analyzer = DomGlancy::Zooka::Analyzer.new
+    assert analyzer.is_a?(DomGlancy::Zooka::Analyzer)
     assert_nil analyzer.image_1
     assert_nil analyzer.image_2
     analyzer.image_1 = img1
@@ -21,18 +21,18 @@ class AnalyzerTest < Kracker::KrackerTestCase
     assert analyzer.image_1.is_a?(ChunkyPNG::Image)
     assert analyzer.image_2.is_a?(ChunkyPNG::Image)
 
-    analyzer = Kracker::Zooka::Analyzer.new({ :image_1 => img1, :image_2 => img2 })
-    assert analyzer.is_a?(Kracker::Zooka::Analyzer)
+    analyzer = DomGlancy::Zooka::Analyzer.new({ :image_1 => img1, :image_2 => img2 })
+    assert analyzer.is_a?(DomGlancy::Zooka::Analyzer)
     assert analyzer.image_1.is_a?(ChunkyPNG::Image)
     assert analyzer.image_2.is_a?(ChunkyPNG::Image)
 
-    analyzer = Kracker::Zooka::Analyzer.new({ :filename_1 => filename_1, :filename_2 => filename_2 })
-    assert analyzer.is_a?(Kracker::Zooka::Analyzer)
+    analyzer = DomGlancy::Zooka::Analyzer.new({ :filename_1 => filename_1, :filename_2 => filename_2 })
+    assert analyzer.is_a?(DomGlancy::Zooka::Analyzer)
     assert analyzer.image_1.is_a?(ChunkyPNG::Image)
     assert analyzer.image_2.is_a?(ChunkyPNG::Image)
 
-    analyzer = Kracker::Zooka::Analyzer.new({ :image_1 => img1, :filename_2 => filename_2 })
-    assert analyzer.is_a?(Kracker::Zooka::Analyzer)
+    analyzer = DomGlancy::Zooka::Analyzer.new({ :image_1 => img1, :filename_2 => filename_2 })
+    assert analyzer.is_a?(DomGlancy::Zooka::Analyzer)
     assert analyzer.image_1.is_a?(ChunkyPNG::Image)
     assert analyzer.image_2.is_a?(ChunkyPNG::Image)
 
@@ -40,7 +40,7 @@ class AnalyzerTest < Kracker::KrackerTestCase
   end
 
   def test_similar_color
-    analyzer = Kracker::Zooka::Analyzer.new
+    analyzer = DomGlancy::Zooka::Analyzer.new
 
     assert analyzer.send(:color_similar?, 1, 1, 'red')
     assert analyzer.send(:color_similar?, 1, 16, 'red')
@@ -55,11 +55,11 @@ class AnalyzerTest < Kracker::KrackerTestCase
   end
 
   def test_similar_brightness
-    analyzer = Kracker::Zooka::Analyzer.new
+    analyzer = DomGlancy::Zooka::Analyzer.new
     analyzer.tolerance.red = 2
 
-    pixel1 = Kracker::Zooka::Pixel.new(0)
-    pixel2 = Kracker::Zooka::Pixel.new(0)
+    pixel1 = DomGlancy::Zooka::Pixel.new(0)
+    pixel2 = DomGlancy::Zooka::Pixel.new(0)
 
     assert analyzer.send(:brightness_similar?, pixel1, pixel2)
 
@@ -87,7 +87,7 @@ class AnalyzerTest < Kracker::KrackerTestCase
           ]
 
     hue_data.each do |hue_data_set|
-      pixel1 = Kracker::Zooka::Pixel.new(ChunkyPNG::Color.rgba(hue_data_set[0], hue_data_set[1], hue_data_set[2], 128))
+      pixel1 = DomGlancy::Zooka::Pixel.new(ChunkyPNG::Color.rgba(hue_data_set[0], hue_data_set[1], hue_data_set[2], 128))
       assert_in_delta hue_data_set[3], pixel1.hue, 0.0001, "hue calcuation for r: #{hue_data_set[0]}, g: #{hue_data_set[1]}, b: #{hue_data_set[2]}"
     end
 
@@ -109,7 +109,7 @@ class AnalyzerTest < Kracker::KrackerTestCase
     img1.save(filename_1)
     img2.save(filename_2)
 
-    analyzer = Kracker::Zooka::Analyzer.new({ :image_1 => img1, :image_2 => img2 })
+    analyzer = DomGlancy::Zooka::Analyzer.new({ :image_1 => img1, :image_2 => img2 })
     analyzer.analyze
     result_image = analyzer.result
     pixels = analyzer.noncompliant_pixels
@@ -141,13 +141,13 @@ class AnalyzerTest < Kracker::KrackerTestCase
   private
 
   def make_zooka_filename(base_name)
-    Kracker.current_filename(base_name).gsub('yaml', 'png')
+    DomGlancy.current_filename(base_name).gsub('yaml', 'png')
   end
 
   def remove_old_zooka_files
-    Dir[File.join(Kracker::current_file_location, '*.png')].each { |f| FileUtils.rm_rf f }
-    Dir[File.join(Kracker::master_file_location, '*.png')].each { |f| FileUtils.rm_rf f }
-    Dir[File.join(Kracker::diff_file_location, '*.png')].each { |f| FileUtils.rm_rf f }
+    Dir[File.join(DomGlancy::current_file_location, '*.png')].each { |f| FileUtils.rm_rf f }
+    Dir[File.join(DomGlancy::master_file_location, '*.png')].each { |f| FileUtils.rm_rf f }
+    Dir[File.join(DomGlancy::diff_file_location, '*.png')].each { |f| FileUtils.rm_rf f }
   end
 
 end

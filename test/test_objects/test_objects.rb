@@ -1,4 +1,4 @@
-module Kracker
+module DomGlancy
   module TestObjects
     def array_of_elements
       [

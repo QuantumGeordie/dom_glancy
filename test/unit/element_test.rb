@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ElementTest < Kracker::KrackerTestCase
+class ElementTest < DomGlancy::DomGlancyTestCase
 
   def test_sameness
     element1 = DOMElement.new(single_element_hash)

@@ -1,16 +1,18 @@
-# Kracker
+# DOM Glancy
 
 DOM element comparison
 
+_you know. like taking a quick glance at the DOM, but make it sound kinda like Tom Clancy instead._
+
 ## Travis-ci.org
 
-[![Build Status](https://travis-ci.org/QuantumGeordie/kracker.png)](https://travis-ci.org/QuantumGeordie/kracker)
+[![Build Status](https://travis-ci.org/QuantumGeordie/dom_glancy.svg?branch=master)](https://travis-ci.org/QuantumGeordie/dom_glancy)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'kracker'
+    gem 'dom_glancy'
 
 And then execute:
 
@@ -18,7 +20,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install kracker
+    $ gem install dom_glancy
 
 ## Usage
 

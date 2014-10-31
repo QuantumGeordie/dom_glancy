@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AnalysisTest < Kracker::KrackerTestCase
+class AnalysisTest < DomGlancy::DomGlancyTestCase
 
   def test_same_elements
 

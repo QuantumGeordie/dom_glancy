@@ -23,9 +23,9 @@ require "action_controller/railtie"
 require "sprockets/railtie"
 require 'rails'
 
-require 'kracker'
+require 'dom_glancy'
 
 Rails.backtrace_cleaner.remove_silencers!
 
 require 'test_app'
-run KrackerApp::Application
+run DomGlancyApp::Application
