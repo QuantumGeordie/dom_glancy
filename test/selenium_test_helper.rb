@@ -30,8 +30,6 @@ require 'selenium-webdriver'
 
 require 'page_objects'
 
-require 'chunky_png'
-
 test_objects_location = File.expand_path('../test_objects/*', __FILE__)
 Dir[test_objects_location].each { |f| require f }
 
