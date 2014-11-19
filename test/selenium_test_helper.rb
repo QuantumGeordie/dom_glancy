@@ -17,7 +17,8 @@ end
 
 require 'rails/all'
 require 'dom_glancy'
-require 'test_app/test_app'
+
+require File.expand_path('../test_app/config/environment', __FILE__)
 
 require 'minitest/autorun'
 

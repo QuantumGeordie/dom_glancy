@@ -1,12 +1,17 @@
 <h2>difference files</h2>
-<% if @files.length > 0 %>
-  <p>file location: <%= DomGlancy.diff_file_location %></p>
-<% else %>
-  <p>There were no differences files found.</p>
-<% end %>
+<p>file location: <%= DomGlancy.diff_file_location %></p>
+<form name="bessing" action="/dom_glancy/bless" method="POST">
+  <p><input type="checkbox" name="delete_on_bless" value='true' checked> Remove difference files on blessing</p>
+  <input class="kr--button kr--button-small" type="button" value="Check All" onclick="checkByParent('kr--files', true);">
+  <input class="kr--button kr--button-small" type="button" value="Uncheck All" onclick="checkByParent('kr--files', false);">
 
-<ul id="kr--files" class="kr--ul">
-  <% @files.each do |file| %>
-    <li class="kr--file"><%= link_to file, "/dom_glancy/show/#{file}", :class => 'kr' %></li>
-  <% end %>
-</ul>
+  <ul id="kr--files" class="kr--ul">
+    <% @files.each_with_index do |file, i| %>
+      <li class="kr--file">
+        <input type="checkbox" name="option_<%= i %>" value="<%= File.basename(file).gsub('_diff.html', '') %>">
+        <%= link_to File.basename(file).gsub('_diff.html', ''), "/dom_glancy/show/#{file}", :class => 'kr' %>
+      </li>
+    <% end %>
+  </ul>
+  <input type="submit" value="Bless Selected" class="kr--button">
+</form>

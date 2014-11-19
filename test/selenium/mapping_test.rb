@@ -34,7 +34,7 @@ class MappingTest < DomGlancy::SeleniumTestCase
     index_page = visit_index
 
     assert_equal 1, index_page.files.count, 'number of difference files'
-    assert_match 'dom_glancy_index_diff.html', index_page.files.first.text, 'file name displayed'
+    assert_match 'dom_glancy_index', index_page.files.first.text, 'file name displayed'
 
     index_page.files.first.find('a').click
     show_page = PageObjects::DomGlancy::ShowPage.new
@@ -63,14 +63,14 @@ class MappingTest < DomGlancy::SeleniumTestCase
     index_page = visit_index
 
     assert_equal 1, index_page.files.count, 'number of difference files'
-    assert_match 'dom_glancy_index_diff.html', index_page.files.first.text, 'file name displayed'
+    assert_match 'dom_glancy_index', index_page.files.first.text, 'file name displayed'
 
     index_page.files.first.find('a').click
     show_page = PageObjects::DomGlancy::ShowPage.new
 
-    assert_equal 0, show_page.not_master.count, 'elements listed as not in master'
-    assert_equal 7, show_page.not_current.count, 'elements listed as not in current'
-    assert_equal 5, show_page.changed.count, 'elements listed as changed'
+    assert_equal 0,  show_page.not_master.count, 'elements listed as not in master'
+    assert_equal 7,  show_page.not_current.count, 'elements listed as not in current'
+    assert_equal 10, show_page.changed.count, 'elements listed as changed'
 
     assert_artifacts_on_difference('dom_glancy_index')
 
