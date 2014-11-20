@@ -3,13 +3,13 @@
 <head>
   <title>DOM Glancy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-
-  <%= stylesheet_link_tag "noramlize.css", :media => "all" %>
-  <%= stylesheet_link_tag "720_grid.css", :media => "screen and (min-width: 720px)" %>
-  <%= stylesheet_link_tag "986_grid.css", :media => "screen and (min-width: 986px)" %>
-  <%= stylesheet_link_tag "1236_grid.css", :media => "screen and (min-width: 1236px)" %>
-
-  <%= stylesheet_link_tag "dom_glancy", :media => "all" %>
+  <%= javascript_include_tag 'application'
+  %>
+  <%= stylesheet_link_tag 'normalize.css', :media => 'all' %>
+  <%= stylesheet_link_tag '720_grid.css',  :media => 'screen and (min-width: 720px)' %>
+  <%= stylesheet_link_tag '986_grid.css',  :media => 'screen and (min-width: 986px)' %>
+  <%= stylesheet_link_tag '1236_grid.css', :media => 'screen and (min-width: 1236px)' %>
+  <%= stylesheet_link_tag 'dom_glancy',    :media => 'all' %>
 
   <%= csrf_meta_tags %>
 </head>

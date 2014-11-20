@@ -52,15 +52,15 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
 }
 
 .kr--ul {
+  line-height: 1.8em;
   list-style-type: none;
-  padding:0;
   margin:0;
+  padding: 20px 0;
 }
-
 
 .kr--dom_review_table td {
     padding: 1em;
-    border: 0px solid;
+    border: 0 solid;
     background-color: transparent;
     vertical-align: top;
     min-width: 250px;
@@ -131,4 +131,20 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
 .kr--artifacts td {
     padding-left: 7px;
     padding-right: 7px;
+}
+
+.kr--button {
+    font-family: inherit;
+    font-size: 100%;
+    padding: .5em 1em;
+    color: #956C1F;
+    border: 1px solid #956C1F;
+    background-color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.kr--button-small {
+    border-radius: 5px;
+    font-size: 75%;
 }

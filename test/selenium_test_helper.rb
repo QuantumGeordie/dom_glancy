@@ -15,9 +15,14 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
-require 'rails/all'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'sprockets/railtie'
+require 'rails/test_unit/railtie'
+
 require 'dom_glancy'
-require 'test_app/test_app'
+
+require File.expand_path('../test_app/config/environment', __FILE__)
 
 require 'minitest/autorun'
 
