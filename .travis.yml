@@ -12,4 +12,4 @@ before_script:
 script:
   - bundle exec rake
 addons:
-  firefox: "19.0.1"
+  firefox: "31.0"
