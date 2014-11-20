@@ -68,9 +68,16 @@ class MappingTest < DomGlancy::SeleniumTestCase
     index_page.files.first.find('a').click
     show_page = PageObjects::DomGlancy::ShowPage.new
 
-    assert_equal 0,  show_page.not_master.count, 'elements listed as not in master'
+    assert_equal 0,  show_page.not_master.count,  'elements listed as not in master'
     assert_equal 7,  show_page.not_current.count, 'elements listed as not in current'
-    assert_equal 10, show_page.changed.count, 'elements listed as changed'
+
+    puts '#'*50
+    show_page.changed.each do |changed|
+      puts changed.text.gsub(' ', ',')
+    end
+    puts '#'*50
+
+    assert_equal 10, show_page.changed.count,     'elements listed as changed'
 
     assert_artifacts_on_difference('dom_glancy_index')
 
