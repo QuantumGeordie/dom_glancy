@@ -4,8 +4,8 @@ class DomGlancyController < DomGlancyApplicationController
   require 'kramdown'
 
   def index
-    @files = if DomGlancy.diff_file_location
-      Dir[File.join(DomGlancy.diff_file_location, "*_diff.html")].map{|f| File.basename(f)}
+    @files = if DomGlancy::DomGlancy.diff_file_location
+      Dir[File.join(DomGlancy::DomGlancy.diff_file_location, "*_diff.html")].map{|f| File.basename(f)}
     else
       []
     end
@@ -26,16 +26,16 @@ class DomGlancyController < DomGlancyApplicationController
   end
 
   def new
-    @files_current = Dir[File.join(DomGlancy.current_file_location, '*.yaml')].map { |f| File.basename(f).gsub('.yaml', '') }
-    @files_master  = Dir[File.join(DomGlancy.master_file_location,  '*.yaml')].map { |f| File.basename(f).gsub('.yaml', '') }
+    @files_current = Dir[File.join(DomGlancy::DomGlancy.current_file_location, '*.yaml')].map { |f| File.basename(f).gsub('.yaml', '') }
+    @files_master  = Dir[File.join(DomGlancy::DomGlancy.master_file_location,  '*.yaml')].map { |f| File.basename(f).gsub('.yaml', '') }
 
     @extra_files = @files_current.select { |f| !@files_master.include?("#{f}_master")}.sort
   end
 
   def make_master
     test_root = params[:file]
-    src = DomGlancy.current_filename(test_root)
-    dst = DomGlancy.master_filename(test_root)
+    src = DomGlancy::DomGlancy.current_filename(test_root)
+    dst = DomGlancy::DomGlancy.master_filename(test_root)
     FileUtils.cp src, dst
 
     redirect_to '/dom_glancy/new'
@@ -43,7 +43,7 @@ class DomGlancyController < DomGlancyApplicationController
 
   def delete_current
     test_root = params[:file]
-    src = DomGlancy.current_filename(test_root)
+    src = DomGlancy::DomGlancy.current_filename(test_root)
     FileUtils.rm_rf src
 
     redirect_to '/dom_glancy/new'
@@ -81,8 +81,8 @@ class DomGlancyController < DomGlancyApplicationController
   end
 
   def clear
-    Dir[File.join(DomGlancy.diff_file_location, '*.yaml'), File.join(DomGlancy.diff_file_location, '*.html')].each { |f| FileUtils.rm_rf(f) }
-    Dir[File.join(DomGlancy.current_file_location, '*.yaml')].each { |f| FileUtils.rm_rf(f) }
+    Dir[File.join(DomGlancy::DomGlancy.diff_file_location, '*.yaml'), File.join(DomGlancy::DomGlancy.diff_file_location, '*.html')].each { |f| FileUtils.rm_rf(f) }
+    Dir[File.join(DomGlancy::DomGlancy.current_file_location, '*.yaml')].each { |f| FileUtils.rm_rf(f) }
     redirect_to dom_glancy_path
   end
 
@@ -93,16 +93,16 @@ class DomGlancyController < DomGlancyApplicationController
     blessings.each do |blessing|
       base_test_name = blessing
 
-      src_yaml = DomGlancy.current_filename(base_test_name)
-      dst_yaml = DomGlancy.master_filename(base_test_name)
+      src_yaml = DomGlancy::DomGlancy.current_filename(base_test_name)
+      dst_yaml = DomGlancy::DomGlancy.master_filename(base_test_name)
 
       FileUtils.cp src_yaml, dst_yaml if File.exist?(src_yaml)
 
       if params['delete_on_bless'] == 'true'
-        files_to_remove  = [DomGlancy.diff_filename(base_test_name)]
-        files_to_remove << File.join(DomGlancy.diff_file_location, blessing + '__current_not_master__diff.yaml')
-        files_to_remove << File.join(DomGlancy.diff_file_location, blessing + '__master_not_current__diff.yaml')
-        files_to_remove << File.join(DomGlancy.diff_file_location, blessing + '__changed_master__diff.yaml')
+        files_to_remove  = [DomGlancy::DomGlancy.diff_filename(base_test_name)]
+        files_to_remove << File.join(DomGlancy::DomGlancy.diff_file_location, blessing + '__current_not_master__diff.yaml')
+        files_to_remove << File.join(DomGlancy::DomGlancy.diff_file_location, blessing + '__master_not_current__diff.yaml')
+        files_to_remove << File.join(DomGlancy::DomGlancy.diff_file_location, blessing + '__changed_master__diff.yaml')
 
         files_to_remove.each { |f| FileUtils.rm_rf f }
       end

@@ -35,9 +35,13 @@ Dir[test_helper_location].each { |f| require f }
 module DomGlancy
   class DomGlancyTestCase < Minitest::Test
 
-    include DomGlancy
-    include DomGlancy::TestObjects
-    include DomGlancy::TestHelpers::Location
+    # include DomGlancy
+    include TestObjects
+    include TestHelpers::Location
+
+    def setup
+      @dom_glancy = DomGlancy::DomGlancy::DomGlancy.new
+    end
 
   end
 end

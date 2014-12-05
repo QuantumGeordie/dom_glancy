@@ -20,8 +20,6 @@ require 'action_mailer/railtie'
 require 'sprockets/railtie'
 require 'rails/test_unit/railtie'
 
-require 'dom_glancy'
-
 require File.expand_path('../test_app/config/environment', __FILE__)
 
 require 'minitest/autorun'
@@ -45,13 +43,14 @@ Capybara.default_driver = :selenium
 
 module DomGlancy
   class SeleniumTestCase < Minitest::Test
-    include DomGlancy
-    include DomGlancy::TestObjects
-    include DomGlancy::TestHelpers::Location
+    # include DomGlancy
+    include ::DomGlancy::TestObjects
+    include ::DomGlancy::TestHelpers::Location
 
     include Capybara::DSL
 
     def setup
+      @dom_glancy = ::DomGlancy::DomGlancy.new
       delete_contents_from_dom_glancy_locations
       initialize_browser_size_for_test
     end

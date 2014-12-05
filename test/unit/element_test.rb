@@ -3,8 +3,8 @@ require 'test_helper'
 class ElementTest < DomGlancy::DomGlancyTestCase
 
   def test_sameness
-    element1 = DOMElement.new(single_element_hash)
-    element2 = DOMElement.new(single_element_hash.merge({"left" => 72}))
+    element1 = DomGlancy::DOMElement.new(single_element_hash)
+    element2 = DomGlancy::DOMElement.new(single_element_hash.merge({"left" => 72}))
 
     assert element1.same_element?(element2), 'should be the same element'
     refute element1.all_same?(element2),     'should not be all same'
@@ -19,9 +19,9 @@ class ElementTest < DomGlancy::DomGlancyTestCase
   end
 
   def test_similarity
-    element1 = DOMElement.new(single_element_hash.merge({"similarity" => 2}))
-    element2 = DOMElement.new(single_element_hash.merge({"left" => 72}))
-    element3 = DOMElement.new(single_element_hash.merge({"left" => 74}))
+    element1 = DomGlancy::DOMElement.new(single_element_hash.merge({"similarity" => 2}))
+    element2 = DomGlancy::DOMElement.new(single_element_hash.merge({"left" => 72}))
+    element3 = DomGlancy::DOMElement.new(single_element_hash.merge({"left" => 74}))
 
     assert element1.same_element?(element2), 'should be the same element'
     assert element1.same_element?(element3), 'should be the same element'
@@ -37,8 +37,8 @@ class ElementTest < DomGlancy::DomGlancyTestCase
   end
 
   def test_changed_element__width
-    element1 = DOMElement.new(array_of_elements.last)
-    element2 = DOMElement.new(array_of_elements.last.merge("width" => 20))
+    element1 = DomGlancy::DOMElement.new(array_of_elements.last)
+    element2 = DomGlancy::DOMElement.new(array_of_elements.last.merge("width" => 20))
 
     assert element1.same_element?(element2), 'should be same element'
     refute element1.close_enough?(element2), 'elements not close enough'
