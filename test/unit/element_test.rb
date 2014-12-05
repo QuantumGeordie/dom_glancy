@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ElementTest < DomGlancy::DomGlancyTestCase
+class ElementTest < DomGlancyTestCase
 
   def test_sameness
     element1 = DomGlancy::DOMElement.new(single_element_hash)

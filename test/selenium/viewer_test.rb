@@ -1,6 +1,6 @@
 require 'selenium_test_helper'
 
-class ViewerTest < DomGlancy::SeleniumTestCase
+class ViewerTest < SeleniumTestCase
 
   def test_navigation
     index_page = visit_index
@@ -18,5 +18,4 @@ class ViewerTest < DomGlancy::SeleniumTestCase
 
     index_page = about_page.navigation.home!
   end
-
 end

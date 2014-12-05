@@ -1,6 +1,6 @@
 require 'selenium_test_helper'
 
-class MappingTest < DomGlancy::SeleniumTestCase
+class MappingTest < SeleniumTestCase
 
   def test_full_mapping__same
     visit_index

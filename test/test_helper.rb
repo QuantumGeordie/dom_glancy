@@ -31,17 +31,11 @@ Dir[test_objects_location].each { |f| require f }
 test_helper_location = File.expand_path('../test_helpers/**/*.rb', __FILE__)
 Dir[test_helper_location].each { |f| require f }
 
+class DomGlancyTestCase < Minitest::Test
+  include DomGlancy::TestObjects
+  include DomGlancy::TestHelpers::Location
 
-module DomGlancy
-  class DomGlancyTestCase < Minitest::Test
-
-    # include DomGlancy
-    include TestObjects
-    include TestHelpers::Location
-
-    def setup
-      @dom_glancy = DomGlancy::DomGlancy::DomGlancy.new
-    end
-
+  def setup
+    @dom_glancy = DomGlancy::DomGlancy.new
   end
 end

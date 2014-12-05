@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DomGlancyTest < DomGlancy::DomGlancyTestCase
+class DomGlancyTest < DomGlancyTestCase
 
   def setup
     super

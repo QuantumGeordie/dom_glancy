@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class LocationTest < DomGlancy::DomGlancyTestCase
+class LocationTest < DomGlancyTestCase
 
   def setup
     super

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AnalysisTest < DomGlancy::DomGlancyTestCase
+class AnalysisTest < DomGlancyTestCase
 
   def test_same_elements
     master_data = array_of_elements
