@@ -43,8 +43,8 @@ Capybara.default_driver = :selenium
 
 class SeleniumTestCase < Minitest::Test
   # include DomGlancy::DomGlancy
-  include DomGlancy::TestObjects
-  include DomGlancy::TestHelpers::Location
+  include TestObjects
+  include TestHelpers::Location
 
   include Capybara::DSL
 
@@ -110,13 +110,13 @@ class SeleniumTestCase < Minitest::Test
     filename = DomGlancy::DomGlancy.diff_filename(test_root)
     assert File.exists?(filename), "Diff file should exist: #{filename}"
 
-    filename = File.join(DomGlancy::DomGlancy.diff_file_location, "#{test_root}__changed_master__diff.yaml")
+    filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__changed_master__diff.yaml")
     assert File.exists?(filename), "Changed master file should exist: #{filename}"
 
-    filename = File.join(DomGlancy::DomGlancy.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
+    filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
     assert File.exists?(filename), "Current, not master, file should exist: #{filename}"
 
-    filename = File.join(DomGlancy::DomGlancy.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
+    filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
     assert File.exists?(filename), "Master, not current, file should exist: #{filename}"
 
     filename = DomGlancy::DomGlancy.master_filename(test_root)
@@ -130,13 +130,13 @@ class SeleniumTestCase < Minitest::Test
     filename = DomGlancy::DomGlancy.diff_filename(test_root)
     refute File.exists?(filename), "No diff file should exist: #{filename}"
 
-    filename = File.join(DomGlancy::DomGlancy.diff_file_location, "#{test_root}__changed_master__diff.yaml")
+    filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__changed_master__diff.yaml")
     refute File.exists?(filename), "No changed master file should exist: #{filename}"
 
-    filename = File.join(DomGlancy::DomGlancy.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
+    filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
     refute File.exists?(filename), "No current, not master, file should exist: #{filename}"
 
-    filename = File.join(DomGlancy::DomGlancy.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
+    filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
     refute File.exists?(filename), "No master, not current, file should exist: #{filename}"
 
     filename = DomGlancy::DomGlancy.master_filename(test_root)

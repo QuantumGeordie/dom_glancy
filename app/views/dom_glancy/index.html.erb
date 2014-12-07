@@ -1,5 +1,5 @@
 <h2>difference files</h2>
-<p id="js--file_location">file location: <%= DomGlancy::DomGlancy.diff_file_location %></p>
+<p id="js--file_location">file location: <%= DomGlancy.configuration.diff_file_location %></p>
 <form name="bessing" action="/dom_glancy/bless" method="POST">
   <p id="js--input"><input type="checkbox" name="delete_on_bless" value='true' checked> Remove difference files on blessing</p>
   <input class="kr--button kr--button-small" type="button" value="Check All" onclick="checkByParent('kr--files', true);">

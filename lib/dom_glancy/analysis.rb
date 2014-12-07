@@ -81,7 +81,7 @@ module DomGlancy
     end
 
     def save_set_info(test_root, suffix, data_set)
-      filename = File.join(DomGlancy.diff_file_location, "#{test_root}__#{suffix}__diff.yaml")
+      filename = File.join(::DomGlancy.configuration.diff_file_location, "#{test_root}__#{suffix}__diff.yaml")
 
       data_array = data_set.to_a
 

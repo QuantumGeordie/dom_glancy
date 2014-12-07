@@ -117,7 +117,7 @@ module DomGlancy
     def purge_old_files_before_test(test_root)
       File.delete DomGlancy.current_filename(test_root) if File.exist?(DomGlancy.current_filename(test_root))
 
-      filename_pattern = File.join(DomGlancy.diff_file_location, "#{test_root}__*__diff.yaml")
+      filename_pattern = File.join(::DomGlancy.configuration.diff_file_location, "#{test_root}__*__diff.yaml")
       Dir[filename_pattern].each { |file| file.delete(file) if File.exist?(file) }
     end
   end

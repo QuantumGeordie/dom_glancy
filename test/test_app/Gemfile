@@ -6,4 +6,3 @@ gem 'json'
 group :test, :development do
   gem 'dom_glancy', :path => '../..'
 end
-

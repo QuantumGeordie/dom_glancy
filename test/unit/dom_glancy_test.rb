@@ -57,7 +57,7 @@ class DomGlancyTest < DomGlancyTestCase
 
     assert_match blessing_copy_string, mapping_results[1], 'blessing copy string should be in the error message'
 
-    files_in_diff_location = Dir[File.join(DomGlancy::DomGlancy.diff_file_location, '*')]
+    files_in_diff_location = Dir[File.join(DomGlancy.configuration.diff_file_location, '*')]
     assert_equal 4, files_in_diff_location.count, 'the number of files in the diff location after a failure.'
 
     `#{blessing_copy_string}`
