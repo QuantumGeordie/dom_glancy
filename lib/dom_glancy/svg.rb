@@ -45,27 +45,28 @@ module DomGlancy
 
     def format__not_in_master
       {
-          :stroke       => 'blue',
-          :fill         => 'white',
-          :stroke_width => '1',
-          :opacity      => '0.5'
+        :stroke       => 'blue',
+        :fill         => 'white',
+        :stroke_width => '1',
+        :opacity      => '0.5'
       }
     end
 
     def format__not_in_current
       {
-          :stroke       => 'red',
-          :fill         => 'white',
-          :stroke_width => '1',
-          :opacity      => '0.5'
+        :stroke       => 'red',
+        :fill         => 'white',
+        :stroke_width => '1',
+        :opacity      => '0.5'
       }
     end
+
     def format__same_but_different
       {
-          :stroke       => 'orange',
-          :fill         => 'white',
-          :stroke_width => '1',
-          :opacity      => '0.5'
+        :stroke       => 'orange',
+        :fill         => 'white',
+        :stroke_width => '1',
+        :opacity      => '0.5'
       }
     end
   end

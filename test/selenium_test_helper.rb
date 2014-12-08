@@ -42,7 +42,6 @@ Dir[test_helper_location].each { |f| require f }
 Capybara.default_driver = :selenium
 
 class SeleniumTestCase < Minitest::Test
-  # include DomGlancy::DomGlancy
   include TestObjects
   include TestHelpers::Location
 
@@ -83,16 +82,16 @@ class SeleniumTestCase < Minitest::Test
 
   def add_centered_element(text_content)
     js = <<-JS
-          var centeredElement = document.createElement('div');
-          centeredElement.style.textAlign = 'center';
-          centeredElement.style.fontSize = '2em';
-          centeredElement.style.width = '400px';
-          centeredElement.style.marginLeft = 'auto';
-          centeredElement.style.marginRight = 'auto';
-          centeredElement.id = 'hack-element';
-          centeredElement.textContent = '#{text_content}';
-          centeredElement.style.backgroundColor = '#ff0000'
-          document.getElementsByTagName('body')[0].appendChild(centeredElement);
+      var centeredElement = document.createElement('div');
+      centeredElement.style.textAlign = 'center';
+      centeredElement.style.fontSize = '2em';
+      centeredElement.style.width = '400px';
+      centeredElement.style.marginLeft = 'auto';
+      centeredElement.style.marginRight = 'auto';
+      centeredElement.id = 'hack-element';
+      centeredElement.textContent = '#{text_content}';
+      centeredElement.style.backgroundColor = '#ff0000'
+      document.getElementsByTagName('body')[0].appendChild(centeredElement);
     JS
 
     page.driver.browser.execute_script(js)

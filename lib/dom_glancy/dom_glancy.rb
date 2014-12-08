@@ -1,6 +1,4 @@
 module DomGlancy
-  # require 'yaml'
-
   class DomGlancy
     def page_map_same?(test_root)
       purge_old_files_before_test(test_root)
@@ -56,42 +54,41 @@ module DomGlancy
     def perform_mapping_operation
 
       js = <<-JS
-              var dom_glancy = {
+        var dom_glancy = {
 
-                  treeUp: function() {
-                      var treeWalker = document.createTreeWalker(
-                          document.body,
-                          NodeFilter.SHOW_ELEMENT,
-                          { acceptNode: function(node) { return NodeFilter.FILTER_ACCEPT; } },
-                          false
-                      );
+          treeUp: function() {
+            var treeWalker = document.createTreeWalker(
+              document.body,
+              NodeFilter.SHOW_ELEMENT,
+              { acceptNode: function(node) { return NodeFilter.FILTER_ACCEPT; } },
+              false
+            );
 
-                      var nodeList = [];
+            var nodeList = [];
 
-                      while(treeWalker.nextNode()){
-                          var cn = treeWalker.currentNode;
-                          var node_details = {
-                              "height"  : cn.clientHeight,
-                              "width"   : cn.clientWidth,
-                              "id"      : cn.id,
-                              "tag"     : cn.tagName,
-                              "class"   : cn.className,
-                            //"html"    : cn.innerHTML,
-                              "top"     : cn.offsetTop,
-                              "left"    : cn.offsetLeft,
-                              "visible" : dom_glancy.isVisible(cn)
-                          }
-                          nodeList.push(node_details);
-                      }
+            while(treeWalker.nextNode()){
+              var cn = treeWalker.currentNode;
+              var node_details = {
+                "height"  : cn.clientHeight,
+                "width"   : cn.clientWidth,
+                "id"      : cn.id,
+                "tag"     : cn.tagName,
+                "class"   : cn.className,
+                "top"     : cn.offsetTop,
+                "left"    : cn.offsetLeft,
+                "visible" : dom_glancy.isVisible(cn)
+              }
+              nodeList.push(node_details);
+            }
 
-                      return(nodeList);
-                  },
+            return(nodeList);
+          },
 
-                  isVisible: function(elem) {
-                      return elem.offsetWidth > 0 || elem.offsetHeight > 0;
-                  }
-              };
-              return dom_glancy.treeUp();
+          isVisible: function(elem) {
+              return elem.offsetWidth > 0 || elem.offsetHeight > 0;
+          }
+        };
+        return dom_glancy.treeUp();
       JS
 
       Capybara.current_session.driver.browser.execute_script(js)
