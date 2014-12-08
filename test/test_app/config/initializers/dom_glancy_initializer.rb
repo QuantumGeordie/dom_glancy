@@ -4,4 +4,6 @@ DomGlancy.configure do |c|
   c.diff_file_location    = Rails.root.join('tmp', 'data', 'map', 'diff')
 end
 
-DomGlancy::DomGlancy.create_comparison_directories
+FileUtils.mkdir_p(DomGlancy.configuration.master_file_location)
+FileUtils.mkdir_p(DomGlancy.configuration.diff_file_location)
+FileUtils.mkdir_p(DomGlancy.configuration.current_file_location)
