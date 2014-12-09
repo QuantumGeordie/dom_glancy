@@ -51,9 +51,21 @@ module DomGlancy
       result
     end
 
-    def perform_mapping_operation
+    def resize_browser_for_scrollbar
+      original_dimensions = Capybara.current_session.driver.browser.manage.window.size
+      width = Capybara.current_session.evaluate_script('window.innerWidth - document.documentElement.clientWidth').to_i
 
-      js = <<-JS
+      Capybara.current_session.driver.browser.manage.window.resize_to(original_dimensions.width + width, original_dimensions.height) if width > 0
+
+      result = yield
+
+      Capybara.current_session.driver.browser.manage.window.resize_to(original_dimensions.width, original_dimensions.height) if width > 0
+
+      result
+    end
+
+    def perform_mapping_operation
+      page_map_js = <<-JS
         var dom_glancy = {
 
           treeUp: function() {
@@ -91,7 +103,9 @@ module DomGlancy
         return dom_glancy.treeUp();
       JS
 
-      Capybara.current_session.driver.browser.execute_script(js)
+      resize_browser_for_scrollbar do
+        Capybara.current_session.driver.browser.execute_script(page_map_js)
+      end
     end
 
     def master_file_exists?(test_root)
