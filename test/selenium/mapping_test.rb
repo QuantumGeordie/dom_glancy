@@ -1,13 +1,13 @@
 require 'selenium_test_helper'
 
-class MappingTest < DomGlancy::SeleniumTestCase
+class MappingTest < SeleniumTestCase
 
   def test_full_mapping__same
     visit_index
 
     map_current_page_and_save_as_master('dom_glancy_index')
 
-    same, msg = page_map_same?('dom_glancy_index')
+    same, msg = @dom_glancy.page_map_same?('dom_glancy_index')
 
     assert same, msg
     assert_artifacts_on_same('dom_glancy_index')
@@ -15,7 +15,7 @@ class MappingTest < DomGlancy::SeleniumTestCase
 
   def test_mapping__no_master
     visit_index
-    same, msg = page_map_same?('poop')
+    same, msg = @dom_glancy.page_map_same?('poop')
     refute same, msg
     assert_match 'Master file does not exist', msg, 'the missing master error message'
   end
@@ -27,7 +27,7 @@ class MappingTest < DomGlancy::SeleniumTestCase
 
     add_centered_element('Back In Black')
 
-    same, msg = page_map_same?('dom_glancy_index')
+    same, msg = @dom_glancy.page_map_same?('dom_glancy_index')
 
     refute same, msg
 
@@ -56,7 +56,7 @@ class MappingTest < DomGlancy::SeleniumTestCase
 
     remove_about_element
 
-    same, msg = page_map_same?('dom_glancy_index')
+    same, msg = @dom_glancy.page_map_same?('dom_glancy_index')
 
     refute same, msg
 
@@ -83,7 +83,7 @@ class MappingTest < DomGlancy::SeleniumTestCase
 
     map_current_page_and_save_as_master('test_page')
 
-    same, msg = page_map_same?('test_page')
+    same, msg = @dom_glancy.page_map_same?('test_page')
 
     assert same, msg
 
@@ -101,7 +101,7 @@ class MappingTest < DomGlancy::SeleniumTestCase
 
     resize_browser(w, h)
 
-    same, msg = page_map_same?('test_page')
+    same, msg = @dom_glancy.page_map_same?('test_page')
 
     refute same, msg
 
@@ -111,8 +111,8 @@ class MappingTest < DomGlancy::SeleniumTestCase
   private
 
   def map_current_page_and_save_as_master(test_root)
-    map_data = perform_mapping_operation
-    File.open(DomGlancy.master_filename(test_root), 'w') { |file| file.write(map_data.to_yaml) }
+    map_data = @dom_glancy.perform_mapping_operation
+    File.open(DomGlancy::DomGlancy.master_filename(test_root), 'w') { |file| file.write(map_data.to_yaml) }
   end
 
 end

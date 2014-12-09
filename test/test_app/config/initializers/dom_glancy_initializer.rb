@@ -1,5 +1,9 @@
-DomGlancy.master_file_location  = Rails.root.join('tmp', 'data', 'map', 'masters')
-DomGlancy.current_file_location = Rails.root.join('tmp', 'data', 'map', 'current')
-DomGlancy.diff_file_location    = Rails.root.join('tmp', 'data', 'map', 'diff')
+DomGlancy.configure do |c|
+  c.master_file_location  = Rails.root.join('tmp', 'data', 'map', 'masters')
+  c.current_file_location = Rails.root.join('tmp', 'data', 'map', 'current')
+  c.diff_file_location    = Rails.root.join('tmp', 'data', 'map', 'diff')
+end
 
-DomGlancy.create_comparison_directories
+FileUtils.mkdir_p(DomGlancy.configuration.master_file_location)
+FileUtils.mkdir_p(DomGlancy.configuration.diff_file_location)
+FileUtils.mkdir_p(DomGlancy.configuration.current_file_location)

@@ -7,20 +7,20 @@
 <table class="kr--dom_review_table">
   <tr>
     <td>
-      <% contents = File.read(File.join(DomGlancy.diff_file_location, "#{@file_diff}")) %>
+      <% contents = File.read(File.join(DomGlancy.configuration.diff_file_location, "#{@file_diff}")) %>
       <%= raw(contents) %>
     </td>
     <td>
       <h2>in current dom, not master</h2>
-      <% elements = YAML::load_file(File.join(DomGlancy.diff_file_location, @file_set_not_master)) %>
+      <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_not_master)) %>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--not_master'} %>
 
       <h2>in master dom, not current</h2>
-      <% elements = YAML::load_file(File.join(DomGlancy.diff_file_location, @file_set_not_current)) %>
+      <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_not_current)) %>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--not_current'} %>
 
       <h2>changed</h2>
-      <% elements = YAML::load_file(File.join(DomGlancy.diff_file_location, @file_set_changed)) %>
+      <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_changed)) %>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--changed'} %>
 
     </td>
