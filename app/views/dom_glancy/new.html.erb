@@ -3,12 +3,12 @@
 </div>
 
 <div class="row">
-  <table class='kr kr--artifacts'>
+  <table class='kr kr--artifacts' id='js--files'>
     <% @extra_files.each do |f| %>
-      <tr>
+      <tr class='js--new_files'>
         <td><%= f %></td>
-        <td><%= link_to 'make master', "make_master/#{f}", :class => 'kr' %></td>
-        <td><%= link_to 'delete', "delete_current/#{f}", :class => 'kr' %></td>
+        <td><%= link_to 'make master', "make_master/#{f}", :class => 'kr kr--button kr--button-small' %></td>
+        <td><%= link_to 'delete', "delete_current/#{f}", :class => 'kr kr--button kr--button-small' %></td>
       </tr>
     <% end %>
   </table>

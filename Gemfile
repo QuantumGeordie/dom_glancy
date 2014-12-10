@@ -12,4 +12,4 @@ gem 'mocha'
 
 gem 'selenium-webdriver', '2.44.0'
 gem 'capybara', '2.2.1'
-gem 'ae_page_objects', '1.0.0'
+gem 'ae_page_objects', '1.3.0'

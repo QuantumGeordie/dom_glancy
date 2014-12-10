@@ -129,8 +129,7 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
 }
 
 .kr--artifacts td {
-    padding-left: 7px;
-    padding-right: 7px;
+    padding: 7px;
 }
 
 .kr--button {

@@ -18,4 +18,31 @@ class ViewerTest < SeleniumTestCase
 
     index_page = about_page.navigation.home!
   end
+
+  def test_make_master
+    names = %w(steven_gerrard jordan_henderson adam_lallana)
+    names.each { |name| File.open(DomGlancy::DomGlancy.current_filename(name), 'w') { |f| f.write '' } }
+
+    index_page = visit_index
+    new_tests_page = index_page.navigation.new_page!
+
+    assert_equal names.count, new_tests_page.files.count
+
+    new_tests_page.files.each do |file|
+      assert_includes names, file.name.text, 'filename displayed'
+    end
+
+    assert_equal names.count, Dir[File.join(DomGlancy.configuration.current_file_location, '*.yaml')].count
+    assert_equal 0,           Dir[File.join(DomGlancy.configuration.master_file_location, '*.yaml')].count
+
+    new_tests_page = new_tests_page.files.first.make_master
+    assert_equal names.count - 1, new_tests_page.files.count
+    assert_equal names.count,     Dir[File.join(DomGlancy.configuration.current_file_location, '*.yaml')].count
+    assert_equal 1,               Dir[File.join(DomGlancy.configuration.master_file_location, '*.yaml')].count
+
+    new_tests_page = new_tests_page.files.first.delete
+    assert_equal names.count - 2, new_tests_page.files.count
+    assert_equal names.count - 1, Dir[File.join(DomGlancy.configuration.current_file_location, '*.yaml')].count
+    assert_equal 1,               Dir[File.join(DomGlancy.configuration.master_file_location, '*.yaml')].count
+  end
 end
