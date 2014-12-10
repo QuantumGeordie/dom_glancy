@@ -34,8 +34,8 @@ class DomGlancyController < DomGlancyApplicationController
 
   def make_master
     test_root = params[:file]
-    src = DomGlancy.configuration.current_filename(test_root)
-    dst = DomGlancy.configuration.master_filename(test_root)
+    src = DomGlancy::DomGlancy.current_filename(test_root)
+    dst = DomGlancy::DomGlancy.master_filename(test_root)
     FileUtils.cp src, dst
 
     redirect_to '/dom_glancy/new'
@@ -43,7 +43,7 @@ class DomGlancyController < DomGlancyApplicationController
 
   def delete_current
     test_root = params[:file]
-    src = DomGlancy.configuration.current_filename(test_root)
+    src = DomGlancy::DomGlancy.current_filename(test_root)
     FileUtils.rm_rf src
 
     redirect_to '/dom_glancy/new'
