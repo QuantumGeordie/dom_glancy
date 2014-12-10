@@ -38,4 +38,6 @@ class DomGlancyTestCase < Minitest::Test
   def setup
     @dom_glancy = DomGlancy::DomGlancy.new
   end
+
+  DomGlancy.configure
 end

@@ -80,6 +80,16 @@ class SeleniumTestCase < Minitest::Test
     page.driver.browser.execute_script(js)
   end
 
+  def resize_about_element(add_to_width)
+    js = <<-JS
+      var element = document.getElementById('js--about');
+      var width = element.clientWidth + #{add_to_width};
+      element.style.width = width + 'px';
+    JS
+
+    page.driver.browser.execute_script(js)
+  end
+
   def add_centered_element(text_content)
     js = <<-JS
       var centeredElement = document.createElement('div');

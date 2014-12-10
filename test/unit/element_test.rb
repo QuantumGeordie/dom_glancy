@@ -4,11 +4,14 @@ class ElementTest < DomGlancyTestCase
 
   def test_sameness
     element1 = DomGlancy::DOMElement.new(single_element_hash)
-    element2 = DomGlancy::DOMElement.new(single_element_hash.merge({"left" => 72}))
+    element2 = DomGlancy::DOMElement.new(single_element_hash.merge({'left' => 72}))
 
     assert element1.same_element?(element2), 'should be the same element'
     refute element1.all_same?(element2),     'should not be all same'
-    assert element1.close_enough?(element2), 'should be the same element, but with slight differences'
+    refute element1.close_enough?(element2), 'default similarity is 0 so not similar yet.'
+
+    element1.similarity = 15
+    assert element1.close_enough?(element2), 'default similarity is 15 now, so it is similar.'
 
     element1.left = 72
     assert element1.all_same?(element2), 'should be the same now'
@@ -19,9 +22,9 @@ class ElementTest < DomGlancyTestCase
   end
 
   def test_similarity
-    element1 = DomGlancy::DOMElement.new(single_element_hash.merge({"similarity" => 2}))
-    element2 = DomGlancy::DOMElement.new(single_element_hash.merge({"left" => 72}))
-    element3 = DomGlancy::DOMElement.new(single_element_hash.merge({"left" => 74}))
+    element1 = DomGlancy::DOMElement.new(single_element_hash.merge({'similarity' => 2}))
+    element2 = DomGlancy::DOMElement.new(single_element_hash.merge({'left' => 72}))
+    element3 = DomGlancy::DOMElement.new(single_element_hash.merge({'left' => 74}))
 
     assert element1.same_element?(element2), 'should be the same element'
     assert element1.same_element?(element3), 'should be the same element'
