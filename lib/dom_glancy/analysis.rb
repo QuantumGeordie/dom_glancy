@@ -30,7 +30,7 @@ module DomGlancy
           set_master_not_current.delete(item2)
         end
 
-        changed_element_pairs.select!{ |pair| !DOMElement.new(pair[0]).close_enough?(DOMElement.new(pair[1])) }
+        changed_element_pairs.select!{ |pair| !DOMElement.new(add_similarity(pair[0])).close_enough?(DOMElement.new(add_similarity(pair[1]))) }
         changed_element_pairs.each do |pair|
           set_changed_master.add(pair.first)
         end
@@ -95,7 +95,7 @@ module DomGlancy
         set2.each do |item2|
           element2 = DOMElement.new(item2)
           if element1.same_element?(element2)
-            same_but_different_pairs << [item1, item2] #unless element1.close_enough?(element2)
+            same_but_different_pairs << [item1, item2]
           end
         end
       end
@@ -105,9 +105,9 @@ module DomGlancy
     def pairs_that_are_close_enough(set1, set2)
       ok_pairs = []
       set1.each do |item1|
-        element1 = DOMElement.new(item1)
+        element1 = DOMElement.new(add_similarity(item1))
         set2.each do |item2|
-          element2 = DOMElement.new(item2)
+          element2 = DOMElement.new(add_similarity(item2))
           if element1.same_element?(element2) && element1.close_enough?(element2)
             ok_pairs << [item1, item2]
           end
@@ -133,6 +133,11 @@ module DomGlancy
 
       msg.join("\n")
     end
+
+    def add_similarity(element)
+      element.merge(:similarity => ::DomGlancy.configuration.similarity)
+    end
+
 
     def blessing_copy_string(test_root)
       "cp #{DomGlancy.current_filename(test_root)} #{DomGlancy.master_filename(test_root)}"

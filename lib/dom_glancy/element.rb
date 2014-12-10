@@ -25,7 +25,7 @@ module DomGlancy
       @id         = h[:id]         || h['id']
       @style      = h[:style]      || h['style']
       @visible    = h[:visible]    || h['visible']
-      @similarity = h[:similarity] || h['similarity'] || 15
+      @similarity = h[:similarity] || h['similarity'] || 0
     end
 
     def same_element?(anOther)

@@ -78,6 +78,24 @@ class MappingTest < SeleniumTestCase
     assert_equal 0, index_page.files.count, 'number of difference files'
   end
 
+  def test_mapping__similarity
+    visit_index
+
+    map_current_page_and_save_as_master('dom_glancy_index')
+
+    assert_equal 15, DomGlancy.configuration.similarity, 'Dom Glancy similarity value'
+
+    resize_about_element(15)    # increase the size of the about element by the similarity amount and it should be same
+
+    same, msg = @dom_glancy.page_map_same?('dom_glancy_index')
+    assert same, msg
+
+    resize_about_element(1)     # increase the size of the about element by 1 more pixel and it should be NOT same
+
+    same, msg = @dom_glancy.page_map_same?('dom_glancy_index')
+    refute same, msg
+  end
+
   def test_non_dom_glancy_page__pass
     local_page = PageObjects::DomGlancy::LocalIndexPage.visit
 
