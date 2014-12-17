@@ -1,5 +1,4 @@
 module DomGlancy
-
   class DOMElement
     ## element looks like this in archive.
     # {"id"=>"", "height"=>238, "visible"=>true, "tag"=>"DIV", "width"=>720, "class"=>"grid", "left"=>43, "top"=>14}

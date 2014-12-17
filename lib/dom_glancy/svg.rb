@@ -1,5 +1,5 @@
 module DomGlancy
-  class DomGlancy
+  class SVG
     def generate_svg(rectangles)
       width, height = get_window_size_from_rectangles(rectangles)
       s = svg_start(width, height)

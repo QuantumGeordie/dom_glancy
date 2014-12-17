@@ -7,6 +7,7 @@ class DomGlancyTest < DomGlancyTestCase
     @test_root = 'elbow'
     prep_locations_for_test
     make_master_test_file(@test_root, array_of_elements_small)
+    @dom_glancy = DomGlancy::DomGlancy.new
   end
 
   def teardown

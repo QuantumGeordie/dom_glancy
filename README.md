@@ -8,6 +8,11 @@ _you know. like taking a quick glance at the DOM, but make it sound kinda like T
 
 [![Build Status](https://travis-ci.org/QuantumGeordie/dom_glancy.svg?branch=master)](https://travis-ci.org/QuantumGeordie/dom_glancy)
 
+## Code Climate
+
+[![Code Climate](https://codeclimate.com/github/QuantumGeordie/dom_glancy/badges/gpa.svg)](https://codeclimate.com/github/QuantumGeordie/dom_glancy)
+[![Test Coverage](https://codeclimate.com/github/QuantumGeordie/dom_glancy/badges/coverage.svg)](https://codeclimate.com/github/QuantumGeordie/dom_glancy)
+
 ## Installation
 
 Add this line to your application's Gemfile in the test and development groups:

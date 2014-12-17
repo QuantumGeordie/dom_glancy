@@ -1,6 +1,5 @@
 module DomGlancy
   class DomGlancy
-
     def self.master_filename(test_root)
       File.join(::DomGlancy.configuration.master_file_location, "#{test_root}_master.yaml")
     end

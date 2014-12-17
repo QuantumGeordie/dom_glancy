@@ -1,5 +1,5 @@
 module DomGlancy
-  class DomGlancy
+  class Analyzer
     def analyze(master_data, current_data, test_root = nil)
       output_hash = {}
 
@@ -48,6 +48,8 @@ module DomGlancy
       output_hash
     end
 
+    private
+
     def make_svg(set_master_not_current, set_current_not_master, set_changed_master)
       js_id = 0
       set_master_not_current.each do |item|
@@ -63,12 +65,14 @@ module DomGlancy
         js_id += 1
       end
 
-      rectangles = set_current_not_master.map  { |item| item.merge(format__not_in_master) }
-      rectangles << set_master_not_current.map { |item| item.merge(format__not_in_current) }
-      rectangles << set_changed_master.map     { |item| item.merge(format__same_but_different) }
+      svg = ::DomGlancy::SVG.new
+
+      rectangles = set_current_not_master.map  { |item| item.merge(svg.format__not_in_master) }
+      rectangles << set_master_not_current.map { |item| item.merge(svg.format__not_in_current) }
+      rectangles << set_changed_master.map     { |item| item.merge(svg.format__same_but_different) }
       rectangles.flatten!
 
-      generate_svg(rectangles)
+      svg.generate_svg(rectangles)
     end
 
     def create_diff_file(set_current_not_master, set_master_not_current, set_changed_master, test_root)
@@ -116,31 +120,8 @@ module DomGlancy
       ok_pairs
     end
 
-    def make_analysis_failure_report(analysis_data)
-      return '' if analysis_data[:same]
-
-      msg = ["\n------- DOM Comparison Failure ------"]
-      msg << "Elements not in master: #{analysis_data[:not_in_master].count}"
-      msg << "Elements not in current: #{analysis_data[:not_in_current].count}"
-      msg << "Changed elements: #{analysis_data[:changed_element_pairs].count}"
-      msg << "Files:"
-      msg << "\tcurrent: #{DomGlancy.current_filename(analysis_data[:test_root])}"
-      msg << "\tmaster: #{DomGlancy.master_filename(analysis_data[:test_root])}"
-      msg << "\tdifference: #{DomGlancy.diff_filename(analysis_data[:test_root])}"
-      msg << "Bless this current data set:"
-      msg << "\t#{blessing_copy_string(analysis_data[:test_root])}"
-      msg<< "-------------------------------------"
-
-      msg.join("\n")
-    end
-
     def add_similarity(element)
       element.merge(:similarity => ::DomGlancy.configuration.similarity)
-    end
-
-
-    def blessing_copy_string(test_root)
-      "cp #{DomGlancy.current_filename(test_root)} #{DomGlancy.master_filename(test_root)}"
     end
   end
 end
