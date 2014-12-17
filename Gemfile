@@ -13,3 +13,7 @@ gem 'mocha'
 gem 'selenium-webdriver', '2.44.0'
 gem 'capybara', '2.2.1'
 gem 'ae_page_objects', '1.3.0'
+
+group :test do
+  gem 'codeclimate-test-reporter', require: nil
+end
