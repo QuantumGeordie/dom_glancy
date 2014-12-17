@@ -116,7 +116,9 @@ class SeleniumTestCase < Minitest::Test
   end
 
   def assert_artifacts_on_difference(test_root)
-    filename = DomGlancy::DomGlancy.diff_filename(test_root)
+    fnb = DomGlancy::FileNameBuilder.new(test_root)
+
+    filename = fnb.diff
     assert File.exists?(filename), "Diff file should exist: #{filename}"
 
     filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__changed_master__diff.yaml")
@@ -128,15 +130,17 @@ class SeleniumTestCase < Minitest::Test
     filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
     assert File.exists?(filename), "Master, not current, file should exist: #{filename}"
 
-    filename = DomGlancy::DomGlancy.master_filename(test_root)
+    filename = fnb.master
     assert File.exists?(filename), "Master file should exist: #{filename}"
 
-    filename = DomGlancy::DomGlancy.current_filename(test_root)
+    filename = fnb.current
     assert File.exists?(filename), "Current file should exist: #{filename}"
   end
 
   def assert_artifacts_on_same(test_root)
-    filename = DomGlancy::DomGlancy.diff_filename(test_root)
+    fnb = DomGlancy::FileNameBuilder.new(test_root)
+
+    filename = fnb.diff
     refute File.exists?(filename), "No diff file should exist: #{filename}"
 
     filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__changed_master__diff.yaml")
@@ -148,10 +152,10 @@ class SeleniumTestCase < Minitest::Test
     filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
     refute File.exists?(filename), "No master, not current, file should exist: #{filename}"
 
-    filename = DomGlancy::DomGlancy.master_filename(test_root)
+    filename = fnb.master
     assert File.exists?(filename), "Master file should exist: #{filename}"
 
-    filename = DomGlancy::DomGlancy.current_filename(test_root)
+    filename = fnb.current
     refute File.exists?(filename), "No current file should exist: #{filename}"
   end
 

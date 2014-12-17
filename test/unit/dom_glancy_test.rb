@@ -7,6 +7,7 @@ class DomGlancyTest < DomGlancyTestCase
     @test_root = 'elbow'
     prep_locations_for_test
     make_master_test_file(@test_root, array_of_elements_small)
+    @dom_glancy = DomGlancy::DomGlancy.new
   end
 
   def teardown
@@ -15,7 +16,8 @@ class DomGlancyTest < DomGlancyTestCase
 
   def test_dom_glancy__missing_master
     this_test_root = 'not_elbow'
-    blessing_copy_string = "cp #{DomGlancy::DomGlancy.current_filename(this_test_root)} #{DomGlancy::DomGlancy.master_filename(this_test_root)}"
+    fnb = DomGlancy::FileNameBuilder.new(this_test_root)
+    blessing_copy_string = "cp #{fnb.current} #{fnb.master}"
 
     @dom_glancy.stubs(:perform_mapping_operation).returns(array_of_elements_small)
     mapping_results = @dom_glancy.page_map_same?(this_test_root)
@@ -39,7 +41,9 @@ class DomGlancyTest < DomGlancyTestCase
   end
 
   def test_dom_glancy__fail_one_new_element
-    blessing_copy_string = "cp #{DomGlancy::DomGlancy.current_filename(@test_root)} #{DomGlancy::DomGlancy.master_filename(@test_root)}"
+    fnb = DomGlancy::FileNameBuilder.new(@test_root)
+
+    blessing_copy_string = "cp #{fnb.current} #{fnb.master}"
 
     current_data = array_of_elements_small << single_element_hash
     @dom_glancy.stubs(:perform_mapping_operation).returns(current_data)
@@ -51,9 +55,9 @@ class DomGlancyTest < DomGlancyTestCase
     assert_match 'Elements not in current: 0', mapping_results[1], 'error message contents'
     assert_match 'Changed elements: 0',        mapping_results[1], 'error message contents'
 
-    assert_match "current: #{DomGlancy::DomGlancy.current_filename(@test_root)}", mapping_results[1], 'error message contents'
-    assert_match "master: #{DomGlancy::DomGlancy.master_filename(@test_root)}",   mapping_results[1], 'error message contents'
-    assert_match "difference: #{DomGlancy::DomGlancy.diff_filename(@test_root)}", mapping_results[1], 'error message contents'
+    assert_match "current: #{fnb.current}", mapping_results[1], 'error message contents'
+    assert_match "master: #{fnb.master}",   mapping_results[1], 'error message contents'
+    assert_match "difference: #{fnb.diff}", mapping_results[1], 'error message contents'
 
     assert_match blessing_copy_string, mapping_results[1], 'blessing copy string should be in the error message'
 
@@ -70,7 +74,7 @@ class DomGlancyTest < DomGlancyTestCase
   end
 
   def make_master_test_file(test_root, data)
-    filename = DomGlancy::DomGlancy.master_filename(test_root)
+    filename = DomGlancy::FileNameBuilder.new(test_root).master
     yaml_data = data.to_yaml
     File.open(filename, 'w') { |file| file.write(yaml_data) }
   end

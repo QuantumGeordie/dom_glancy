@@ -41,7 +41,7 @@ class DomGlancyTestCase < Minitest::Test
   include TestHelpers::Location
 
   def setup
-    @dom_glancy = DomGlancy::DomGlancy.new
+    # @dom_glancy = DomGlancy::DomGlancy.new
   end
 
   DomGlancy.configure
