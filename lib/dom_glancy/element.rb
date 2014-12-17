@@ -15,16 +15,16 @@ module DomGlancy
     attr_accessor :similarity
 
     def initialize(h = {})
-      @tag        = h[:tag]        || h['tag']
-      @left       = h[:left]       || h['left']
-      @top        = h[:top]        || h['top']
-      @height     = h[:height]     || h['height']
-      @width      = h[:width]      || h['width']
-      @klass      = h[:class]      || h['class']
-      @id         = h[:id]         || h['id']
-      @style      = h[:style]      || h['style']
-      @visible    = h[:visible]    || h['visible']
-      @similarity = h[:similarity] || h['similarity'] || 0
+      @tag        = h['tag']
+      @left       = h['left']
+      @top        = h['top']
+      @height     = h['height']
+      @width      = h['width']
+      @klass      = h['class']
+      @id         = h['id']
+      @style      = h['style']
+      @visible    = h['visible']
+      @similarity = h['similarity'] || 0
     end
 
     def same_element?(anOther)

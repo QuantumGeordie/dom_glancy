@@ -121,7 +121,7 @@ module DomGlancy
     end
 
     def add_similarity(element)
-      element.merge(:similarity => ::DomGlancy.configuration.similarity)
+      element.merge('similarity' => ::DomGlancy.configuration.similarity)
     end
   end
 end
