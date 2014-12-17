@@ -1,9 +1,8 @@
 language: ruby
 rvm:
   - "1.9.3"
-  - "2.0.0"
-  - "2.1.0"
   - "2.1.2"
+  - "2.1.5"
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
@@ -11,3 +10,5 @@ script:
   - bundle exec rake
 addons:
   firefox: "31.0"
+  code_climate:
+    repo_token: 83887755db231f4c094598500eb6044a9cc4cd0e3993fa5af7d705a6b64cfb2a
