@@ -34,8 +34,9 @@ class DomGlancyController < DomGlancyApplicationController
 
   def make_master
     test_root = params[:file]
-    src = DomGlancy::DomGlancy.current_filename(test_root)
-    dst = DomGlancy::DomGlancy.master_filename(test_root)
+    fnb = DomGlancy::FileNameBuilder.new(test_root)
+    src = fnb.current
+    dst = fnb.master
     FileUtils.cp src, dst
 
     redirect_to '/dom_glancy/new'
@@ -43,7 +44,8 @@ class DomGlancyController < DomGlancyApplicationController
 
   def delete_current
     test_root = params[:file]
-    src = DomGlancy::DomGlancy.current_filename(test_root)
+    fnb = DomGlancy::FileNameBuilder.new(test_root)
+    src = fnb.current
     FileUtils.rm_rf src
 
     redirect_to '/dom_glancy/new'
@@ -92,14 +94,15 @@ class DomGlancyController < DomGlancyApplicationController
 
     blessings.each do |blessing|
       base_test_name = blessing
+      fnb = DomGlancy::FileNameBuilder.new(base_test_name)
 
-      src_yaml = DomGlancy::DomGlancy.current_filename(base_test_name)
-      dst_yaml = DomGlancy::DomGlancy.master_filename(base_test_name)
+      src_yaml = fnb.current
+      dst_yaml = fnb.master
 
       FileUtils.cp src_yaml, dst_yaml if File.exist?(src_yaml)
 
       if params['delete_on_bless'] == 'true'
-        files_to_remove  = [DomGlancy::DomGlancy.diff_filename(base_test_name)]
+        files_to_remove  = [fnb.diff]
         files_to_remove << File.join(DomGlancy.configuration.diff_file_location, blessing + '__current_not_master__diff.yaml')
         files_to_remove << File.join(DomGlancy.configuration.diff_file_location, blessing + '__master_not_current__diff.yaml')
         files_to_remove << File.join(DomGlancy.configuration.diff_file_location, blessing + '__changed_master__diff.yaml')

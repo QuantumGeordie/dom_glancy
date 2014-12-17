@@ -21,7 +21,7 @@ class ViewerTest < SeleniumTestCase
 
   def test_make_master
     names = %w(steven_gerrard jordan_henderson adam_lallana)
-    names.each { |name| File.open(DomGlancy::DomGlancy.current_filename(name), 'w') { |f| f.write '' } }
+    names.each { |name| File.open(DomGlancy::FileNameBuilder.new(name).current, 'w') { |f| f.write '' } }
 
     index_page = visit_index
     new_tests_page = index_page.navigation.new_page!

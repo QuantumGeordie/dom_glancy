@@ -76,7 +76,7 @@ module DomGlancy
     end
 
     def create_diff_file(set_current_not_master, set_master_not_current, set_changed_master, test_root)
-      filename = DomGlancy.diff_filename(test_root)
+      filename = ::DomGlancy::FileNameBuilder.new(test_root).diff
       svg = make_svg(set_current_not_master, set_master_not_current, set_changed_master)
       File.open(filename, 'w') { |file| file.write(svg) }
       save_set_info(test_root, 'current_not_master', set_current_not_master)
