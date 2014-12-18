@@ -70,34 +70,14 @@ module DomGlancy
       end
     end
 
-    def make_svg(set_master_not_current, set_current_not_master, set_changed_master)
-      js_id = 0
-      set_master_not_current.each do |item|
-        item[:js_id] = js_id
-        js_id += 1
-      end
-      set_current_not_master.each do |item|
-        item[:js_id] = js_id
-        js_id += 1
-      end
-      set_changed_master.each do |item|
-        item[:js_id] = js_id
-        js_id += 1
-      end
-
-      svg = ::DomGlancy::SVG.new
-
-      rectangles = set_current_not_master.map  { |item| item.merge(svg.format__not_in_master) }
-      rectangles << set_master_not_current.map { |item| item.merge(svg.format__not_in_current) }
-      rectangles << set_changed_master.map     { |item| item.merge(svg.format__same_but_different) }
-      rectangles.flatten!
-
-      svg.generate_svg(rectangles)
+    def make_svg
+      svg = ::DomGlancy::SVG.new(@set_current_not_master, @set_master_not_current, @set_changed_master)
+      svg.generate_svg
     end
 
     def create_diff_file
       filename = ::DomGlancy::FileNameBuilder.new(@test_root).diff
-      svg = make_svg(@set_current_not_master, @set_master_not_current, @set_changed_master)
+      svg = make_svg
       File.open(filename, 'w') { |file| file.write(svg) }
       save_set_info(@test_root, 'current_not_master', @set_current_not_master)
       save_set_info(@test_root, 'master_not_current', @set_master_not_current)
@@ -125,19 +105,25 @@ module DomGlancy
         end
       end
 
-      @changed_element_pairs.each do |item1, item2|
-        @set_current_not_master.delete(item1)
-        @set_current_not_master.delete(item2)
-
-        @set_master_not_current.delete(item1)
-        @set_master_not_current.delete(item2)
-      end
+      remove_elements_from_data_sets @changed_element_pairs
 
       @changed_element_pairs.select!{ |pair| !DOMElement.new(add_similarity(pair[0])).close_enough?(DOMElement.new(add_similarity(pair[1]))) }
 
       @changed_element_pairs.each do |pair|
         @set_changed_master.add(pair.first)
       end
+    end
+
+    def remove_elements_from_data_sets(element_pairs)
+      element_pairs.each do |element_1, element_2|
+        remove_element_from_data_sets element_1
+        remove_element_from_data_sets element_2
+      end
+    end
+
+    def remove_element_from_data_sets(element)
+      @set_current_not_master.delete element
+      @set_master_not_current.delete element
     end
 
     def similar_pairs(set1, set2)
