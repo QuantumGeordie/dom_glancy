@@ -1,5 +1,5 @@
 module DomGlancy
-  class FileMapper
+  class PageMapper
 
     def run(test_root)
       filename = ::DomGlancy::FileNameBuilder.new(test_root).current

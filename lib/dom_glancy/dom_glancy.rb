@@ -3,7 +3,7 @@ module DomGlancy
     def page_map_same?(test_root)
       purge_old_files_before_test(test_root)
 
-      result, msg = ::DomGlancy::FileMapper.new.run(test_root)
+      result, msg = ::DomGlancy::PageMapper.new.run(test_root)
       return [result, msg]  unless result
 
       result, msg = master_file_exists?(test_root)
