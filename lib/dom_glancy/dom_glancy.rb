@@ -2,6 +2,7 @@ module DomGlancy
   class DomGlancy
     def page_map_same?(test_root)
       purge_old_files_before_test(test_root)
+      fnb = ::DomGlancy::FileNameBuilder.new(test_root)
 
       result, msg = ::DomGlancy::PageMapper.new.run(test_root)
       return [result, msg]  unless result
@@ -9,18 +10,24 @@ module DomGlancy
       result, msg = master_file_exists?(test_root)
       return [result, msg] unless result
 
-      result, msg, current_data = read_map_file(::DomGlancy::FileNameBuilder.new(test_root).current)
+      result, msg, current_data = ::DomGlancy::MapFile.new.read(fnb.current)
       return [result, msg]  unless result
 
-      result, msg, master_data = read_map_file(::DomGlancy::FileNameBuilder.new(test_root).master)
+      result, msg, master_data = ::DomGlancy::MapFile.new.read(fnb.master)
       return [result, msg]  unless result
 
-      analysis_data = ::DomGlancy::Analyzer.new(master_data, current_data, test_root).analyze
+      analyzer = ::DomGlancy::Analyzer.new(master_data, current_data, test_root)
+      analysis_data = analyzer.analyze
+
+      unless analysis_data[:same]
+        analysis_reporter = ::DomGlancy::AnalysisReporter.new(test_root, analyzer.set_current_not_master, analyzer.set_master_not_current, analyzer.set_changed_master)
+        analysis_reporter.create_diff_file
+      end
 
       msg = make_analysis_failure_report(analysis_data)
       result = analysis_data[:same]
 
-      File.delete ::DomGlancy::FileNameBuilder.new(test_root).current if result
+      File.delete fnb.current if result
 
       [result, msg]
     end
@@ -50,17 +57,6 @@ module DomGlancy
     def blessing_copy_string(test_root)
       fnb = ::DomGlancy::FileNameBuilder.new(test_root)
       "cp #{fnb.current} #{fnb.master}"
-    end
-
-    def read_map_file(filename)
-      results = [true, '', nil]
-      begin
-        results[2] = YAML::load( File.open( filename ) )
-      rescue Exception => e
-        results = [false, "Error reading data from file: #{filename}", nil]
-      end
-
-      results
     end
 
     def master_file_exists?(test_root)
