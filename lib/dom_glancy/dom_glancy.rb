@@ -15,7 +15,7 @@ module DomGlancy
       result, msg, master_data = read_map_file(::DomGlancy::FileNameBuilder.new(test_root).master)
       return [result, msg]  unless result
 
-      analysis_data = ::DomGlancy::Analyzer.new.analyze(master_data, current_data, test_root)
+      analysis_data = ::DomGlancy::Analyzer.new(master_data, current_data, test_root).analyze
 
       msg = make_analysis_failure_report(analysis_data)
       result = analysis_data[:same]

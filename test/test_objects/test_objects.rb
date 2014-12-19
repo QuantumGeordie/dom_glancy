@@ -595,7 +595,7 @@ module TestObjects
       YAML::load(data)
     end
   
-    def travis_local_generated_master_2
+  def travis_local_generated_master_2
       data = <<-DATA
 ---
 - height: 45
@@ -1160,11 +1160,10 @@ module TestObjects
   visible: false
       DATA
   
-      YAML::load(data)
-    end
-  
-  
-    def travis_generated_current
+    YAML::load(data)
+  end
+
+  def travis_generated_current
       data = <<-DATA
 ---
 - height: 45

@@ -1,6 +1,20 @@
 module DomGlancy
   class SVG
-    def generate_svg(rectangles)
+    @set_current_not_master
+    @set_master_not_current
+    @set_changed_master
+
+    def initialize(set_current_not_master, set_master_not_current, set_changed_master)
+      @set_current_not_master = set_current_not_master
+      @set_master_not_current = set_master_not_current
+      @set_changed_master     = set_changed_master
+    end
+
+    def generate_svg
+      add_ids
+
+      rectangles = make_rectangles
+
       width, height = get_window_size_from_rectangles(rectangles)
       s = svg_start(width, height)
 
@@ -11,6 +25,31 @@ module DomGlancy
 
       s += svg_end
       s += "\n"
+    end
+
+    private
+
+    def add_ids
+      js_id = 0
+      @set_master_not_current.each do |item|
+        item[:js_id] = js_id
+        js_id += 1
+      end
+      @set_current_not_master.each do |item|
+        item[:js_id] = js_id
+        js_id += 1
+      end
+      @set_changed_master.each do |item|
+        item[:js_id] = js_id
+        js_id += 1
+      end
+    end
+
+    def make_rectangles
+      rectangles = @set_current_not_master.map  { |item| item.merge(format__not_in_master) }
+      rectangles << @set_master_not_current.map { |item| item.merge(format__not_in_current) }
+      rectangles << @set_changed_master.map     { |item| item.merge(format__same_but_different) }
+      rectangles.flatten!
     end
 
     def get_window_size_from_rectangles(rectangles)
