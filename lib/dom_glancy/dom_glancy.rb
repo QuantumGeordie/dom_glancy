@@ -24,7 +24,7 @@ module DomGlancy
         analysis_reporter.create_diff_file
       end
 
-      msg = make_analysis_failure_report(analysis_data)
+      msg = console_failure_string(analysis_data)
       result = analysis_data[:same]
 
       File.delete fnb.current if result
@@ -34,7 +34,7 @@ module DomGlancy
 
     private
 
-    def make_analysis_failure_report(analysis_data)
+    def console_failure_string(analysis_data)
       return '' if analysis_data[:same]
 
       fnb = ::DomGlancy::FileNameBuilder.new(analysis_data[:test_root])

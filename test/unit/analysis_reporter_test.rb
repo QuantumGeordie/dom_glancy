@@ -17,6 +17,11 @@ class AnalysisReporterTest < DomGlancyTestCase
     reporter.create_diff_file
 
     files = Dir[File.join(DomGlancy.configuration.diff_file_location, '*')]
+
     assert_equal 4, files.length
+    assert_includes files, File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__changed_master__diff.yaml")
+    assert_includes files, File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__current_not_master__diff.yaml")
+    assert_includes files, File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
+    assert_includes files, File.join(DomGlancy.configuration.diff_file_location, "#{test_root}_diff.html")
   end
 end

@@ -16,9 +16,9 @@ module DomGlancy
       filename = ::DomGlancy::FileNameBuilder.new(@test_root).diff
       svg = make_svg
       File.open(filename, 'w') { |file| file.write(svg) }
-      save_set_info(@test_root, 'current_not_master', @set_current_not_master)
-      save_set_info(@test_root, 'master_not_current', @set_master_not_current)
-      save_set_info(@test_root, 'changed_master', @set_changed_master)
+      save_set_info('current_not_master', @set_current_not_master)
+      save_set_info('master_not_current', @set_master_not_current)
+      save_set_info('changed_master',     @set_changed_master)
     end
 
     private
@@ -28,8 +28,8 @@ module DomGlancy
       svg.generate_svg
     end
 
-    def save_set_info(test_root, suffix, data_set)
-      filename = File.join(::DomGlancy.configuration.diff_file_location, "#{test_root}__#{suffix}__diff.yaml")
+    def save_set_info(suffix, data_set)
+      filename = File.join(::DomGlancy.configuration.diff_file_location, "#{@test_root}__#{suffix}__diff.yaml")
       File.open(filename, 'w') { |file| file.write(data_set.to_a.to_yaml) }
     end
   end
