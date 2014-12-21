@@ -1,11 +1,12 @@
 module DomGlancy
   class Analyzer
+    attr_reader :set_current_not_master
+    attr_reader :set_master_not_current
+    attr_reader :set_changed_master
+
     @master_data
     @current_data
     @test_root
-    @set_current_not_master
-    @set_master_not_current
-    @set_changed_master
     @changed_element_pairs
 
     def initialize(master_data, current_data, test_root = nil)
@@ -22,7 +23,7 @@ module DomGlancy
         extract_changed_elements
       end
 
-      create_diff_file if @test_root && !all_same?
+      # create_diff_file if @test_root && !all_same?
       compile_results
     end
 
@@ -68,28 +69,6 @@ module DomGlancy
         @set_current_not_master.delete(item1)
         @set_master_not_current.delete(item2)
       end
-    end
-
-    def make_svg
-      svg = ::DomGlancy::SVG.new(@set_current_not_master, @set_master_not_current, @set_changed_master)
-      svg.generate_svg
-    end
-
-    def create_diff_file
-      filename = ::DomGlancy::FileNameBuilder.new(@test_root).diff
-      svg = make_svg
-      File.open(filename, 'w') { |file| file.write(svg) }
-      save_set_info(@test_root, 'current_not_master', @set_current_not_master)
-      save_set_info(@test_root, 'master_not_current', @set_master_not_current)
-      save_set_info(@test_root, 'changed_master', @set_changed_master)
-    end
-
-    def save_set_info(test_root, suffix, data_set)
-      filename = File.join(::DomGlancy.configuration.diff_file_location, "#{test_root}__#{suffix}__diff.yaml")
-
-      data_array = data_set.to_a
-
-      File.open(filename, 'w') { |file| file.write(data_array.to_yaml) }
     end
 
     def extract_changed_elements

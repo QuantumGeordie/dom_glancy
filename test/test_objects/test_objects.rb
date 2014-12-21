@@ -2025,4 +2025,8 @@ module TestObjects
     DATA
     YAML::load(data)
   end
+
+  def mapping_json
+    "--- - id: '12'   height: 238   visible: true   tag: DIV   width: 720   class: grid   left: 43   top: 14 - id: '14'   height: 0   visible: true   tag: SPAN   width: 0   class: mm--title_text_sub   left: 71   top: 86 "
+  end
 end

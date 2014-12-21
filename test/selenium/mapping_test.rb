@@ -129,7 +129,8 @@ class MappingTest < SeleniumTestCase
   private
 
   def map_current_page_and_save_as_master(test_root)
-    map_data = @dom_glancy.send(:perform_mapping_operation)
+    file_mapper = DomGlancy::PageMapper.new
+    map_data = file_mapper.send(:map_page)
     File.open(DomGlancy::FileNameBuilder.new(test_root).master, 'w') { |file| file.write(map_data.to_yaml) }
   end
 

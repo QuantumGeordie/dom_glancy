@@ -19,7 +19,7 @@ class DomGlancyTest < DomGlancyTestCase
     fnb = DomGlancy::FileNameBuilder.new(this_test_root)
     blessing_copy_string = "cp #{fnb.current} #{fnb.master}"
 
-    @dom_glancy.stubs(:perform_mapping_operation).returns(array_of_elements_small)
+    ::DomGlancy::PageMapper.any_instance.stubs(:map_page).returns(array_of_elements_small)
     mapping_results = @dom_glancy.page_map_same?(this_test_root)
 
     refute mapping_results[0], 'test should fail because no master'
@@ -27,14 +27,15 @@ class DomGlancyTest < DomGlancyTestCase
     assert_match blessing_copy_string, mapping_results[1], 'blessing copy string should be in the error message'
 
     `#{blessing_copy_string}`
-    @dom_glancy.stubs(:perform_mapping_operation).returns(array_of_elements_small)
+    ::DomGlancy::PageMapper.any_instance.stubs(:map_page).returns(array_of_elements_small)
 
     mapping_results = @dom_glancy.page_map_same?(this_test_root)
     assert mapping_results[0], 'test should now pass with copied master'
   end
 
   def test_dom_glancy__pass
-    @dom_glancy.stubs(:perform_mapping_operation).returns(array_of_elements_small)
+    ::DomGlancy::PageMapper.any_instance.stubs(:map_page).returns(array_of_elements_small)
+
     mapping_results = @dom_glancy.page_map_same?(@test_root)
 
     assert mapping_results[0], mapping_results[1]
@@ -46,7 +47,7 @@ class DomGlancyTest < DomGlancyTestCase
     blessing_copy_string = "cp #{fnb.current} #{fnb.master}"
 
     current_data = array_of_elements_small << single_element_hash
-    @dom_glancy.stubs(:perform_mapping_operation).returns(current_data)
+    ::DomGlancy::PageMapper.any_instance.stubs(:map_page).returns(current_data)
     mapping_results = @dom_glancy.page_map_same?(@test_root)
 
     refute mapping_results[0], 'page same results should be false'
