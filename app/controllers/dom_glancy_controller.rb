@@ -76,12 +76,6 @@ class DomGlancyController < DomGlancyApplicationController
     redirect_to dom_glancy_path
   end
 
-  def about
-    about_file = File.expand_path('../../../README.md', __FILE__)
-    raw = File.read(about_file)
-    @about = Kramdown::Document.new(raw).to_html
-  end
-
   def clear
     Dir[File.join(DomGlancy.configuration.diff_file_location, '*.yaml'), File.join(DomGlancy.configuration.diff_file_location, '*.html')].each { |f| FileUtils.rm_rf(f) }
     Dir[File.join(DomGlancy.configuration.current_file_location, '*.yaml')].each { |f| FileUtils.rm_rf(f) }
