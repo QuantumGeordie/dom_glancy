@@ -11,18 +11,17 @@
       <%= raw(contents) %>
     </td>
     <td>
-      <h2>in current dom, not master</h2>
+      <h2><span class="hideable" id="not_master_toggle">+</span> Not in Master</h2>
       <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_not_master)) %>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--not_master'} %>
 
-      <h2>in master dom, not current</h2>
+      <h2><span class="hideable" id="not_current_toggle">+</span> Not in Current</h2>
       <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_not_current)) %>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--not_current'} %>
 
-      <h2>changed</h2>
+      <h2><span class="hideable" id="changed_toggle">+</span> Changed</h2>
       <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_changed)) %>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--changed'} %>
-
     </td>
   </tr>
 </table>
@@ -39,4 +38,5 @@
     var this_element = document.getElementById(element_id);
     this_element.setAttribute("stroke-width", "5");
   }
+
 </script>

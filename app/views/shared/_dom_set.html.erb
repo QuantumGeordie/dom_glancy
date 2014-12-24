@@ -1,4 +1,4 @@
-<div id="<%= finder_id %>">
+<div id="<%= finder_id %>" class="hide">
   <% if elements.length > 0 %>
     <table class='kr--dom'>
       <thead>
@@ -11,6 +11,7 @@
           <th>width</th>
           <th>height</th>
           <th>visible</th>
+          <th>was</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,7 @@
             <td><%= element['width'] %></td>
             <td><%= element['height'] %></td>
             <td><%= element['visible'] %></td>
+            <td><%= element['was'] %></td>
           </tr>
         <% end %>
       </tbody>

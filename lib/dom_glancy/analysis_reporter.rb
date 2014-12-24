@@ -4,12 +4,14 @@ module DomGlancy
     @set_current_not_master
     @set_master_not_current
     @set_changed_master
+    @changed_pairs
 
-    def initialize(test_root, set_current_not_master,set_master_not_current, set_changed_master)
+    def initialize(test_root, set_current_not_master,set_master_not_current, set_changed_master, changed_pairs)
       @test_root              = test_root
       @set_current_not_master = set_current_not_master
       @set_master_not_current = set_master_not_current
       @set_changed_master     = set_changed_master
+      @changed_pairs          = changed_pairs
     end
 
     def create_diff_file
@@ -19,6 +21,7 @@ module DomGlancy
       save_set_info('current_not_master', @set_current_not_master)
       save_set_info('master_not_current', @set_master_not_current)
       save_set_info('changed_master',     @set_changed_master)
+      save_set_info('changed_pairs',      @changed_pairs)
     end
 
     private

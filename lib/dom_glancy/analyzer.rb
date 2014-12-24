@@ -3,11 +3,11 @@ module DomGlancy
     attr_reader :set_current_not_master
     attr_reader :set_master_not_current
     attr_reader :set_changed_master
+    attr_reader :changed_element_pairs
 
     @master_data
     @current_data
     @test_root
-    @changed_element_pairs
 
     def initialize(master_data, current_data, test_root = nil)
       @master_data  = master_data
@@ -45,6 +45,7 @@ module DomGlancy
         not_in_master:         @set_current_not_master,
         not_in_current:        @set_master_not_current,
         changed_element_pairs: @changed_element_pairs,
+        changed_master:        @set_changed_master,
         test_root:             @test_root,
         same:                  all_same?
       }
@@ -74,12 +75,12 @@ module DomGlancy
     def extract_changed_elements
       @changed_element_pairs = []
 
-      @set_current_not_master.each do |item1|
+      @set_current_not_master.each do |item1|           # in current
         element1 = DOMElement.new(item1)
-        @set_master_not_current.each do |item2|
+        @set_master_not_current.each do |item2|         # in master
           element2 = DOMElement.new(item2)
           if element1.same_element?(element2)
-            @changed_element_pairs << [item1, item2]
+            @changed_element_pairs << [item1, item2]    # [current version, master version]
           end
         end
       end
@@ -89,7 +90,10 @@ module DomGlancy
       @changed_element_pairs.select!{ |pair| !DOMElement.new(add_similarity(pair[0])).close_enough?(DOMElement.new(add_similarity(pair[1]))) }
 
       @changed_element_pairs.each do |pair|
-        @set_changed_master.add(pair.first)
+        current_element = pair[0].dup
+        master_element  = pair[1].dup
+        current_element['was'] = master_element
+        @set_changed_master.add(current_element)
       end
     end
 

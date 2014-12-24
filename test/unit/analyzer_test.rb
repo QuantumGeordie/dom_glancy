@@ -8,9 +8,9 @@ class AnalyzerTest < DomGlancyTestCase
 
     analysis = DomGlancy::Analyzer.new(master_data, current_data).analyze
 
-    assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 0, analysis[:not_in_master].count,  'results of data analysis: not_in_master'
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
-    assert analysis[:same], 'results of data analysis.same'
+    assert analysis[:same],                          'results of data analysis.same'
   end
 
   def test_one_id_different
@@ -20,9 +20,9 @@ class AnalyzerTest < DomGlancyTestCase
 
     analysis = DomGlancy::Analyzer.new(master_data, current_data).analyze
 
-    assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 1, analysis[:not_in_master].count,  'results of data analysis: not_in_master'
     assert_equal 1, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
-    refute analysis[:same], 'results of data analysis.same'
+    refute analysis[:same],                          'results of data analysis.same'
   end
 
   def test_one_new_element
@@ -32,9 +32,9 @@ class AnalyzerTest < DomGlancyTestCase
 
     analysis = DomGlancy::Analyzer.new(master_data, current_data).analyze
 
-    assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 1, analysis[:not_in_master].count,  'results of data analysis: not_in_master'
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
-    refute analysis[:same], 'results of data analysis.same'
+    refute analysis[:same],                          'results of data analysis.same'
   end
 
   def test_two_changed
@@ -45,11 +45,11 @@ class AnalyzerTest < DomGlancyTestCase
 
     analysis = DomGlancy::Analyzer.new(master_data, current_data).analyze
 
-    assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
-    assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    assert_equal 0, analysis[:not_in_master].count,         'results of data analysis: not_in_master'
+    assert_equal 0, analysis[:not_in_current].count,        'results of data analysis: not_in_current'
     assert_equal 2, analysis[:changed_element_pairs].count, 'changed element pairs'
-    refute analysis[:same], 'results of data analysis.same'
-
+    assert_equal 2, analysis[:changed_master].count,        'changed master elements'
+    refute analysis[:same],                                 'results of data analysis.same'
   end
 
   def test_one_changed_less_than_similarity_factor
@@ -60,10 +60,10 @@ class AnalyzerTest < DomGlancyTestCase
 
     analysis = DomGlancy::Analyzer.new(master_data, current_data).analyze
 
-    assert_equal 0, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
-    assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
+    assert_equal 0, analysis[:not_in_master].count,         'results of data analysis: not_in_master'
+    assert_equal 0, analysis[:not_in_current].count,        'results of data analysis: not_in_current'
     assert_equal 0, analysis[:changed_element_pairs].count, 'changed element pairs'
-    assert analysis[:same], 'results of data analysis.same'
+    assert analysis[:same],                                 'results of data analysis.same'
   end
 
   def test_one_changed_one_missing_one_added
@@ -77,7 +77,7 @@ class AnalyzerTest < DomGlancyTestCase
 
     analysis = DomGlancy::Analyzer.new(master_data, current_data).analyze
 
-    assert_equal 1, analysis[:not_in_master].count, 'results of data analysis: not_in_master'
+    assert_equal 1, analysis[:not_in_master].count,          'results of data analysis: not_in_master'
     assert_equal 1, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
     assert_equal 1, analysis[:changed_element_pairs].count, 'changed element pairs'
     refute analysis[:same], 'results of data analysis.same'
@@ -105,6 +105,68 @@ class AnalyzerTest < DomGlancyTestCase
     assert_equal 0, analysis[:not_in_current].count, 'results of data analysis: not_in_current'
     assert_equal 1, analysis[:changed_element_pairs].count, 'changed element pairs'
     refute analysis[:same], 'results of data analysis.same'
+  end
+
+  def xtest_similar_pairs
+    test_root = 'suso'
+    file_1 = File.expand_path('../../test_objects/options_file_1.yaml', __FILE__)
+    file_2 = File.expand_path('../../test_objects/options_file_2.yaml', __FILE__)
+    file_1a = File.expand_path('../../test_objects/results_1.yaml', __FILE__)
+    file_2a = File.expand_path('../../test_objects/results_2.yaml', __FILE__)
+
+    result, msg, current_data = DomGlancy::MapFile.new.read(file_1)
+    result, msg, master_data  = DomGlancy::MapFile.new.read(file_2)
+
+    analyzer = ::DomGlancy::Analyzer.new(master_data, current_data, test_root)
+
+    analyzer.send(:clear_results)
+    similar_pairs = analyzer.send(:similar_pairs, analyzer.set_current_not_master, analyzer.set_master_not_current)
+
+    puts "current not master: #{analyzer.set_current_not_master.count}"
+    puts "master not current: #{analyzer.set_master_not_current.count}"
+    puts "similar pairs:      #{similar_pairs.count}"
+
+    hist = {}
+    hist2 = {}
+    similar_pairs.each do |pair|
+      hist[pair[0].to_s] = hist[pair[0].to_s].to_i + 1
+      hist2[pair[1].to_s] = hist2[pair[1].to_s].to_i + 1
+    end
+
+    puts hist.keys.count
+    puts hist2.keys.count
+
+    analyzer.send(:remove_elements_from_data_sets, similar_pairs)
+    similar_pairs = analyzer.send(:similar_pairs, analyzer.set_current_not_master, analyzer.set_master_not_current)
+
+    puts "current not master: #{analyzer.set_current_not_master.count}"
+    puts "master not current: #{analyzer.set_master_not_current.count}"
+    puts "similar pairs:      #{similar_pairs.count}"
+
+    File.open(file_1a, 'w') { |f| f.write(analyzer.set_current_not_master.to_yaml) }
+    File.open(file_2a, 'w') { |f| f.write(analyzer.set_master_not_current.to_yaml) }
+  end
+
+  def xtest_from_similar_files
+    test_root = 'jordan_henderson'
+    file_1 = File.expand_path('../../test_objects/options_file_1.yaml', __FILE__)
+    file_2 = File.expand_path('../../test_objects/options_file_2.yaml', __FILE__)
+
+    result, msg, current_data = DomGlancy::MapFile.new.read(file_1)
+    assert result
+    result, msg, master_data  = DomGlancy::MapFile.new.read(file_2)
+    assert result
+
+    analyzer = ::DomGlancy::Analyzer.new(master_data, current_data, test_root)
+    analysis_data = analyzer.analyze
+
+    puts "not in master:  #{analysis_data[:not_in_master].count}"
+    puts "not in current: #{analysis_data[:not_in_current].count}"
+    puts "changed pairs:  #{analysis_data[:changed_element_pairs].count}"
+    puts "changed master: #{analysis_data[:changed_master].count}"
+
+    assert analysis_data[:same]
+
   end
 
 end

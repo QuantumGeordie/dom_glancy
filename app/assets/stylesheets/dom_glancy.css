@@ -106,11 +106,11 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
 }
 
 .kr-dom_row_odd {
-    background-color: #A3906D;
+    background-color: #ffffff;
 }
 
 .kr-dom_row_even {
-    background-color: transparent;
+    background-color: #FFFBF5;
 }
 
 .kr--svg_rect_highlight {
@@ -146,4 +146,10 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
 .kr--button-small {
     border-radius: 5px;
     font-size: 75%;
+}
+
+.hide { display: none; }
+.hideable {
+    color: #956C1F;
+    cursor: pointer;
 }

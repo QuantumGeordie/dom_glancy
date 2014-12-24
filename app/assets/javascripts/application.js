@@ -5,3 +5,21 @@ function checkByParent(aId, aChecked) {
       collection[x].checked = aChecked;
   }
 }
+
+function toggleDetailSection(section_id, event) {
+    var section = document.getElementById(section_id);
+    var classes = section.classList;
+    if(classes.contains("hide"))
+    {
+        classes.remove("hide");
+        event.currentTarget.innerHTML = '-';
+    }else
+    {
+        classes.add("hide");
+        event.currentTarget.innerHTML = '+';
+    }
+}
+
+document.getElementById("changed_toggle").addEventListener("click", function(e) { toggleDetailSection('js--changed', e) });
+document.getElementById("not_master_toggle").addEventListener("click", function(e) { toggleDetailSection('js--not_master', e) });
+document.getElementById("not_current_toggle").addEventListener("click", function(e) { toggleDetailSection('js--not_current', e) });
