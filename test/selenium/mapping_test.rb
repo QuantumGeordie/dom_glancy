@@ -39,6 +39,8 @@ class MappingTest < SeleniumTestCase
     index_page.files.first.find('a').click
     show_page = PageObjects::DomGlancy::ShowPage.new
 
+    show_page.toggle
+
     assert_equal 1, show_page.not_master.count, 'elements listed as not in master'
     assert_equal 0, show_page.not_current.count, 'elements listed as not in current'
     assert_equal 0, show_page.changed.count, 'elements listed as changed'
@@ -68,6 +70,8 @@ class MappingTest < SeleniumTestCase
     index_page.files.first.find('a').click
     show_page = PageObjects::DomGlancy::ShowPage.new
 
+    show_page.toggle
+    
     assert_equal 0,  show_page.not_master.count,  'elements listed as not in master'
     assert_equal 7,  show_page.not_current.count, 'elements listed as not in current'
     assert_equal 11, show_page.changed.count,     'elements listed as changed'

@@ -3,8 +3,6 @@
 <head>
   <title>DOM Glancy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <%= javascript_include_tag 'application'
-  %>
   <%= stylesheet_link_tag 'normalize.css', :media => 'all' %>
   <%= stylesheet_link_tag '720_grid.css',  :media => 'screen and (min-width: 720px)' %>
   <%= stylesheet_link_tag '986_grid.css',  :media => 'screen and (min-width: 986px)' %>
@@ -14,19 +12,21 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="grid grid_top">
-    <div class="row">
-      <h1>DOM Glancy</h1>
-    </div>
-    <div class="row">
-      <h2 class="caramel"><%= @parent_application_name %> {<span id="js-kr--gem_rev"><%= @gem_version %></span>}</h2>
-    </div>
+  <h1>DOM Glancy</h1>
+  <h2 class="caramel"><%= @parent_application_name %> {<span id="js-kr--gem_rev"><%= @gem_version %></span>}</h2>
 
-    <%= render :partial => 'shared/dom_glancy_nav' %>
+  <%= render :partial => 'shared/dom_glancy_nav' %>
 
-    <div class="row">
-      <%= yield %>
-    </div>
-  </div>
+  <%= yield %>
+
+  <!--<ul class="tab_list">-->
+    <!--<li class="tab"><span class="hideable" id="changed_toggle">+</span> one</li>-->
+    <!--<li class="tab">two</li>-->
+    <!--<li class="tab">three</li>-->
+    <!--<li class="tab tab_active">four</li>-->
+    <!--<li class="tab">five</li>-->
+  <!--</ul>-->
+
+  <%= javascript_include_tag 'application' %>
 </body>
 </html>

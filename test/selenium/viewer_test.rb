@@ -14,7 +14,7 @@ class ViewerTest < SeleniumTestCase
     assert page.has_content?('do not have a corresponding master file in the expected file location'), 'new masters page content.'
 
     about_page = new_page.navigation.about!
-    assert page.has_content?('Add this line to your'), 'about page line from README.md'
+    assert page.has_content?('Info about Dom Glancy can be found'), 'about page content.'
 
     index_page = about_page.navigation.home!
   end

@@ -15,6 +15,9 @@ module TestHelpers
       filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
       assert File.exists?(filename), "Master, not current, file should exist: #{filename}"
 
+      filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__changed_pairs__diff.yaml")
+      assert File.exists?(filename), "Changed pairs file should exist: #{filename}"
+
       filename = fnb.master
       assert File.exists?(filename), "Master file should exist: #{filename}"
 
@@ -36,6 +39,9 @@ module TestHelpers
 
       filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__master_not_current__diff.yaml")
       refute File.exists?(filename), "No master, not current, file should exist: #{filename}"
+
+      filename = File.join(DomGlancy.configuration.diff_file_location, "#{test_root}__changed_pairs__diff.yaml")
+      refute File.exists?(filename), "No master changed pairs file should exist: #{filename}"
 
       filename = fnb.master
       assert File.exists?(filename), "Master file should exist: #{filename}"

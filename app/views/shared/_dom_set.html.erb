@@ -1,4 +1,4 @@
-<div id="<%= finder_id %>">
+<div id="<%= finder_id %>" class="hide">
   <% if elements.length > 0 %>
     <table class='kr--dom'>
       <thead>
@@ -11,12 +11,24 @@
           <th>width</th>
           <th>height</th>
           <th>visible</th>
+          <% if finder_id == 'js--changed' %>
+            <th>was</th>
+          <% end %>
         </tr>
       </thead>
       <tbody>
         <% reset_cycle %>
         <% elements.each do |element| %>
           <tr onclick="highlightElement(<%= element[:js_id] %>);" class="<%= cycle("kr-dom_row_odd", "kr-dom_row_even") %>">
+            <% was_element = element['was'] %>
+            <% changed = [] %>
+            <% if was_element %>
+              <% changed << "height: #{was_element['height']}" unless element['height'] == was_element['height'] %>
+              <% changed << "width: #{was_element['width']}" unless element['width'] == was_element['width'] %>
+              <% changed << "top: #{was_element['top']}" unless element['top'] == was_element['top'] %>
+              <% changed << "left: #{was_element['left']}" unless element['left'] == was_element['left'] %>
+              <% changed << "class: #{was_element['class']}" unless element['class'] == was_element['class'] %>
+            <% end %>
             <td><%= element['tag'] %></td>
             <td><%= element['id'] %></td>
             <td><%= element['class'] %></td>
@@ -25,6 +37,9 @@
             <td><%= element['width'] %></td>
             <td><%= element['height'] %></td>
             <td><%= element['visible'] %></td>
+            <% if was_element %>
+              <td><%= changed.join(', ') %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

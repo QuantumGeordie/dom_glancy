@@ -20,7 +20,7 @@ module DomGlancy
       analysis_data = analyzer.analyze
 
       unless analysis_data[:same]
-        analysis_reporter = ::DomGlancy::AnalysisReporter.new(test_root, analyzer.set_current_not_master, analyzer.set_master_not_current, analyzer.set_changed_master)
+        analysis_reporter = ::DomGlancy::AnalysisReporter.new(test_root, analyzer.set_current_not_master, analyzer.set_master_not_current, analyzer.set_changed_master, analyzer.changed_element_pairs)
         analysis_reporter.create_diff_file
       end
 

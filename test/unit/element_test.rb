@@ -21,6 +21,27 @@ class ElementTest < DomGlancyTestCase
     refute element1.same_element?(element2)
   end
 
+  def test_sameness_and_similarity__no_id
+    element_1 = DomGlancy::DOMElement.new({"id"=>"", "height"=>10, "visible"=>true, "tag"=>"SPAN", "width"=>50, "class"=>"", "left"=>71, "top"=>86, 'similarity' => DomGlancy.configuration.similarity})
+    element_2 = DomGlancy::DOMElement.new({"id"=>"", "height"=>12, "visible"=>true, "tag"=>"SPAN", "width"=>52, "class"=>"", "left"=>72, "top"=>82, 'similarity' => DomGlancy.configuration.similarity})
+    element_3 = DomGlancy::DOMElement.new({"id"=>"", "height"=>13, "visible"=>true, "tag"=>"SPAN", "width"=>54, "class"=>"", "left"=>72, "top"=>82, 'similarity' => DomGlancy.configuration.similarity})
+    element_4 = DomGlancy::DOMElement.new({"id"=>"", "height"=>14, "visible"=>true, "tag"=>"SPAN", "width"=>56, "class"=>"", "left"=>72, "top"=>82, 'similarity' => DomGlancy.configuration.similarity})
+    element_5 = DomGlancy::DOMElement.new({"id"=>"", "height"=>115, "visible"=>true, "tag"=>"SPAN", "width"=>58, "class"=>"", "left"=>72, "top"=>82, 'similarity' => DomGlancy.configuration.similarity})
+    element_6 = DomGlancy::DOMElement.new({"id"=>"", "height"=>16, "visible"=>true, "tag"=>"SPAN", "width"=>142, "class"=>"", "left"=>72, "top"=>82, 'similarity' => DomGlancy.configuration.similarity})
+
+    assert element_1.same_element?(element_2)
+    assert element_1.same_element?(element_3)
+    assert element_1.same_element?(element_4)
+    assert element_1.same_element?(element_5)
+    assert element_1.same_element?(element_6)
+
+    assert element_1.close_enough?(element_2)
+    assert element_1.close_enough?(element_3)
+    assert element_1.close_enough?(element_4)
+    refute element_1.close_enough?(element_5)
+    refute element_1.close_enough?(element_6)
+  end
+
   def test_similarity
     element1 = DomGlancy::DOMElement.new(single_element_hash.merge({'similarity' => 2}))
     element2 = DomGlancy::DOMElement.new(single_element_hash.merge({'left' => 72}))
