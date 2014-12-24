@@ -30,6 +30,8 @@ body {
   margin: 0 0 0 20px;
 }
 
+p { max-width: 960px; }
+
 a.kr:link    { text-decoration:none; color: #A3906D; }
 a.kr:visited { text-decoration:none; color: #A3906D; }
 a.kr:hover   { text-decoration:none; color: #956C1F; }
@@ -102,7 +104,6 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
     width: auto;
     min-width: 0;
     padding: 4px 4px 4px 4px;
-
 }
 
 .kr-dom_row_odd {
@@ -154,4 +155,26 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
 .hideable {
     color: #956C1F;
     cursor: pointer;
+}
+
+/* tab list */
+ul.tab_list {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+li.tab {
+    display: inline;
+    background-color: transparent;
+    font-size: 2em;
+    padding: 0 2em 0 2em;
+}
+
+.tab_active {
+    color: #956C1F;
+    background-color: #FFFBF5;
+    border-bottom: 4px solid #956C1F;
 }
