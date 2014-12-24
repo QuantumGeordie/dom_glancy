@@ -27,7 +27,7 @@ html {
 body {
   background-color: #FFFBF5;
   color: #2A2111;
-  margin-top: 0px;
+  margin: 0 0 0 20px;
 }
 
 a.kr:link    { text-decoration:none; color: #A3906D; }
@@ -119,6 +119,7 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
 
 .kr--about {
     margin-top: 30px;
+    margin-left: 30px;
     padding: 35px;
     color: #2A2111;
     background-color: #fff;
@@ -126,6 +127,7 @@ a.kr:active  { text-decoration:none; color: #A3906D; }
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
     border-radius: 10px; /* future proofing */
+    max-width: 960px;
 }
 
 .kr--artifacts td {
