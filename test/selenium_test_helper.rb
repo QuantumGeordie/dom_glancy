@@ -55,7 +55,7 @@ class SeleniumTestCase < Minitest::Test
   end
 
   def teardown
-    delete_contents_from_dom_glancy_locations
+    # delete_contents_from_dom_glancy_locations
   end
 
   def initialize_browser_size_for_test

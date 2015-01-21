@@ -2029,4 +2029,52 @@ module TestObjects
   def mapping_json
     "--- - id: '12'   height: 238   visible: true   tag: DIV   width: 720   class: grid   left: 43   top: 14 - id: '14'   height: 0   visible: true   tag: SPAN   width: 0   class: mm--title_text_sub   left: 71   top: 86 "
   end
+
+  def set_1_h1_changes
+    data = <<-DATA
+---
+- height: 38
+  width: 944
+  id: ''
+  tag: H1
+  class: ''
+  top: 21
+  left: 8
+  visible: true
+- height: 38
+  width: 944
+  id: ''
+  tag: H1
+  class: ''
+  top: 291
+  left: 8
+  visible: true
+
+    DATA
+    YAML::load(data)
+  end
+
+  def set_2_h1_changes
+    data = <<-DATA
+---
+- height: 38
+  width: 1044
+  id: ''
+  tag: H1
+  class: ''
+  top: 21
+  left: 8
+  visible: true
+- height: 38
+  width: 1044
+  id: ''
+  tag: H1
+  class: ''
+  top: 291
+  left: 8
+  visible: true
+
+    DATA
+    YAML::load(data)
+  end
 end

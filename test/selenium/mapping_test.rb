@@ -72,9 +72,9 @@ class MappingTest < SeleniumTestCase
 
     show_page.toggle
     
-    assert_equal 0,  show_page.not_master.count,  'elements listed as not in master'
-    assert_equal 7,  show_page.not_current.count, 'elements listed as not in current'
-    assert_equal 11, show_page.changed.count,     'elements listed as changed'
+    assert_equal 0, show_page.not_master.count,  'elements listed as not in master'
+    assert_equal 7, show_page.not_current.count, 'elements listed as not in current'
+    assert_equal 9, show_page.changed.count,     'elements listed as changed'
 
     assert_artifacts_on_difference('dom_glancy_index')
 

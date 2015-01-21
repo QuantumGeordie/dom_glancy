@@ -77,12 +77,21 @@ module DomGlancy
 
       @set_current_not_master.each do |item1|           # in current
         element1 = DOMElement.new(item1)
+        changed_elements = []
         @set_master_not_current.each do |item2|         # in master
           element2 = DOMElement.new(item2)
           if element1.same_element?(element2)
-            @changed_element_pairs << [item1, item2]    # [current version, master version]
+            changed_elements << element2
+            # @changed_element_pairs << [item1, item2]    # [current version, master version]
           end
         end
+
+        least_changed = changed_elements[0]
+        changed_elements.each do |element|
+          least_changed = element unless element1.change_level(element) > element1.change_level(least_changed)
+        end
+
+        @changed_element_pairs << [item1, least_changed.to_hash] if least_changed
       end
 
       remove_elements_from_data_sets @changed_element_pairs

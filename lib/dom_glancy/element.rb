@@ -37,7 +37,7 @@ module DomGlancy
       same = same_element?(anOther)     &&
           similar_size?(anOther, 0)     &&
           similar_location?(anOther, 0) &&
-          same_size?(anOther) &&
+          same_size?(anOther)           &&
           same_visibility?(anOther)
     end
 
@@ -87,5 +87,38 @@ module DomGlancy
       @style == anOther.style
     end
 
+    def similarity_level(anOther)
+      level = 0
+      if same_element?(anOther) && same_style?(anOther)
+        level += 1 if similar_location?(anOther, @similarity) and !same_location?(anOther)
+        level += 1 if similar_size?(anOther, @similarity)     and !same_size?(anOther)
+      end
+      level
+    end
+
+    def change_level(anOther)
+      level = -1
+      if same_element?(anOther)
+        level = 0
+        level += 1 unless same_style?(anOther)
+        level += 1 unless similar_location?(anOther, @similarity)
+        level += 1 unless similar_size?(anOther, @similarity)
+        level += 1 unless same_visibility?(anOther)
+      end
+      level
+    end
+
+    def to_hash
+      {
+          'id'      => @id,
+          'height'  => @height,
+          'visible' => @visible,
+          'tag'     => @tag,
+          'width'   => @width,
+          'class'   => @klass,
+          'left'    => @left,
+          'top'     => @top
+      }
+    end
   end
 end

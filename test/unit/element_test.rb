@@ -60,6 +60,41 @@ class ElementTest < DomGlancyTestCase
     assert element1.close_enough?(element3), 'should not be close enough'
   end
 
+  def test_similarity_level
+    element1 = DomGlancy::DOMElement.new(single_element_hash.merge({'similarity' => 2}))
+    element2 = element1.dup
+
+    element2.left = element2.left.to_i + 1
+
+    assert_equal 1, element1.similarity_level(element2), 'similarity level of 1'
+
+    element2.top += 1
+    assert_equal 1, element1.similarity_level(element2), 'similarity level of 1, still'
+
+    element2.width += 1
+    assert_equal 2, element1.similarity_level(element2), 'similarity level of 2'
+  end
+
+  def test_change_level
+    element1 = DomGlancy::DOMElement.new(single_element_hash.merge({'similarity' => 2}))
+    element2 = element1.dup
+
+    element2.top = element2.top.to_i + 1
+    refute element1.all_same?(element2),     'not exactly the same'
+    assert element1.close_enough?(element2), 'should be within similarity'
+
+    element2.top += 2
+    refute element1.close_enough?(element2)
+
+    assert_equal 1, element1.change_level(element2), 'change level with one change'
+
+    element2.width += 1
+    assert_equal 1, element1.change_level(element2), 'change level with one change and one similar'
+
+    element2.width += 10
+    assert_equal 2, element1.change_level(element2), 'change level with one change and one similar'
+  end
+
   def test_changed_element__width
     element1 = DomGlancy::DOMElement.new(array_of_elements.last)
     element2 = DomGlancy::DOMElement.new(array_of_elements.last.merge("width" => 20))
