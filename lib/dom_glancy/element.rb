@@ -59,6 +59,22 @@ module DomGlancy
       similar && (@left - anOther.left).abs <= similarity
     end
 
+    def similar_top?(anOther, similarity = 0)
+      (@top - anOther.top).abs <= similarity
+    end
+
+    def similar_left?(anOther, similarity = 0)
+      (@left - anOther.left).abs <= similarity
+    end
+
+    def similar_width?(anOther, similarity = 0)
+      (@width - anOther.width).abs <= similarity
+    end
+
+    def similar_height?(anOther, similarity = 0)
+      (@height - anOther.height).abs <= similarity
+    end
+
     def same_tag?(anOther)
       @tag == anOther.tag
     end
@@ -97,15 +113,18 @@ module DomGlancy
     end
 
     def change_level(anOther)
-      level = -1
+      change_info(anOther).length
+    end
+
+    def change_info(anOther)
+      info = []
       if same_element?(anOther)
-        level = 0
-        level += 1 unless same_style?(anOther)
-        level += 1 unless similar_location?(anOther, @similarity)
-        level += 1 unless similar_size?(anOther, @similarity)
-        level += 1 unless same_visibility?(anOther)
+        info << 'left' unless similar_left?(anOther, @similarity)
+        info << 'top' unless similar_top?(anOther, @similarity)
+        info << 'height' unless similar_height?(anOther, @similarity)
+        info << 'width' unless similar_width?(anOther, @similarity)
       end
-      level
+      info
     end
 
     def to_hash

@@ -82,13 +82,13 @@ module DomGlancy
           element2 = DOMElement.new(item2)
           if element1.same_element?(element2)
             changed_elements << element2
-            # @changed_element_pairs << [item1, item2]    # [current version, master version]
           end
         end
 
         least_changed = changed_elements[0]
         changed_elements.each do |element|
-          least_changed = element unless element1.change_level(element) > element1.change_level(least_changed)
+          change_analyzer = ChangeAnalyzer.new
+          least_changed = element if change_analyzer.compare(element1, element) < change_analyzer.compare(element1, least_changed)
         end
 
         @changed_element_pairs << [item1, least_changed.to_hash] if least_changed

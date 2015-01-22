@@ -107,7 +107,7 @@ class AnalyzerTest < DomGlancyTestCase
     refute analysis[:same], 'results of data analysis.same'
   end
 
-  def xtest_large_change_set
+  def test_large_change_set
     test_root = 'suso'
     file_1 = File.expand_path('../../test_objects/options_file_1.yaml', __FILE__)
     file_2 = File.expand_path('../../test_objects/options_file_2.yaml', __FILE__)
@@ -119,11 +119,11 @@ class AnalyzerTest < DomGlancyTestCase
 
     analysis_data = analyzer.analyze
 
-    ap analysis_data
+    # ap analysis_data
 
     refute analysis_data[:same]
-    assert_equal 0, analysis_data[:not_in_master].count,         'not master count'
-    assert_equal 44, analysis_data[:not_in_current].count,        'not current count'
+    assert_equal 0,  analysis_data[:not_in_master].count,         'not master count'
+    assert_equal 39, analysis_data[:not_in_current].count,        'not current count'
     assert_equal 47, analysis_data[:changed_element_pairs].count, 'changed element pairs count'
     assert_equal 47, analysis_data[:changed_master].count,        'changed master count'
   end
