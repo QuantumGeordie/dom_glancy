@@ -2,6 +2,24 @@ require 'selenium_test_helper'
 
 class MappingTest < SeleniumTestCase
 
+  def test_slight_shift_down
+    PageObjects::DomGlancy::LocalIndexPage.visit
+
+    map_current_page_and_save_as_master('dom_glancy_index__shifted')
+
+    add_to_top('booty')
+
+    same, msg = @dom_glancy.page_map_same?('dom_glancy_index__shifted')
+
+    refute same, msg
+
+    assert_match 'Elements not in master: 1', msg
+    assert_match 'Elements not in current: 1', msg
+    assert_match 'Changed elements: 32', msg
+
+    assert_artifacts_on_difference('dom_glancy_index__shifted')
+  end
+
   def test_full_mapping__same
     visit_index
 

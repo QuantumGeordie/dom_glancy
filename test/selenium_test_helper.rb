@@ -91,6 +91,29 @@ class SeleniumTestCase < Minitest::Test
     page.driver.browser.execute_script(js)
   end
 
+  def add_to_top(text_content)
+    # insertBefore
+    js = <<-JS
+      var el = document.createElement('div');
+      el.style.textAlign = 'center';
+      el.style.fontSize = '0.8em';
+      el.style.width = '400px';
+      el.style.height = '20px';
+      el.style.marginLeft = 'auto';
+      el.style.marginRight = 'auto';
+      el.id = 'hack-element';
+      el.textContent = '#{text_content}';
+      el.style.backgroundColor = '#ff0000';
+
+      var bod = document.getElementsByTagName('body')[0];
+      var opts = document.getElementsByClassName('lot_o_h2s')[0];
+
+      bod.insertBefore(el, opts);
+    JS
+
+    page.driver.browser.execute_script(js)
+  end
+
   def add_centered_element(text_content)
     js = <<-JS
       var centeredElement = document.createElement('div');

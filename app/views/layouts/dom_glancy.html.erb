@@ -3,11 +3,11 @@
 <head>
   <title>DOM Glancy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <%= stylesheet_link_tag 'normalize.css', :media => 'all' %>
-  <%= stylesheet_link_tag '720_grid.css',  :media => 'screen and (min-width: 720px)' %>
-  <%= stylesheet_link_tag '986_grid.css',  :media => 'screen and (min-width: 986px)' %>
-  <%= stylesheet_link_tag '1236_grid.css', :media => 'screen and (min-width: 1236px)' %>
-  <%= stylesheet_link_tag 'dom_glancy',    :media => 'all' %>
+  <%= stylesheet_link_tag 'dom_glancy/normalize.css', :media => 'all' %>
+  <%= stylesheet_link_tag 'dom_glancy/720_grid.css',  :media => 'screen and (min-width: 720px)' %>
+  <%= stylesheet_link_tag 'dom_glancy/986_grid.css',  :media => 'screen and (min-width: 986px)' %>
+  <%= stylesheet_link_tag 'dom_glancy/1236_grid.css', :media => 'screen and (min-width: 1236px)' %>
+  <%= stylesheet_link_tag 'dom_glancy/dom_glancy',    :media => 'all' %>
 
   <%= csrf_meta_tags %>
 </head>
@@ -18,15 +18,6 @@
   <%= render :partial => 'shared/dom_glancy_nav' %>
 
   <%= yield %>
-
-  <!--<ul class="tab_list">-->
-    <!--<li class="tab"><span class="hideable" id="changed_toggle">+</span> one</li>-->
-    <!--<li class="tab">two</li>-->
-    <!--<li class="tab">three</li>-->
-    <!--<li class="tab tab_active">four</li>-->
-    <!--<li class="tab">five</li>-->
-  <!--</ul>-->
-
-  <%= javascript_include_tag 'application' %>
+  <%= javascript_include_tag 'dom_glancy/dom_glancy' %>
 </body>
 </html>
