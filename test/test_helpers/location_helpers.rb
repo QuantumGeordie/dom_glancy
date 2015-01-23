@@ -12,6 +12,8 @@ module TestHelpers
       FileUtils.mkdir_p(DomGlancy.configuration.master_file_location)
       FileUtils.mkdir_p(DomGlancy.configuration.diff_file_location)
       FileUtils.mkdir_p(DomGlancy.configuration.current_file_location)
+
+      delete_contents_from_dom_glancy_locations
     end
 
     def delete_test_locations
@@ -21,10 +23,10 @@ module TestHelpers
     end
 
     def delete_contents_from_dom_glancy_locations
-      Dir[File.join(DomGlancy.configuration.master_file_location, '*.yaml')].each  { |file| FileUtils.rm_rf file }
+      Dir[File.join(DomGlancy.configuration.master_file_location,  '*.yaml')].each { |file| FileUtils.rm_rf file }
       Dir[File.join(DomGlancy.configuration.current_file_location, '*.yaml')].each { |file| FileUtils.rm_rf file }
-      Dir[File.join(DomGlancy.configuration.diff_file_location, '*.html')].each    { |file| FileUtils.rm_rf file }
-      Dir[File.join(DomGlancy.configuration.diff_file_location, '*.yaml')].each    { |file| FileUtils.rm_rf file }
+      Dir[File.join(DomGlancy.configuration.diff_file_location,    '*.html')].each { |file| FileUtils.rm_rf file }
+      Dir[File.join(DomGlancy.configuration.diff_file_location,    '*.yaml')].each { |file| FileUtils.rm_rf file }
     end
   end
 end
