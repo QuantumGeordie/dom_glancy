@@ -11,16 +11,16 @@
       <%= raw(contents) %>
     </td>
     <td>
-      <h2><span class="hideable" id="not_master_toggle">+</span> Not in Master</h2>
       <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_not_master)) %>
+      <h2><span class="hideable" id="not_master_toggle">+</span> Not in Master [<%= elements.count %>]</h2>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--not_master'} %>
 
-      <h2><span class="hideable" id="not_current_toggle">+</span> Not in Current</h2>
       <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_not_current)) %>
+      <h2><span class="hideable" id="not_current_toggle">+</span> Not in Current [<%= elements.count %>]</h2>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--not_current'} %>
 
-      <h2><span class="hideable" id="changed_toggle">+</span> Changed</h2>
       <% elements = YAML::load_file(File.join(DomGlancy.configuration.diff_file_location, @file_set_changed)) %>
+      <h2><span class="hideable" id="changed_toggle">+</span> Changed [<%= elements.count %>]</h2>
       <%= render :partial => "shared/dom_set", :locals => {:elements => elements, :finder_id => 'js--changed'} %>
     </td>
   </tr>

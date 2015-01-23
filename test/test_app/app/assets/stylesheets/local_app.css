@@ -23,3 +23,11 @@ td {
     font-size: 1.5em;
     font-family: monospace, arial, helvetica, sans-serif;
 }
+
+.lot_o_h2s {
+    margin: 0 auto;
+    color: #c3d9ff;
+    width: 600px;
+    border: 2px solid #000080;
+    background-color: #009900;
+}
