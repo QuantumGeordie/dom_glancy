@@ -23,4 +23,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'kramdown', '~> 1.1.0'
   spec.add_dependency 'capybara', ['>= 1.0', '< 3']
+
+  spec.add_dependency 'sass-rails', '3.2.6'
 end

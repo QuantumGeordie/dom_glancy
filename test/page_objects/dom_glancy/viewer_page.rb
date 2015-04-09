@@ -1,10 +1,10 @@
 module PageObjects
   module DomGlancy
     class ViewerPage < ::AePageObjects::Document
-      element :navigation, :is => Navigation, :locator => "#js-kr--nav"
+      element :navigation, :is => Navigation, :locator => "#js-dg--nav"
 
       def revision
-        node.find("#js-kr--gem_rev").text
+        node.find("#js-dg--gem_rev").text
       end
 
     end

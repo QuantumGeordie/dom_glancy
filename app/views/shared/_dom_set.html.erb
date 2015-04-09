@@ -1,6 +1,6 @@
 <div id="<%= finder_id %>" class="hide">
   <% if elements.length > 0 %>
-    <table class='kr--dom'>
+    <table class='dg--dom'>
       <thead>
         <tr>
           <th>tag</th>
@@ -19,7 +19,7 @@
       <tbody>
         <% reset_cycle %>
         <% elements.each do |element| %>
-          <tr onclick="highlightElement(<%= element[:js_id] %>);" class="<%= cycle("kr-dom_row_odd", "kr-dom_row_even") %>">
+          <tr onclick="highlightElement(<%= element[:js_id] %>);" class="<%= cycle("dg-dom_row_odd", "dg-dom_row_even") %>">
             <% was_element = element['was'] %>
             <% changed = [] %>
             <% if was_element %>

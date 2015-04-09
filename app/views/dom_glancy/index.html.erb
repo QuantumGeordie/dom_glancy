@@ -1,17 +1,22 @@
-<h2>difference files</h2>
-<p id="js--file_location">file location: <%= DomGlancy.configuration.diff_file_location %></p>
-<form name="bessing" action="/dom_glancy/bless" method="POST">
-  <p id="js--input"><input type="checkbox" name="delete_on_bless" value='true' checked> Remove difference files on blessing</p>
-  <input class="kr--button kr--button-small" type="button" value="Check All" onclick="checkByParent('kr--files', true);">
-  <input class="kr--button kr--button-small" type="button" value="Uncheck All" onclick="checkByParent('kr--files', false);">
+<h1>Differences</h1>
+<% if @files.count > 0 %>
+  <form name="bessing" action="/dom_glancy/bless" method="POST">
+    <p id="js--input"><input type="checkbox" name="delete_on_bless" value='true' checked> Remove difference files on blessing</p>
+    <input class="dg--button dg--button-small" type="button" value="Check All" onclick="checkByParent('dg--files', true);">
+    <input class="dg--button dg--button-small" type="button" value="Uncheck All" onclick="checkByParent('dg--files', false);">
 
-  <ul id="kr--files" class="kr--ul">
-    <% @files.each_with_index do |file, i| %>
-      <li class="kr--file">
-        <input type="checkbox" name="option_<%= i %>" value="<%= File.basename(file).gsub('_diff.html', '') %>">
-        <%= link_to File.basename(file).gsub('_diff.html', ''), "/dom_glancy/show/#{file}", :class => 'kr' %>
-      </li>
-    <% end %>
-  </ul>
-  <input type="submit" value="Bless Selected" class="kr--button">
-</form>
+    <ul id="dg--files" class="dg--ul">
+      <% @files.each_with_index do |file, i| %>
+        <li class="dg--file">
+          <input type="checkbox" name="option_<%= i %>" value="<%= File.basename(file).gsub('_diff.html', '') %>">
+          <%= link_to File.basename(file).gsub('_diff.html', ''), "/dom_glancy/show/#{file}", :class => 'dg' %>
+        </li>
+      <% end %>
+    </ul>
+    <input type="submit" value="Bless Selected" class="dg--button">
+  </form>
+<% else %>
+  <p class="no_files_message">There are currently no difference files to be displayed.</p>
+<% end %>
+
+<p class="dg--footer" id="js--file_location">file location: <%= DomGlancy.configuration.diff_file_location %></p>

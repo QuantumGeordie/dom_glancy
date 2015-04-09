@@ -11,7 +11,7 @@ class ViewerTest < SeleniumTestCase
     assert_equal DomGlancy.configuration.diff_file_location.to_s, config_page.diffs, 'difference file location'
 
     new_page = config_page.navigation.new_page!
-    assert page.has_content?('do not have a corresponding master file in the expected file location'), 'new masters page content.'
+    assert page.has_content?('There are no new test files to display.'), 'new masters page content.'
 
     about_page = new_page.navigation.about!
     assert page.has_content?('Info about Dom Glancy can be found'), 'about page content.'

@@ -3,13 +3,13 @@
   <p>assume downloads from TeamCity will end up in ~/Downloads</p>
 
   <p><strong>** Can't unzip yet. **</strong></p>
-  <table class='kr kr--artifacts'>
+  <table class='dg dg--artifacts'>
     <% @artifacts.each do |artifact| %>
       <tr>
         <% a = artifact.gsub('.', '^') %>
         <th><%= artifact %></th>
         <td>unzip</td>
-        <td><%= link_to 'delete', "artifacts_delete/#{a}", :class => 'kr' %></td>
+        <td><%= link_to 'delete', "artifacts_delete/#{a}", :class => 'dg' %></td>
       </tr>
     <% end -%>
   </table>

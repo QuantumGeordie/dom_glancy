@@ -3,7 +3,7 @@ module PageObjects
     class IndexPage < ViewerPage
       path :dom_glancy
 
-      collection :files, :locator => '#kr--files', :item_locator => '.kr--file'
+      collection :files, :locator => '#dg--files', :item_locator => '.dg--file'
     end
   end
 end

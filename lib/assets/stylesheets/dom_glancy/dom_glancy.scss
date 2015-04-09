@@ -1,0 +1,208 @@
+@import 'colors';
+@import 'nav';
+
+body {
+  font-family: Menlo, 'Panic Sans', monospace;
+  background-color: $primary_background;
+  color: $primary_text;
+  margin: 20px;
+  font-kerning: normal;
+  font-weight: 300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: lighten($title_text, 15%);
+  font-weight: normal;
+  margin: 0;
+}
+
+.title {
+  width: 100%;
+  color: $title_text;
+  vertical-align: bottom;
+  padding: 0;
+}
+
+.dg-header {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px dotted lighten($title_text, 10%);
+}
+
+.dg-title {
+  display: inline-block;
+  width: 49%;
+  font-size: 3em;
+  font-weight: 800;
+}
+
+.gd-title--gem_rev {
+  text-align: right;
+  display: inline-block;
+  width: 49%;
+  font-size: 1.8em;
+  font-weight: 400;
+}
+
+p {
+  max-width: 960px;
+  font-size: 1.1em;
+  line-height: 1.6em;
+}
+
+.no_files_message {
+  font-style: italic;
+}
+
+.dg--footer {
+  color: lighten($primary_text, 20%);
+  border-top: 1px dotted lighten($title_text, 10%);
+  font-size: 0.8em;
+  padding: 5px 0 0 0;
+}
+
+
+a.dg:link    { text-decoration:none; color: $primary_link; }
+a.dg:visited { text-decoration:none; color: $primary_link; }
+a.dg:hover   { text-decoration:none; color: $primary_link_hover; }
+a.dg:active  { text-decoration:none; color: $primary_link; }
+
+.dg th {
+    padding: 0.2em 1em 0.2em 1em;
+    color: $title_text;
+    text-align: left;
+}
+
+//.grid_top {
+//    margin-top: 0px;
+//    border-top: 6px #956C1F solid;
+//}
+
+.dg--ul {
+  line-height: 1.8em;
+  list-style-type: none;
+  margin:0;
+  padding: 20px 0;
+}
+
+.dg--config_table {
+  margin-top: 20px;
+}
+
+.dg--dom_review_table td {
+  padding: 1em;
+  border: 0 solid;
+  background-color: transparent;
+  vertical-align: top;
+  min-width: 250px;
+}
+
+.dg--dom_review_table th {
+  color: $color_G;
+  font-size: 1.3em;
+}
+
+.dg--dom {
+  background-color: $primary_background;
+  font-size: 0.8em;
+  color: $color_G;
+  border-collapse: collapse;
+}
+
+.dg--dom_review_table p{
+  color: $color_G;
+}
+
+table.dg--dom  {
+  margin: 10px 0 0 10px;
+}
+
+.dg--dom th {
+  font-size: 0.8em;
+  background-color: transparent;
+  color: $title_text;
+  font-weight: 300;
+  text-align: center;
+  border: 0px;
+  border-bottom: 2px;
+  border-color: $title_text;
+  border-style: solid;
+  padding: 0 15px 0 3px;
+  border-left: 1px;
+}
+
+.dg--dom td {
+  font-size: 0.8em;
+  background-color: transparent;
+  border: 0;
+  border-right: 1px;
+  border-left: 1px;
+  border-color: lighten($primary_link, 20%);
+  width: auto;
+  min-width: 0;
+  padding: 4px 4px 4px 4px;
+}
+
+.dg-dom_row_odd {
+  color: lighten($primary_link, 20%);
+}
+
+.dg-dom_row_even {
+  color: lighten($primary_link_hover, 20%);
+}
+
+.dg--dom tr:hover{
+  background: $table_highlight;
+  color: $primary_background;
+}
+
+.dg--svg_rect_highlight {
+  border: 5px solid $color_G;
+}
+
+.dg--artifacts td {
+  padding: 7px;
+}
+
+.dg--button {
+  font-family: inherit;
+  font-size: 100%;
+  padding: .5em 1em;
+  border: 1px solid $color_G;
+  background-color: lighten($color_G, 30%);
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.dg--button-small {
+  border-radius: 5px;
+  font-size: 75%;
+}
+
+.hide { display: none; }
+.hideable {
+  color: $color_D;
+  cursor: pointer;
+}
+
+/* tab list */
+ul.tab_list {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+li.tab {
+  display: inline;
+  background-color: transparent;
+  font-size: 2em;
+  padding: 0 2em 0 2em;
+}
+
+.tab_active {
+  color: $color_G;
+  background-color: $color_H;
+  border-bottom: 4px solid $color_E;
+}

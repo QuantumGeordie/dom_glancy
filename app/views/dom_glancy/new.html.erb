@@ -1,15 +1,22 @@
-<div class="row">
-  <p>Files in the Screenshot directory that do not have a corresponding master file in the expected file location. Probably means that they go with a new test.</p>
-</div>
+<h1>New Test Files</h1>
+<% if @extra_files.count > 0 %>
+  <div class="row">
+    <p>Files in the Screenshot directory that do not have a corresponding master file in the expected file location. Probably means that they go with a new test.</p>
+  </div>
 
-<div class="row">
-  <table class='kr kr--artifacts' id='js--files'>
-    <% @extra_files.each do |f| %>
-      <tr class='js--new_files'>
-        <td><%= f %></td>
-        <td><%= link_to 'make master', "make_master/#{f}", :class => 'kr kr--button kr--button-small' %></td>
-        <td><%= link_to 'delete', "delete_current/#{f}", :class => 'kr kr--button kr--button-small' %></td>
-      </tr>
-    <% end %>
-  </table>
-</div>
+  <div class="row">
+    <table class='dg dg--artifacts' id='js--files'>
+      <% @extra_files.each do |f| %>
+        <tr class='js--new_files'>
+          <td><%= f %></td>
+          <td><%= link_to 'make master', "make_master/#{f}", :class => 'dg dg--button dg--button-small' %></td>
+          <td><%= link_to 'delete', "delete_current/#{f}", :class => 'dg dg--button dg--button-small' %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% else %>
+  <p class="no_files_message">There are no new test files to display.</p>
+<% end %>
+
+<p class="dg--footer" id="js--file_location">file location: <%= DomGlancy.configuration.current_file_location %></p>

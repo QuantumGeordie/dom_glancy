@@ -3,7 +3,7 @@ require 'selenium_test_helper'
 class MappingTest < SeleniumTestCase
 
   def test_slight_shift_down
-    PageObjects::DomGlancy::LocalIndexPage.visit
+    visit_local_page
 
     map_current_page_and_save_as_master('dom_glancy_index__shifted')
 
@@ -66,7 +66,7 @@ class MappingTest < SeleniumTestCase
     assert_artifacts_on_difference('dom_glancy_index')
 
     index_page = show_page.navigation.clear_results!
-    assert_equal 0, index_page.files.count, 'should be no difference files now'
+    assert page.has_content? 'There are currently no difference files to be displayed.'
   end
 
   def test_full_mapping__one_missing__bless
@@ -90,36 +90,43 @@ class MappingTest < SeleniumTestCase
 
     show_page.toggle
     
-    assert_equal 0, show_page.not_master.count,  'elements listed as not in master'
-    assert_equal 7, show_page.not_current.count, 'elements listed as not in current'
-    assert_equal 9, show_page.changed.count,     'elements listed as changed'
+    assert_equal 0,  show_page.not_master.count,  'elements listed as not in master'
+    assert_equal 11, show_page.not_current.count, 'elements listed as not in current'
+    assert_equal 4,  show_page.changed.count,     'elements listed as changed'
 
     assert_artifacts_on_difference('dom_glancy_index')
 
     index_page = show_page.bless!
-    assert_equal 0, index_page.files.count, 'number of difference files'
+    assert page.has_content?('There are currently no difference files to be displayed.'), 'Message saying no difference files right now.'
   end
 
   def test_mapping__similarity
-    visit_index
+    visit_local_page
 
-    map_current_page_and_save_as_master('dom_glancy_index')
+    add_centered_element('Buzzcocks')
+
+    map_current_page_and_save_as_master('similarity')
 
     assert_equal 15, DomGlancy.configuration.similarity, 'Dom Glancy similarity value'
 
-    resize_about_element(15)    # increase the size of the about element by the similarity amount and it should be same
+    resize_hack_element(15)    # increase the size of the about element by the similarity amount and it should be same
 
-    same, msg = @dom_glancy.page_map_same?('dom_glancy_index')
+    same, msg = @dom_glancy.page_map_same?('similarity')
     assert same, msg
+    assert_equal '', msg
 
-    resize_about_element(1)     # increase the size of the about element by 1 more pixel and it should be NOT same
+    resize_hack_element(1)     # increase the size of the about element by 1 more pixel and it should be NOT same
 
-    same, msg = @dom_glancy.page_map_same?('dom_glancy_index')
+    same, msg = @dom_glancy.page_map_same?('similarity')
     refute same, msg
+
+    assert_match 'Elements not in master: 0',  msg
+    assert_match 'Elements not in current: 0', msg
+    assert_match 'Changed elements: 1',        msg
   end
 
   def test_non_dom_glancy_page__pass
-    local_page = PageObjects::DomGlancy::LocalIndexPage.visit
+    local_page = visit_local_page
 
     map_current_page_and_save_as_master('test_page')
 
@@ -131,7 +138,7 @@ class MappingTest < SeleniumTestCase
   end
 
   def test_non_dom_glancy_page__fail__size_change
-    local_page = PageObjects::DomGlancy::LocalIndexPage.visit
+    local_page = visit_local_page
 
     map_current_page_and_save_as_master('test_page')
 

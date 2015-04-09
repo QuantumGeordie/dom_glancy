@@ -20,3 +20,4 @@ tmp
 test/test_app/log
 test/test_app/tmp
 test/test_app/db/*.sqlite3
+.sass-cache/

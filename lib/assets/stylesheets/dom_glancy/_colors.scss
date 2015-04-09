@@ -1,0 +1,17 @@
+$color_A: #3F2B2D;
+$color_B: #5A3E42;
+$color_C: #2D2C3A;
+$color_D: #4A465B;
+$color_E: #F0514E;
+$color_F: #E96332;
+$color_G: #799AA2;
+$color_H: #ffffff;
+
+$primary_background: $color_H;
+$primary_text:       lighten($color_A, 20%);
+$primary_link:       $color_E;
+$primary_link_hover: $color_D;
+
+$title_text: $color_F;
+
+$table_highlight: lighten(#E96332, 30%);

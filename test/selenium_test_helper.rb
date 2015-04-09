@@ -72,18 +72,22 @@ class SeleniumTestCase < Minitest::Test
     PageObjects::DomGlancy::IndexPage.visit
   end
 
+  def visit_local_page
+    PageObjects::DomGlancy::LocalIndexPage.visit
+  end
+
   def remove_about_element
     js = <<-JS
-      var element = document.getElementById('js-kr--nav');
+      var element = document.getElementById('js-dg--nav');
       element.parentNode.removeChild(element);
     JS
 
     page.driver.browser.execute_script(js)
   end
 
-  def resize_about_element(add_to_width)
+  def resize_hack_element(add_to_width)
     js = <<-JS
-      var element = document.getElementById('js--about');
+      var element = document.getElementById('hack-element');
       var width = element.clientWidth + #{add_to_width};
       element.style.width = width + 'px';
     JS
